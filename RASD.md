@@ -244,11 +244,8 @@ MOCKUP ADD A STORE
 | G3  | Allow a User to find locations of accessible Stores.                                    |
 |:----|:----------------------------------------------------------------------------------------|
 | R3  | A registered User must be able to login to the system using his credentials.            |
-| R4  | The system must be able to provide the list of accessible Stores within a certain area,
-encoded as the coordinates of an origin point and the maximum distance from it, from the
-current position of a User.                                                                     |
-| R5  | The system must be able to provide the list of accessible Stores within a certain area,
-encoded as the coordinates of an origin point and the maximum distance from it, from an address specified by a User.                                                                                           |
+| R4  | The system must be able to provide the list of accessible Stores within a certain area, encoded as the coordinates of an origin point and the maximum distance from it, from the current position of a User.                                                                     |
+| R5  | The system must be able to provide the list of accessible Stores within a certain area, encoded as the coordinates of an origin point and the maximum distance from it, from an address specified by a User.                                                                                           |
 | D3  | Users and Stores locations are retreived by GPS.                                        |
 | D4  | The GPS positions are always correct.                                                   | 
 
