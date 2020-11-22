@@ -4,16 +4,16 @@
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.0.3
-#### Date: 21/11/2020
+#### Version: 0.0.4
+#### Date: 22/11/2020
 #### Professor: Elisabetta Di Nitto
 <br>
 
 ## Table of Contents
 - [Requirements Analysis and Specification Document](#requirements-analysis-and-specification-document)
   - [Authors:](#authors)
-      - [Version: 0.0.3](#version-003)
-      - [Date: 21/11/2020](#date-21112020)
+      - [Version: 0.0.4](#version-004)
+      - [Date: 22/11/2020](#date-22112020)
       - [Professor: Elisabetta Di Nitto](#professor-elisabetta-di-nitto)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
@@ -50,6 +50,15 @@
       - [3.2.3. Allow a User to find locations of accessible Stores.](#323-allow-a-user-to-find-locations-of-accessible-stores)
       - [3.2.4. Allow a User to request a digital ticket to enter a specific Store as soon as possible.](#324-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-as-soon-as-possible)
       - [3.2.5. Allow a User to request a digital ticket to enter a specific Store at a chosen time.](#325-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-at-a-chosen-time)
+      - [3.2.6. Allow a Store Manager to issue a physical ticket.](#326-allow-a-store-manager-to-issue-a-physical-ticket)
+      - [3.2.7. Allow a Store Manager to inspect a ticket at the entrance.](#327-allow-a-store-manager-to-inspect-a-ticket-at-the-entrance)
+      - [3.2.8. Allow a Store Manager to inspect a ticket at the exit.](#328-allow-a-store-manager-to-inspect-a-ticket-at-the-exit)
+    - [3.3. Non-Functional Rquirements](#33-non-functional-rquirements)
+      - [3.3.1 Performance](#331-performance)
+    - [3.3.2. Reliability](#332-reliability)
+    - [3.3.3. Security](#333-security)
+    - [3.3.4. Scalability](#334-scalability)
+    - [3.3.5. Accuracy](#335-accuracy)
   - [5. Effort Spent](#5-effort-spent)
     - [Ferrara Alessandro](#ferrara-alessandro)
     - [Fratus Lorenzo](#fratus-lorenzo)
@@ -91,18 +100,17 @@ The developements of Customers Line-up was necessary to enforce crowd-avoiding r
 
 #### 1.2.3. Goals
 
-|     |                                                                                         |
-|:----|:----------------------------------------------------------------------------------------|
-| G1  | Allow a Visitor to become registered User after providing credentials.                  |
-| G2  | Allow a Store Manager to add a Store to the system after providing credentials.         |
-| G3  | Allow a User to find locations of accessible Stores.                                    |
-| G4  | Allow a User to request a digital ticket to enter a specific Store as soon as possible. |
-| G5  | Allow a User to request a digital ticket to enter a specific Store at a chosen time.    |
-| G6  | Allow a User to provide advanced details about the visit when requesting a ticket.      |
-| G7  | Allow a User to enter the Store at the time he has requested a ticket for.              |
-| G8  | Allow a Store Manager to issue a physical ticket.                                       |
-| G9  | Allow a Store Manager to inspect a ticket.                                              |
-| G10 | Allow a Store Manager to manually end a Customer's visit.                               |
+|    |                                                                                         |
+|:---|:----------------------------------------------------------------------------------------|
+| G1 | Allow a Visitor to become registered User after providing credentials.                  |
+| G2 | Allow a Store Manager to add a Store to the system after providing credentials.         |
+| G3 | Allow a User to find locations of accessible Stores.                                    |
+| G4 | Allow a User to request a digital ticket to enter a specific Store as soon as possible. |
+| G5 | Allow a User to request a digital ticket to enter a specific Store at a chosen time.    |
+| G6 | Allow a Store Manager to issue a physical ticket.                                       |
+| G7 | Allow a Store Manager to inspect a ticket at the entrance.                              |
+| G8 | Allow a Store Manager to inspect a ticket at the exit.                                  |
+<br>
 
 ### 1.3. Definitions, acronyms and abbreviations
 
@@ -113,8 +121,7 @@ The developements of Customers Line-up was necessary to enforce crowd-avoiding r
 - Digital ticket: Ticket requested by a User, stored on own device.         
 - Physical ticket: Ticket issued by a Store Manager in printed form.
 - Store: physical buisiness that makes use of CLup.
-- Device
-- Queue
+- Queue: imaginary list of Customers ordered by their ticket time of issue, it does not contain Users with a reservation.
 
 
 ### 1.3.2. Acronyms
@@ -154,7 +161,7 @@ After selecting the time slot he prefers, he is able to plan the visit (providin
 #### 2.2.4. Ticket Inspection
 
 This function is reserved to Store Managers and cannot be used by Users.
-The Store Manager will inspect a ticket before letting a Customer into the Store. This allows him to check that the ticket is valid and to manage the number of Customers currently in the Store.
+The Store Manager will inspect a ticket before letting a Customer in and out the Store. This allows him to check that the ticket is valid and to manage the number of Customers currently in the Store.
 
 ### 2.3. User Characteristics
 
@@ -189,25 +196,26 @@ In order to better clarify the presentation and avoid any ambiguities we decided
 - The Store Manager can modify the capacity of the Store according to the regulations in force.
 - A Store is accessible if the number of Customers inside does not exceed half the capacity of the building.
 - A Store is accessible only during the opening time.
-- A User cannot be present more than once in a queue at the same time.
+- A User cannot be present more than once in the queue for a Store at the same time.
+- A User with a reservation for a Store cannot be in the queue during that time slot.
 - A Customer can enter a Store only when it is accessible.
-- Before entering the Store the Customer's ticket is checked by the Store Manager.
+- Before entering and leaving the Store the Customer's ticket is inspected by the Store Manager.
 - When a Customer enters a Store he is no longer in the queue.
-- If a Customer does not notify the system, the Store Manager has to end his visit manually.
 
 #### 2.5.2. Domain Assumptions
 
-|    |                                                                                 |
-|:---|:--------------------------------------------------------------------------------|
-| D1 | The provided email during the registration is valid and unique.                 |
-| D2 | The information provided by the Store Manager are always correct.               |
-| D3 | Users and Stores locations are retreived by GPS.                                |
-| D4 | The GPS positions are always correct.                                           |
-| D5 | The queue is never full.                                                        |
-| D6 | The number of bookings in a time frame cannot exceed the maximum capacity of the store.  |
-| D7 | When a Customer with no reservation enters a Store, the remaining capacity is decreased. |
-| D8 | From the starting time of a reservation to a Store, the remaining capacity is decreased. |
-| D9 | When a Customer's visit ends, the remaining capacity is increased.              |
+|    |                                                                                             |
+|:---|:--------------------------------------------------------------------------------------------|
+| D1 | The provided email during the registration is valid and unique.                             |
+| D2 | The information provided by the Store Manager are always correct.                           |
+| D3 | Users and Stores locations are retreived by GPS.                                            |
+| D4 | The GPS positions are always correct.                                                       |
+| D5 | The queue is never full.                                                                    |
+| D6 | The number of bookings in a time frame cannot exceed the maximum capacity of the store.     |
+| D7 | When a ticket is inspected at the entrance of a Store, its remaining capacity is decreased. |
+| D8 | When a ticket is inspected at the exit of a Store, its remaining capacity is increased.     |
+| D9 | A User with a valid reservation always takes precedence over Customers in the queue.        |
+<br>
 
 ## 3. Secific Requirements
 ### 3.1. External interface requirements
@@ -226,64 +234,111 @@ MOCKUP ADD A STORE
 
 #### 3.2.1. Allow a Visitor to become registered User.
 
-| G1  | Allow a Visitor to become registered User after providing credentials.                  |
-|:----|:----------------------------------------------------------------------------------------|
-| R1  | A Visitor must be able to begin the registration process. During the process the system will ask him to provide credentials.                                                                            |
-| D1  | The provided email during the registration is valid and unique.                         |
+| G1  | Allow a Visitor to become registered User after providing credentials.                    |
+|:----|:------------------------------------------------------------------------------------------|
+| R1  | A Visitor must be able to begin the registration process. During the process the system will ask him to provide credentials.                                                                              |
+| D1  | The provided email during the registration is valid and unique.                           |
+<br>
 
 #### 3.2.2. Allow a Store Manager to add a Store to the system.
 
-| G2  | Allow a Store Manager to add a Store to the system after providing credentials.         |
-|:----|:----------------------------------------------------------------------------------------|
-| R2  | A Store Manager must be able to begin the registration process. During the process the system will ask him to provide credentials.                                                                         |
-| D1  | The provided email during the registration is valid and unique.                         |
-| D2  | The information provided by the Store Manager are always correct.                       |
+| G2  | Allow a Store Manager to add a Store to the system after providing credentials.           |
+|:----|:------------------------------------------------------------------------------------------|
+| R2  | A Store Manager must be able to begin the registration process. During the process the system will ask him to provide credentials.                                                                           |
+| D1  | The provided email during the registration is valid and unique.                           |
+| D2  | The information provided by the Store Manager are always correct.                         |
+<br>
 
 #### 3.2.3. Allow a User to find locations of accessible Stores.
 
-| G3  | Allow a User to find locations of accessible Stores.                                    |
-|:----|:----------------------------------------------------------------------------------------|
-| R3  | A registered User must be able to login to the system using his credentials.            |
-| R4  | The system must be able to provide the list of accessible Stores within a certain area, encoded as the coordinates of an origin point and the maximum distance from it, from the current position of a User.                                                                     |
-| R5  | The system must be able to provide the list of accessible Stores within a certain area, encoded as the coordinates of an origin point and the maximum distance from it, from an address specified by a User.                                                                                           |
-| D3  | Users and Stores locations are retreived by GPS.                                        |
-| D4  | The GPS positions are always correct.                                                   | 
+| G3  | Allow a User to find locations of accessible Stores.                                      |
+|:----|:------------------------------------------------------------------------------------------|
+| R3  | A registered User must be able to login to the system using his credentials.              |
+| R4  | The system must be able to provide the list of accessible Stores within a certain area, encoded as the coordinates of an origin point and the maximum distance from it, from the current position of a User. |
+| R5  | The system must be able to provide the list of accessible Stores within a certain area, encoded as the coordinates of an origin point and the maximum distance from it, from an address specified by a User. |
+| D3  | Users and Stores locations are retreived by GPS.                                          |
+| D4  | The GPS positions are always correct.                                                     | 
+<br>
 
 #### 3.2.4. Allow a User to request a digital ticket to enter a specific Store as soon as possible.
 
-| G4  | Allow a User to request a digital ticket to enter a specific Store as soon as possible. |
-|:----|:----------------------------------------------------------------------------------------|
-| R3  | A registered User must be able to login to the system using his credentials.            |
-| R6  | The system must be able to permit a User to line-up for an accessible Store.            |
+| G4  | Allow a User to request a digital ticket to enter a specific Store as soon as possible.   |
+|:----|:------------------------------------------------------------------------------------------|
+| R3  | A registered User must be able to login to the system using his credentials.              |
+| R6  | The system must be able to permit a User to line-up for an accessible Store.              |
 | R7  | The system must be able to issue a digital ticket to a User if the process is successful. |
-| D5  | The queue is never full.                                                                | 
+| D5  | The queue is never full.                                                                  |
+<br> 
 
 #### 3.2.5. Allow a User to request a digital ticket to enter a specific Store at a chosen time.
 
-| G5  | Allow a User to request a digital ticket to enter a specific Store at a chosen time.    |
-|:----|:----------------------------------------------------------------------------------------|
-| R3  | A registered User must be able to login to the system using his credentials.            |
+| G5  | Allow a User to request a digital ticket to enter a specific Store at a chosen time.      |
+|:----|:------------------------------------------------------------------------------------------|
+| R3  | A registered User must be able to login to the system using his credentials.              |
 | R7  | The system must be able to issue a digital ticket to a User if the process is successful. |
-| R8  | The system must be able to permit a User to book a visit for an accessible Store.       |
-| D6  | The number of bookings in a time frame cannot exceed the maximum capacity of the store. |
+| R8  | The system must be able to permit a User to book a visit for an accessible Store.         |
+| D6  | The number of bookings in a time frame cannot exceed the maximum capacity of the store.   |
+<br>
+
+#### 3.2.6. Allow a Store Manager to issue a physical ticket.
+
+| G6  | Allow a Store Manager to issue a physical ticket.                                          |
+|:----|:-------------------------------------------------------------------------------------------|
+| R9  | A Store Manager must be able to login to the system using the Store credentials.           |
+| R10 | A Store Manager must be able to add to the queue a Customer that's not registered to CLup. |
+| R11 | A Store Manager must be able to physically print a ticket.                                 |
+| D5  | The queue is never full.                                                                   |
+<br>
+
+#### 3.2.7. Allow a Store Manager to inspect a ticket at the entrance.
+
+| G7  | Allow a Store Manager to inspect a ticket at the entrance.                                 |
+|:----|:-------------------------------------------------------------------------------------------|
+| R9  | A Store Manager must be able to login to the system using the Store credentials.           |
+| R12 | A Store Manager must be able to validate a scanned ticket.                                 |
+| R13 | A Store Manager must be able to see the remaining capacity of the Store.                   |
+| D7  | When a ticket is inspected at the entrance of a Store, its remaining capacity is decreased.|
+| D9  | A User with a valid reservation always takes precedence over Customers in the queue.       |
+<br>
+
+#### 3.2.8. Allow a Store Manager to inspect a ticket at the exit.
+
+| G8  | Allow a Store Manager to inspect a ticket at the exit.                                     |
+|:----|:-------------------------------------------------------------------------------------------|
+| R9  | A Store Manager must be able to login to the system using the Store credentials.           |
+| R12 | A Store Manager must be able to validate a scanned ticket.                                 |
+| D8  | When a ticket is inspected at the exit of a Store, its remaining capacity is increased.    |
+<br>
+
+### 3.3. Non-Functional Rquirements
+
+#### 3.3.1 Performance
+The system must be able to handle a great number of concurrent requests especially during peak times (typically lunch and dinner). We are planning to launch this service in Milan (1.35 million people), so we can estimate, in the first year, approximately 200.000 users with an average of 30.000 reservations per day.
+
+### 3.3.2. Reliability
+The system should guarantee a 24/7 service. The presence of CLup in the everyday life enforces security rules aimed to prevent the spreading of the pandemic. Almost no downtime is admissible.
+
+### 3.3.3. Security
+The CLup application is not involved in any payment process, so no payment informations are stored nor used. Data security is no primary concern.
+
+### 3.3.4. Scalability
+The system has to be built considering the future, guaranteeing an high level of scalability both on Store numbers and available cities.
+
+### 3.3.5. Accuracy
+The informations provided by CLup have to be as precise as possible. Both the position on the map and the remaining capacity of a Store should reflect the effective ones.
 
 ## 5. Effort Spent
 
 ### Ferrara Alessandro
-| Topic                                   |      Hours |
-|:----------------------------------------|-----------:|
-| Discussion on the first part            |       1.5h |
-| First and second part                   |       2.5h |
-| Second and third part                   |       2.5h |
-<br>
-
 ### Fratus Lorenzo
 | Topic                                   |      Hours |
 |:----------------------------------------|-----------:|
 | Discussion on the first part            |       1.5h |
 | First and second part                   |       2.5h |
 | Second and third part                   |       2.5h |
+| Third part                              |       2.0h |
 <br>
 
 ## 6. References
 - Slides
+- [Decreto Ministeriale](https://www.gazzettaufficiale.it/atto/vediPermalink?atto.dataPubblicazioneGazzetta=2020-11-09&atto.codiceRedazionale=20G00170&tipoSerie=serie_generale&tipoVigenza=originario&tipoProvvedimento=*)
