@@ -4,8 +4,8 @@
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.0.5
-#### Date: 25/11/2020
+#### Version: 0.0.6
+#### Date: 27/11/2020
 #### Professor: Elisabetta Di Nitto
 <br>
 
@@ -96,14 +96,14 @@ The developements of Customers Line-up was necessary to enforce crowd-avoiding r
 | 1.0     | XX Nov 2020 | First version                        |
 
 ### E. Reference documents
-TODO
+- Assignment document A.Y. 2020/2021 ("Requirement Engineering and Design Project: goal, schedule, and rules")
 
 ### F. Document structure
 
 - [Requirements Analysis and Specification Document](#requirements-analysis-and-specification-document)
   - [Authors:](#authors)
-      - [Version: 0.0.5](#version-005)
-      - [Date: 25/11/2020](#date-25112020)
+      - [Version: 0.0.6](#version-006)
+      - [Date: 27/11/2020](#date-27112020)
       - [Professor: Elisabetta Di Nitto](#professor-elisabetta-di-nitto)
   - [1. Introduction](#1-introduction)
     - [A. Purpose](#a-purpose)
@@ -120,6 +120,13 @@ TODO
     - [F. Document structure](#f-document-structure)
   - [2 Overall description](#2-overall-description)
     - [A. Product perspective](#a-product-perspective)
+      - [A.1. Scenarios](#a1-scenarios)
+        - [A.1.1. Scenario 1](#a11-scenario-1)
+        - [A.1.2. Scenario 2](#a12-scenario-2)
+        - [A.1.3. Scenario 3](#a13-scenario-3)
+        - [A.1.4. Scenario 4](#a14-scenario-4)
+        - [A.1.5. Scenario 5](#a15-scenario-5)
+        - [A.1.6. Scenario 6](#a16-scenario-6)
     - [B. Product functions](#b-product-functions)
       - [B.1. Digital line-up](#b1-digital-line-up)
       - [B.2 Physical line-up](#b2-physical-line-up)
@@ -129,24 +136,35 @@ TODO
     - [D. Assumptions, dependecies and constraints](#d-assumptions-dependecies-and-constraints)
       - [D.1. Text assumptions](#d1-text-assumptions)
       - [D.2. Domain assumptions](#d2-domain-assumptions)
-      - [D.3. Dependencies](#d3-dependencies)
-      - [D.4. Constraints](#d4-constraints)
   - [3. Secific requirements](#3-secific-requirements)
     - [A. External interface requirements](#a-external-interface-requirements)
       - [A.1. User interfaces](#a1-user-interfaces)
       - [A.2. Hardware interfaces](#a2-hardware-interfaces)
       - [A.3. Software interfaces](#a3-software-interfaces)
       - [A.4. Communication interfaces](#a4-communication-interfaces)
-    - [B. Functional rquirements](#b-functional-rquirements)
-      - [B.1. Allow a Visitor to become registered User.](#b1-allow-a-visitor-to-become-registered-user)
-      - [B.2. Allow a Store Manager to add a store to the system.](#b2-allow-a-store-manager-to-add-a-store-to-the-system)
-      - [B.3. Allow a User to find locations of accessible stores.](#b3-allow-a-user-to-find-locations-of-accessible-stores)
-      - [B.4. Allow a User to request a digital ticket to enter a specific store as soon as possible.](#b4-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-as-soon-as-possible)
-      - [B.5. Allow a User to request a digital ticket to enter a specific store at a chosen time.](#b5-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-at-a-chosen-time)
-      - [B.6. Allow a User to delete a previously requested digital ticket before the inspection.](#b6-allow-a-user-to-delete-a-previously-requested-digital-ticket-before-the-inspection)
-      - [B.7. Allow a Store Manager to issue a physical ticket.](#b7-allow-a-store-manager-to-issue-a-physical-ticket)
-      - [B.8. Allow a Store Manager to inspect a ticket at the entrance.](#b8-allow-a-store-manager-to-inspect-a-ticket-at-the-entrance)
-      - [B.9. Allow a Store Manager to inspect a ticket at the exit.](#b9-allow-a-store-manager-to-inspect-a-ticket-at-the-exit)
+    - [B. Functional requirements](#b-functional-requirements)
+      - [B.1. Use cases](#b1-use-cases)
+        - [B.1.1. Visitor registration](#b11-visitor-registration)
+        - [B.1.2. User login](#b12-user-login)
+        - [B.1.3. User join a store queue](#b13-user-join-a-store-queue)
+        - [B.1.4. User leaves a store queue](#b14-user-leaves-a-store-queue)
+        - [B.1.5. User books a visit to the store](#b15-user-books-a-visit-to-the-store)
+        - [B.1.6. User cancels a reservation](#b16-user-cancels-a-reservation)
+        - [B.1.7. Store Manager prints a physical ticket](#b17-store-manager-prints-a-physical-ticket)
+        - [B.1.8. Store Manager scans a ticket at the entrance](#b18-store-manager-scans-a-ticket-at-the-entrance)
+        - [B.1.9. Store Manager scans a ticket at the exit](#b19-store-manager-scans-a-ticket-at-the-exit)
+      - [B.2. Use case diagrams](#b2-use-case-diagrams)
+      - [B.3. Sequence diagrams](#b3-sequence-diagrams)
+      - [B.4. Mapping on requirements](#b4-mapping-on-requirements)
+      - [B.4.1. Allow a Visitor to become registered User.](#b41-allow-a-visitor-to-become-registered-user)
+      - [B.4.2. Allow a Store Manager to add a store to the system.](#b42-allow-a-store-manager-to-add-a-store-to-the-system)
+      - [B.4.3. Allow a User to find locations of accessible stores.](#b43-allow-a-user-to-find-locations-of-accessible-stores)
+      - [B.4.4. Allow a User to request a digital ticket to enter a specific store as soon as possible.](#b44-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-as-soon-as-possible)
+      - [B.4.5. Allow a User to request a digital ticket to enter a specific store at a chosen time.](#b45-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-at-a-chosen-time)
+      - [B.4.6. Allow a User to delete a previously requested digital ticket before the inspection.](#b46-allow-a-user-to-delete-a-previously-requested-digital-ticket-before-the-inspection)
+      - [B.4.7. Allow a Store Manager to issue a physical ticket.](#b47-allow-a-store-manager-to-issue-a-physical-ticket)
+      - [B.4.8. Allow a Store Manager to inspect a ticket at the entrance.](#b48-allow-a-store-manager-to-inspect-a-ticket-at-the-entrance)
+      - [B.4.9. Allow a Store Manager to inspect a ticket at the exit.](#b49-allow-a-store-manager-to-inspect-a-ticket-at-the-exit)
     - [C. Performance requirements](#c-performance-requirements)
     - [D. Design constraints](#d-design-constraints)
       - [D.1. Standards compliance](#d1-standards-compliance)
@@ -159,16 +177,42 @@ TODO
     - [E.4. Portability](#e4-portability)
   - [4. Formal analysis using alloy](#4-formal-analysis-using-alloy)
   - [5. Effort spent](#5-effort-spent)
-    - [Ferrara Alessandro](#ferrara-alessandro)
-    - [Fratus Lorenzo](#fratus-lorenzo)
+    - [Pair programming](#pair-programming)
   - [6. References](#6-references)
 
 ## 2 Overall description
 
 ### A. Product perspective
+
+#### A.1. Scenarios
+
+##### A.1.1. Scenario 1
+Jonathan looks at his watch, it's already half past eleven and his pantry is almost empty, it will be better to fill it quickly!
+He takes his smartphone and, after logging into CLup, he is able to enter the queue of his neighborhood shop while getting dressed.
+The waiting time is approximately 15 minutes, just enough to put on his shoes and approach the supermarket.
+Arrived at the store, Jonathan is asked for his ticket, so he unlocks his phone so that the store manager can scan it and let him in.
+
+##### A.1.2. Scenario 2
+Clarice is an old lady and she's not very good with technology. Her phone doesn't have a data plan because she doesn't surf the web much frequently. She must go shopping to buy groceries but her phone is unable to connect to the CLup applicative. One she has reached the store Clarice ask the Store Manager for a physical ticket. The Store Manager prints the ticket and Clarice can now wait her turn without worring about overcrowding the store.
+
+##### A.1.3. Scenario 3
+It's 8am and Beatrix is working. She has just been informed that her husband has been discharged from the hospital after being hospitalized for COVID. She wants to have a nice dinner but does't have the necessary food at home. Knowing that the lunch break is the only free time she has, she decides to book a visit for that time. Beatrix opens up the CLup application and logs in, then she proceeds to select the nearest store and book a visit with the prefered time. Happy dinner Beatrix and remeber to wear a face-mask!
+
+##### A.1.4. Scenario 4
+Like every Saturday, Kevin doesn't work today, cool! He has all morning for himself, aside for that little task. 
+His wife Karen has booked a visit to the store at 10 o'clock but she is at work so it's Kevin's turn to run errands.
+He is approaching the supermarket when his car suddenly stops working, he is still far away from his destination and will never arrive in time, so he logs into his wife CLup account and cancels her reservation, he will take care of it after having the car repaired.
+
+##### A.1.5. Scenario 5
+The plague is spreading non-stop and the intensive care units of the hospitals are full. Tomorrow the new DPCM signed by the Prime Minister comes into force. The new regulations impose that every grocery store must halve the original maximum capacity. Chad, the store manager, must once again make his store compliant to the new regulations. He opens up CLup and after logging in, selects his store and edit in the new capaciy. No overcrowding under his watch!
+
+##### A.1.6. Scenario 6
+Taking a look outside the shop, Constance realizes that the queue has become absurdly long, managing the customers is getting harder since the beginning of the emergency. Noticing the frightened face of his boss, Lucas decides to recommend her the application that he has heard of in the last few days: CLup. 
+Constance welcomes his advice with enthusiasm and immediately downloads the app to register her store. She has already all the equipment required so the only thing left to do is to thank Lucas for saving the day, perhaps with a salary increase!
+
+
 TODO
-SCENARIOS
-FURTHER DETAILS ON SHARED PHENOMENA
+FURTHER DETAILS ON SHARED PHENOMENA ?
 CLASS DIAGRAMS
 STATECHARTS
 
@@ -213,8 +257,7 @@ In order to better clarify the presentation and avoid any ambiguities we decided
 - A store is accessible only during the opening time.
 - A User can be present at most in one queue at any time (for any store).
 - A User can book as many consecutive time slots as he wants in the same store.
-- A User cannot have reservations in multiple stores during the same time slots.
-- A User cannot be in a queue during any of the booked time slot (if present).
+- A User cannot have multiple reservations the same time slots.
 - A Customer can enter a store only when it is accessible.
 - When a Customer's turn in the queue arrives, he has to enter the store in the short term.
 - A User with a reservation can enter the store at any time during the booked time slots.
@@ -237,12 +280,6 @@ In order to better clarify the presentation and avoid any ambiguities we decided
 | D9  | A User with a valid reservation always takes precedence over Customers in the queue.        |
 | D10 | When a User deletes a reservation, the acquired time slots are released.                    |
 <br>
-
-#### D.3. Dependencies
-TODO
-
-#### D.4. Constraints
-TODO
 
 ## 3. Secific requirements
 
@@ -280,13 +317,112 @@ When the User has queued-up or has booked for a visit, can interrupt the connect
 
 A Store Manager always needs a stable internet connection in order to manage the flow of Customers.
 
-### B. Functional rquirements
-TODO
-USE CASES
-USE CASE DIAGRAMS
-SEQUENCE/ACTIVITY DIAGRAMS
+### B. Functional requirements
 
-#### B.1. Allow a Visitor to become registered User.
+#### B.1. Use cases
+
+##### B.1.1. Visitor registration
+
+| Actors            | Visitor                                                                      |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G1                                                                           |
+| Input conditions  | The Visitor is already on the home page.                                     |
+| Events flow       | 1. The Visitor clicks on the "Sign Up" button to start the registration process.<br>2. The Visitor inserts his information in the mandatory fields.<br>3. The visitor clicks the "Register" button.<br>4. The system saves the data and redirects the Visitor to the login page. |
+| Output conditions | The Visitor successfully ends the registration process and becomes a new User. From now on he can log in to the application providing his credentials and use CLup. |
+| Exceptions        | 1. The Visitor is already a User.<br>2. The Visitor inserts not valid informations in one or more mandatory fields.<br>3.The Visitor chooses an email that has been associated with another user.<br><br>All exceptions are handled notifying the issue to the Visitor and taking back the event flow to the point 2. |
+
+##### B.1.2. User login
+
+| Actors            | User                                                                         |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G1, G3                                                                       |
+| Input conditions  | The User is already on the home page.                                        |
+| Events flow       | 1. The User clicks on the "Sign In" button to start the login process.<br>2. The User inserts his email and password into the corresponding fields.<br>3. The User clicks the "Login" button.<br>4. The User is redirected to the map and the system searches for accessible stores nearby automatically. |
+| Output conditions | The User successfully logs in. From now on he can use the CLup services. |
+| Exceptions        | 1. The email is not valid.<br>2. The password is not valid.<br><br>All exceptions are handled notifying the issue to the User and taking back the event flow to the point 2. |
+
+##### B.1.3. User join a store queue
+
+| Actors            | User                                                                         |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G3, G4                                                                       |
+| Input conditions  | The User is already logged into the system and in the map.                   |
+| Events flow       | 1. The User looks at the map that shows accessible stores.<br>2. The User chooses one of the available stores.<br>3. The User clicks on the "Line Up" button on the store page.<br>4. The system adds the User to the store queue, generates a ticket and redirects him to the queue page. |
+| Output conditions | The User is successfully in the store queue. |
+| Exceptions        | 1. The User is already in a queue.<br><br>All exceptions are handled notifying the issue to the User and redirecting him to the map. |
+
+##### B.1.4. User leaves a store queue
+
+| Actors            | User                                                                         |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G6                                                                           |
+| Input conditions  | The User is already logged into the system and in the queue page.            |
+| Events flow       | 1. The User clicks on the "Leave the Queue" button.<br>2. The system removes the User from the store queue and redirects the User to the map. |
+| Output conditions | The User is no longer in the store queue. |
+| Exceptions        | 1. The User clicks on the "Leave the Queue" button but the ticket has already been inspected.<br><br>All exceptions are handled notifying the issue to the User and redirecting him to the queue page. |
+
+##### B.1.5. User books a visit to the store
+
+| Actors            | User                                                                         |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G3, G5                                                                       |
+| Input conditions  | The User is already logged into the system and in the map.                   |
+| Events flow       | 1. The User looks at the map that shows accessible stores.<br>2. The User chooses one of the available stores.<br>3. The User clicks on the "Book a Visit" button on the store page.<br>4. The User selects one or more avaiable time frames.<br>5. The system adds the User to the store reservations, generates a ticket and redirects him to the reservations page. |
+| Output conditions | The User is booked for the store visit.                                      |
+| Exceptions        | 1. The User has already a reservation during one of the selected time slots.<br><br>All exceptions are handled notifying the issue to the User and taking back the event flow to the point 4. |
+
+##### B.1.6. User cancels a reservation
+
+| Actors            | User                                                                         |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G6                                                                           |
+| Input conditions  | The User is already logged into the system and in the reservations page.     |
+| Events flow       | 1. The User looks at the list of active reservations.<br>2. The User selects the booking he wants to cancel.<br>3. The User clicks on the "Cancel Booking" button.<br>2. The system removes the User's booking and redirects the User to the reservations page. |
+| Output conditions | The User has no longer a reservation for those time slots. |
+| Exceptions        | 1. The User clicks on the "Cancel Booking" button but the ticket has already been inspected.<br><br>All exceptions are handled notifying the issue to the User and redirecting him to the reservations page. |
+
+##### B.1.7. Store Manager prints a physical ticket
+
+| Actors            | Store Manager                                                                |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G7                                                                           |
+| Input conditions  | The Store Manager is already logged into the system and in the home page.    |
+| Events flow       | 1. The Store Manager clicks on the "Issue Ticket" button.<br>2. The system adds a mock User to the store queue, generates a ticket and redirects the Store Manager to the ticket page. |
+| Output conditions | The Store Manager is able to print the newly issued ticket. |
+| Exceptions        | _None_ |
+| Special Requirements | The Store Manager's device must be connected to a printer. |
+
+##### B.1.8. Store Manager scans a ticket at the entrance
+
+| Actors            | Store Manager                                                                |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G8                                                                           |
+| Input conditions  | The Store Manager is already logged into the system and in the home page.    |
+| Events flow       | 1. The Store Manager clicks on the "Scan Ticket" button.<br>2. The Store Manager uses the device camera to scan the Customer's ticket.<br>3. The system removes the corresponding User from the store queue or the list of reservations.<br>4. The system decreases the store capacity and redirects the Store Manager to the home page. |
+| Output conditions | The Store Manager can let the Customer into the store. |
+| Exceptions        | 1. The store has reached its maximum capacity and cannot allow any other Customer inside.<br>2. The ticket is invalid.<br>All exceptions are handled notifying the issue to the Store Manager and redirecting him to the home page. |
+| Special Requirements | The Store Manager's device must be connected to a camera. |
+
+##### B.1.9. Store Manager scans a ticket at the exit
+
+| Actors            | Store Manager                                                                |
+|-------------------|------------------------------------------------------------------------------|
+| Goals             | G9                                                                           |
+| Input conditions  | The Store Manager is already logged into the system and in the home page.    |
+| Events flow       | 1. The Store Manager clicks on the "Scan Ticket" button.<br>2. The Store Manager uses the device camera to scan the Customer's ticket.<br>3. The system removes the ticket from the User's profile.<br>4. The system increases the store capacity and redirects the Store Manager to the home page. |
+| Output conditions | The Store Manager can let the Customer into the store. |
+| Exceptions        | 1. The ticket was never scanned at the entrance.<br>2. The ticket is invalid.<br>All exceptions are handled notifying the issue to the Store Manager and redirecting him to the home page. |
+| Special Requirements | The Store Manager's device must be connected to a camera. |
+
+#### B.2. Use case diagrams
+TODO
+
+#### B.3. Sequence diagrams
+TODO
+
+#### B.4. Mapping on requirements
+
+#### B.4.1. Allow a Visitor to become registered User.
 
 | G1  | Allow a Visitor to become registered User after providing credentials.                     |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -294,7 +430,7 @@ SEQUENCE/ACTIVITY DIAGRAMS
 | D1  | The provided email during the registration is valid and unique.                            |
 <br>
 
-#### B.2. Allow a Store Manager to add a store to the system.
+#### B.4.2. Allow a Store Manager to add a store to the system.
 
 | G2  | Allow a Store Manager to add a store to the system after providing credentials.            |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -303,7 +439,7 @@ SEQUENCE/ACTIVITY DIAGRAMS
 | D2  | The information provided by the Store Manager are always correct.                          |
 <br>
 
-#### B.3. Allow a User to find locations of accessible stores.
+#### B.4.3. Allow a User to find locations of accessible stores.
 
 | G3  | Allow a User to find locations of accessible stores.                                       |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -314,7 +450,7 @@ SEQUENCE/ACTIVITY DIAGRAMS
 | D4  | The GPS positions are always correct.                                                      | 
 <br>
 
-#### B.4. Allow a User to request a digital ticket to enter a specific store as soon as possible.
+#### B.4.4. Allow a User to request a digital ticket to enter a specific store as soon as possible.
 
 | G4  | Allow a User to request a digital ticket to enter a specific store as soon as possible.    |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -324,7 +460,7 @@ SEQUENCE/ACTIVITY DIAGRAMS
 | D5  | The queue is never full.                                                                   |
 <br> 
 
-#### B.5. Allow a User to request a digital ticket to enter a specific store at a chosen time.
+#### B.4.5. Allow a User to request a digital ticket to enter a specific store at a chosen time.
 
 | G5  | Allow a User to request a digital ticket to enter a specific store at a chosen time.       |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -334,7 +470,7 @@ SEQUENCE/ACTIVITY DIAGRAMS
 | D6  | The number of bookings in a time slot cannot exceed three-quarters of the store capacity.  |
 <br>
 
-#### B.6. Allow a User to delete a previously requested digital ticket before the inspection.
+#### B.4.6. Allow a User to delete a previously requested digital ticket before the inspection.
 
 | G6  | Allow a User to delete a previously requested digital ticket before the inspection.        |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -343,7 +479,7 @@ SEQUENCE/ACTIVITY DIAGRAMS
 | D10 | When a User deletes a reservation, the acquired time slots are released.                   |
 <br>
 
-#### B.7. Allow a Store Manager to issue a physical ticket.
+#### B.4.7. Allow a Store Manager to issue a physical ticket.
 
 | G7  | Allow a Store Manager to issue a physical ticket.                                          |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -353,7 +489,7 @@ SEQUENCE/ACTIVITY DIAGRAMS
 | D5  | The queue is never full.                                                                   |
 <br>
 
-#### B.8. Allow a Store Manager to inspect a ticket at the entrance.
+#### B.4.8. Allow a Store Manager to inspect a ticket at the entrance.
 
 | G8  | Allow a Store Manager to inspect a ticket at the entrance.                                 |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -364,7 +500,7 @@ SEQUENCE/ACTIVITY DIAGRAMS
 | D9  | A User with a valid reservation always takes precedence over Customers in the queue.       |
 <br>
 
-#### B.9. Allow a Store Manager to inspect a ticket at the exit.
+#### B.4.9. Allow a Store Manager to inspect a ticket at the exit.
 
 | G9  | Allow a Store Manager to inspect a ticket at the exit.                                     |
 |:----|:-------------------------------------------------------------------------------------------|
@@ -420,8 +556,7 @@ TODO
 
 ## 5. Effort spent
 
-### Ferrara Alessandro
-### Fratus Lorenzo
+### Pair programming
 
 | Topic                                                            |      Hours |
 |:-----------------------------------------------------------------|-----------:|
@@ -430,6 +565,7 @@ TODO
 | Second and third part                                            |       2.5h |
 | Domain assumption, functional requirements and mapping           |       2.0h |
 | Structure adaptation, edit on previous parts, more on third part |       2.5h |
+| Scenarios and use cases                                          |       3.0h |
 <br>
 
 ## 6. References
