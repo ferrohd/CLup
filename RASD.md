@@ -4,8 +4,8 @@
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.0.6
-#### Date: 27/11/2020
+#### Version: 0.0.7
+#### Date: 05/12/2020
 #### Professor: Elisabetta Di Nitto
 <br>
 
@@ -19,67 +19,80 @@ It also includes the research about the interfaces, functional and non-functiona
 
 Finally, to understand better the development of the document, it contains the history that describes how it is made, with the references used and the description of its structure.
 
-This document has the purpose to guide the developer in the realization of the software called Customers Line-up.
+This document has the purpose to guide the developers in the realization of the software called Customers Line-up.
 
 ### B. Scope
-TODO
-SHARED PHENOMENA?
 
 #### B.1. Description of the given problem
 
-The software wants to give users the possibility to have a safer shopping experience in supermarkets avoiding crowdings inside and outside the stores.
+The software wants to foster a safe shopping experience by providing a customer flow control system. This system should allow the users to avoid crowds both inside and outside the stores.
 Customers Line-up offers two main functionalities:
 
-- **Basic service**: the customers can “line up” from their home, and then wait until their turn is coming to approach the store. In addition, the application can be used to generate QR codes that are scanned upon entering the store, thus allowing store managers to monitor entrances.
+- **Join a queue**: the customers can “line up” from their home, and then wait until their turn is coming to approach the store. In addition, the application is used to generate tickets that are scanned upon entering and leaving the store, thus allowing store managers to monitor the flow of customers.
 
-- **Advanced function 1**: the customers are able to book a visit at the store selecting one or more consecutive time slots. In this way they are able to completely avoid the waiting time at the entrance of the store.
+- **Book a visit**: the customers are able to book a visit at the store selecting one or more consecutive time slots. In this way they are able to avoid any waiting time at the entrance of the store. For long-term customers, the system is able to propose the number of time slots based on an analysis of the previous visits.
 
 Clearly, for the application to effectively work in practice, all customers should use it to access the store, and this implies that:
 
 - The software should be very simple to use to adapt to a wide range of users, therefore it must include all demographics.
-
 - The system should provide customers with a reasonably precise estimation of the waiting time and should be able to manage situations where a customer approaches the store with an accettable delay.
-
-- The stores should still use fallback options for those people who do not have access to the required tecnology, for example handing out physical tickets on the spot.
+- The stores should still provide fallback options for those people who do not have access to the required tecnology, for example handing out physical tickets on the spot.
 
 #### B.2. Current system
 
-The developements of Customers Line-up was necessary to enforce crowd-avoiding rules imposed by the coronavirus emergency, for this reason there is no current system to integrate with and to consider in our design process.
+Customers Line-up is a new service that is approaching the market for the first time.
+The development of the system starts from scratch, for this reason no legacy system has been considered in our process.
 
 #### B.3. Goals
 
-| GX | Description of the goal                                                                 |
-|:---|:----------------------------------------------------------------------------------------|
-| G1 | Allow a Visitor to become registered User after providing credentials.                  |
-| G2 | Allow a Store Manager to add a Store to the system after providing credentials.         |
-| G3 | Allow a User to find locations of accessible Stores.                                    |
-| G4 | Allow a User to request a digital ticket to enter a specific Store as soon as possible. |
-| G5 | Allow a User to request a digital ticket to enter a specific Store at a chosen time.    |
-| G6 | Allow a User to delete a previously requested digital ticket before the inspection.     |
-| G7 | Allow a Store Manager to issue a physical ticket.                                       |
-| G8 | Allow a Store Manager to inspect a ticket at the entrance.                              |
-| G9 | Allow a Store Manager to inspect a ticket at the exit.                                  |
+| GX | Description of the goal |
+|----|:------------------------|
+| G1 | Allow a clupper to join a store queue without having to physically approach the store |
+| G2 | Allow a guest to join a store queue by requesting it to the store manager |
+| G3 | Allow a clupper to leave a store queue before entering |
+| G4 | Allow a clupper to book a visit to the store |
+| G5 | Allow a clupper to cancel a reservation to a store before entering |
+| G6 | Allow a clupper to approach at the right time the store he has a ticket for |
+| G7 | Allow a store manager to have an overview of the store |
+| G8 | Allow a store manager to regulate the entrances to the store |
+| G9 | Allow a store manager to regulate the exits from the store |
 <br>
+
+#### B.4. Discarded Features
+
+The assignment document contains an additional feature regarding the function called "Book a visit", we report here an excerpt:
+
+*"The application might also allow users to indicate, if not the exact list of items that they intend to purchase, the categories of items that they intend to buy. This would allow the application to plan visits in a finer way..."*
+
+After careful analysis, we decided to not include it in this document for the following reasons:
+- This software is intended to be used in any store, to implement this functionality we should ask each store manager for the list of available products and their arrangement inside the building.
+- This functionality can have a positive influence on achieving the main goal of the system only if every customer is willing to use it. This result is nearly impossible to obtain, just think of the customers who do not have access to the required technologies or those who prefer not to communicate their purchase intentions.
+- Even if every customer used this functionality, the problem of avoiding crowds would recur in the common areas of the store (e.g. checkout).
+- The presence of this feature may reduce the interest of stores in using our software. The customer may feel compelled to purchase only the previously declared products and this behavior would be against any supermarket marketing strategy.
 
 ### C. Definitions, acronyms and abbreviations
 
 #### C.1. Definitions
 
-- **Customer**: person that wants to visit a store, can be a registered User.
-- **Ticket**: identifies the Customer and guarantees him the access to the Store.         
-- **Digital ticket**: ticket requested by a User, stored on own device.         
-- **Physical ticket**: ticket issued by a Store Manager in printed form.
-- **Booking/Reservation**: digital ticket owned by a User to enter a store for one or more specific time slots.
-- **Ticket inspection**: action of checking the validity of the ticket.
-- **Store**: physical buisiness that makes use of CLup.
-- **Store capacity**: maximum number of Customers allowed inside a store, currently corresponds to half of the capacity of the building.
-- **Queue**: imaginary list of Customers, bound to a store, ordered by their ticket time of issue, it does not contain Users with a reservation.
-- **Time Slot**: a half-hour time window.
+- **User**: person which is correctly registered to the system, it abstracts the concepts of clupper and store manager.
+- **Customer**: person which wants to enter a store, it abstracts the concepts of clupper and guest.
+- **Clupper**: person (both user and customer) which is able to use the basic services offered by CLup (join a queue and book a visit).
+- **Guest**: person (customer) which is not registered to the system or that is currently unable to use the application, and therefore cannot take advantage of the services offered by CLup.
+- **Store manager**: person (user) which is able to use the managerial services offered by CLup.
+- **Store**: physical buisiness registered to the system (by registering his store manager).
+- **Store capacity**: maximum number of customers allowed inside a store (according to the regulations currently in force it corresponds to half of the capacity of the building).
+- **Ticket**: QR code issued to a user as a receipt for queuing or booking at a store. It can be digital or physical and grants the access to the store based on the transaction that generated it.
+- **Valid ticket**: a ticket is valid if the store contained in it matches the one of the store manager which scanned it and:
+  - the ticket is the first in the store queue, if the ticket has been generated by a "Join the queue" function;
+  - the time slots linked to the ticket include the current timestamp, if the ticket has been generated by a "Book a visit" function;
+- **Booking/reservation**: digital ticket owned by a clupper to enter a store for one or more specific time slots.
+- **Queue**: imaginary list of tickets, bound to a store, ordered by their time of issue, it does not contain tickets of customers with a reservation.
+- **Time slot**: a half-hour time window.
+- **Free time slot**: a time slot is considered free if the store is open during that period and the number of reservations already acquired over that slot does not exceed a quarter of the capacity of the store.
 
 #### C.2. Acronyms
 
-- **RASD**: Rquirements Analysis and Specification Document.
-- **API**: Application Programming Languages.
+- **RASD**: Requirements Analysis and Specification Document.
 - **GPS**: Global Positioning System.
 
 #### C.3. Abbreviations
@@ -185,6 +198,10 @@ The developements of Customers Line-up was necessary to enforce crowd-avoiding r
 ### A. Product perspective
 
 #### A.1. Scenarios
+1: CLUPPER REGISTRATION, LOGIN, BOOK VISIT, SEE DETAILS, CANCEL VISIT
+2: CLUPPER LOGIN, JOIN QUEUE, SEE DETAILS, SCAN EXIT, STORE OVERVIEW, SCAN ENTRANCE
+3: SM REGISTRATION, LOGIN, STORE OVERVIEW
+4: GUEST APPROACH SM, ADD TO QUEUE, PRINT TICKET
 
 ##### A.1.1. Scenario 1
 Jonathan looks at his watch, it's already half past eleven and his pantry is almost empty, it will be better to fill it quickly!
@@ -210,38 +227,64 @@ The plague is spreading non-stop and the intensive care units of the hospitals a
 Taking a look outside the shop, Constance realizes that the queue has become absurdly long, managing the customers is getting harder since the beginning of the emergency. Noticing the frightened face of his boss, Lucas decides to recommend her the application that he has heard of in the last few days: CLup. 
 Constance welcomes his advice with enthusiasm and immediately downloads the app to register her store. She has already all the equipment required so the only thing left to do is to thank Lucas for saving the day, perhaps with a salary increase!
 
-
 TODO
-FURTHER DETAILS ON SHARED PHENOMENA ?
 CLASS DIAGRAMS
 STATECHARTS
 
 ### B. Product functions
 
-#### B.1. Digital line-up
+#### B.1. Join the queue (digital) - Basic service
 
-This is the basic function of this system that allows the User to line-up for the desired store using any device. Once the request is received, a digital ticket is issued and the User is added to the store queue. While waiting for his turn, the User is able to see the number of Customers before him and an estimation of the waiting time.
-At any time the User can leave the queue for a store, this results in the deletion of his ticket.
+This function allows a clupper to line up for the desired store without having to immediately reach the store.
+After selecting a supermarket from the map (searching around his GPS location or any address) the clupper will be able to see its details (name, address, number of customers already in line) and to join the queue.
+The system will provide the clupper with a digital ticket, which he will be able to see directly from the application.
+Finally, the clupper is able to leave the queue at any time before entering the store, this results in the deletion of his ticket.
 
-#### B.2 Physical line-up
+#### B.2. Book a visit - Basic service
 
-This function is almost identycal to the "Digital Line-up". In fact, the Physical Line-up allows the Customers who don't have access to the required techonolgy to queue up. For those who can't acquire a digital ticket there is the possibility to request a physical one at the Store Manager granting them to queue-up among the other Customers.
+This function allows a clupper to book a visit to the desired store, thus avoiding the queuing process.
+After selecting a supermarket from the map (searching around his GPS location or any address) the clupper will be able to see its details (name, address, number of customers already in line) and to add a reservation.
+The system will request the clupper to select one or more consecutive time slots and will provide him with a digital ticket, which he will be able to see directly from the application.
+Finally, the clupper is able to cancel his reservation at any time before entering the store, this results in the deletion of his ticket and the release of the acquired time slots.
 
-#### B.3. Book a visit
+#### B.3. Join the queue (physical) - Managerial service
 
-Unlike the previous functions, the User is able to book a visit to the store, avoiding the queue.
-After selecting the time slot he prefers, he is able to plan the visit to help the system manage the total number of Customers in the Store. As in the "Digital Line-up" function the user is provided a digital ticket that can be deleted at anytime, therefore canceling the booking.
+This function is a fallback of the first one, indeed, it allows the store manager to insert into the queue any guest requesting it.
+The system will provide the store manager with a digital ticket, which he will have to convert into physical (e.g. by printing it) and hand out to the guest.
 
-#### B.4. Ticket inspection
+#### B.4. Store overview - Managerial service
 
-This function is reserved to Store Managers and cannot be used by Users.
-The Store Manager will inspect a ticket before letting a Customer in and out the store. This allows him to check that the ticket is valid and to manage the number of Customers currently in the store.
+This function allows a store manager to have a live overview of the store.
+The system will provide the store manager with the number of customers inside the store (compared to the capacity), those in the store queue and those with a reservation for the current time slot (that have not entered the store yet).
+This data should allow him to regulate the flow of customers.
+
+#### B.5. Ticket scan - Managerial service
+
+This function allows a store manager to scan (and validate) a customer's ticket (both at the entrance and the exit of the store).
+This has the double purpose of updating the data contained into the store overview, and make sure that the flow of customers corresponds to that expected by the system (no one should be able to enter before his turn).
 
 ### C. User characteristics
 
-- **Visitor**: person using CLup that is not yet registered to the system. 
-- **Registered User/User**: person registered to the CLup system, his main objective is enter a store to buy groceries while avoiding the risk of crowdings.
-- **Store Manager**: person working for a store (at any level of hierarchy), his main objective are to manage the flow of Customers inside the building and to offer them a safe shopping experience.
+#### C.1. Clupper
+
+Anyone who wants to become a clupper can do so by registering and entering his personal information.  
+The main goal of a clupper is to avoid having to wait for his turn near a store, thus reducing the risk of COVID infection.  
+To do so, the system offers a set of functions (called "basic services") with which he is able to join a queue from wherever he wants or to book a visit to enter the supermarket at a specific time.
+
+#### C.2. Store manager
+
+Due to the higher privileges offered to him by the system, to become a store manager a person shall enter, during the registration process, specific information about his work place (thus adding the store to the system).  
+The goal of a store manager is to avoid crowds inside the building by limiting the flow of customers (to comply with current regulations).  
+To do so the system offers a set of functions (called "managerial services") with which he is able to have an overview of the customers dealing with the store and to approve their entrances.
+
+#### C.3. Other stakeholders
+
+As explained in the previous sections, the system shall be able to provide fallback options for customers that need to enter a store but do not have access to the application. We define as **guest** any person who:
+- Is not registered to the system (regardless of whether they have access to the required technology or not);
+- Is registered to the system but is currently unable to use the application (e.g. no device with him, dead battery, no internet connection, ...);
+
+The goal of a guest is the same as that of a clupper (the risk of infection is technically lower due to the fact that the majority of customers should be cluppers).  
+By definition, a guest cannot directly take advantage of the services offered by the system, for this reason he is only able to join a queue by addressing the store manager.
 
 ### D. Assumptions, dependecies and constraints
 
@@ -249,36 +292,24 @@ In order to better clarify the presentation and avoid any ambiguities we decided
 
 #### D.1. Text assumptions
 
-- Credentials that a Visitor has to provide to become a registered User are: name, surname, address, email and password.
-- Credentials that a Store Manager has to provide to add a store to the system are: store name, name and surname of the owner, address, VAT number, email and password.
-- Credentials that a registered User or a Store Manager have to provide to login are: email and password (in case of the Store Manager those associated with his store).
-- The Store Manager can modify the store capacity according to the regulations in force.
-- A store is accessible if the number of Customers inside does not exceed the store capacity.
-- A store is accessible only during the opening time.
-- A User can be present at most in one queue at any time (for any store).
-- A User can book as many consecutive time slots as he wants in the same store.
-- A User cannot have multiple reservations the same time slots.
-- A Customer can enter a store only when it is accessible.
-- When a Customer's turn in the queue arrives, he has to enter the store in the short term.
+- Credentials that a person has to provide to become a clupper are: name, surname, address, email and password.
+- Credentials that a person has to provide to become a store manager are: name, surname, email and password. He must also provide information about the store: name, address, VAT number, maximum capacity.
+- Credentials that a user has to provide to login are: email and password.
 - A User with a reservation can enter the store at any time during the booked time slots.
-- Before entering and leaving the Store the Customer's ticket is inspected by the Store Manager.
-- When a Customer enters a Store he is no longer in the queue.
-- A User with a reservation have to exit the store before the end of his last time slot.
 
 #### D.2. Domain assumptions
 
-| DX  | Description of the domain assumption                                                        |
-|:----|:--------------------------------------------------------------------------------------------|
-| D1  | The provided email during the registration is valid and unique.                             |
-| D2  | The information provided by the Store Manager are always correct.                           |
-| D3  | Users and stores locations are retreived by GPS.                                            |
-| D4  | The GPS positions are always correct.                                                       |
-| D5  | The queue is never full.                                                                    |
-| D6  | The number of bookings in a time slot cannot exceed three-quarters of the store capacity.   |
-| D7  | When a ticket is inspected at the entrance of a store, its remaining capacity is decreased. |
-| D8  | When a ticket is inspected at the exit of a store, its remaining capacity is increased.     |
-| D9  | A User with a valid reservation always takes precedence over Customers in the queue.        |
-| D10 | When a User deletes a reservation, the acquired time slots are released.                    |
+| DX | Description of the domain assumption |
+|----|:-------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| D2 | The positions retrieved by GPS are always correct |
+| D3 | The store manager will always add to the store queue any guest requesting it |
+| D4 | The store manager will always grant the precedence of a customer with a reservation over those in the queue |
+| D5 | The store manager will always keep enough space inside the store to accomodate the users with a reservation |
+| D6 | At any time during the visit to a store, the customer shall be able to show the ticket with which he entered to the store manager |
+| D7 | A clupper with a reservation should leave the store before the end of the acquired time slots |
+| D8 | A customer is not able to enter a store before providing a valid ticket to the store manager |
+| D9 | A customer is not able to leave a store before providing a valid ticket to the store manager |
 <br>
 
 ## 3. Secific requirements
@@ -287,23 +318,17 @@ In order to better clarify the presentation and avoid any ambiguities we decided
 
 #### A.1. User interfaces
 
-The following mockups represent a basic idea of what the mobile app will look like in the first release.
+The following mockups represent an idea of what the application will look like in the first release.
 
 TODO
-MOCKUP REGISTRATION
-MOCKUP LOGIN
-MOCKUP SELECT A STORE
-MOCKUP QUEUE UP AND BOOK A VISIT
-MOCKUP SCAN A TICKET
-MOCKUP ADD A STORE
+MOCKUPS
 
 #### A.2. Hardware interfaces
 
-The system requires each registered User (or Visitor) to have at least one mobile device (such as a smartphone or tablet) that will be used to exibit the ticket to the Store Manager.
+The system requires each clupper to have at least one mobile device (such as a smartphone or tablet) that will be used to exibit the ticket to the store manager.  
+The clupper can perform the operations to obtain a ticket also from a PC of any kind that will however not be sufficient to have access to the store.
 
-The User can perform the operations to request the ticket also from a PC of any kind that will not be sufficient to have access to the store.
-
-The Store Manager needs a mobile device or a PC equipped with a camera to scan the tickets and a printer of any kind to hand out tickets to Customers that do not use CLup.
+The store manager needs a mobile device or a PC equipped with a camera to scan the tickets and a printer of any kind to hand out tickets to the guests.
 
 #### A.3. Software interfaces
 
@@ -311,108 +336,162 @@ The CLup applicative is a web application, for this reason a relatively modern w
 
 #### A.4. Communication interfaces
 
-To perform any operation in the application, an Internet connection (WiFi or mobile) is required.
+To perform any operation in the application, an Internet connection (WiFi or mobile) is required.  
+When a clupper has queued-up or has booked for a visit, can interrupt the connection without losing the place in the queue or the booking (he will not have access to the live information such as place in the queue or expected waiting time).
 
-When the User has queued-up or has booked for a visit, can interrupt the connection without losing the place in the queue or the booking.
-
-A Store Manager always needs a stable internet connection in order to manage the flow of Customers.
+A store manager always needs a stable internet connection in order to have access to the managerial services.
 
 ### B. Functional requirements
 
+| RX | Description of the functional requirement |
+|----|:------------------------------------------|
+| R1 | A person is able to register to the system as a user. During the process, the system will ask him to provide the information required for the specific type of user |
+| R2 | The system is able to verify that the email provided by a person during the registration process is unique |
+| R3 | The system is able to verify that the VAT number provided by a store manager during the registration process is unique |
+| R4 | The system is able to create a new store after the registration of store manager |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R6 | The system is able to generate a new ticket after receiving a request |
+| R7 | A clupper is able to join at most one queue at any time (for any store) |
+| R8 | The system is able to insert a ticket into a store queue |
+| R9 | The system is able to remove a ticket from a store queue |
+| R10 | A clupper is able to select as many consecutive free time slots as he wants while booking a visit to a store |
+| R11 | A clupper cannot have multiple reservations in the same time slots |
+| R12 | The system is able to retrieve the list of free time slots for each store |
+| R13 | The system is able to acquire the selected free time slots when creating a new reservation to a store |
+| R14 | The system is able to release the time slots acquired by a reservation when a clupper cancels it |
+| R15 | The system is able to notify a clupper the time in which he should approach the store |
+| R16 | A clupper is able to retrieve a previously obtained ticket |
+| R17 | A store manager is able to change the maximum store capacity at any time |
+| R18 | The system is able to infer the number of time slots to be proposed to a clupper when booking a visit to the store |
+| R19 | A store manager is able to scan a customer’s ticket at the entrance of the store before letting him in only if the number of customers currently inside does not exceed its maximum capacity |
+| R20 | A store manager is always able to scan a customer’s ticket at the exit of the store before letting him out |
+| R21 | The system is able to perform a validity check on a ticket scanned by a store manager and to inform him about the result |
+| R22 | The system is able to remove a customer's ticket from the store queue when it is scanned at the entrance |
+| R23 | The system is able to invalidate a customer’s ticket when it is scanned at the exit |
+| R24 | The system is able to retrieve the customer’s GPS location |
+| R25 | The system is able to retrieve the GPS location from a specific address |
+| R26 | The system is able to estimate the distance between two GPS locations |
+| R27 | The system is able to get a list of stores around a GPS location |
+| R28 | The system is able to retrieve the name and GPS location of a store |
+| R29 | The system is able to retrieve the position of a clupper in a store queue |
+| R30 | The system is able to estimate the waiting time for a clupper in a store queue |
+| R31 | The system is able to retrieve the number of customers currently in a store queue |
+| R32 | The system is able to retrieve the number of customers currently inside a store |
+| R33 | The system is able to retrieve the number of reservations for a store during the current time slot |
+<br>
+
 #### B.1. Use cases
 
-##### B.1.1. Visitor registration
-
-| Actors            | Visitor                                                                      |
+| UserRegisters     |                                                                              |
 |-------------------|------------------------------------------------------------------------------|
+| Actors            | User                                                                         |
+| Goals             | G1, G4, G7                                                                   |
+| Input conditions  | The user-to-be is already on the home page.                                  |
+| Events flow       | 1. The user clicks on the "Sign Up" button to start the registration process.<br>2. The user inserts his information in the mandatory fields.<br>3. The user clicks the "Register" button.<br>4. The system stores the inserted data<br>5. The system redirects the user to the login page. |
+| Output conditions | The user-to-be successfully ends the registration process and becomes a CLup user. From now on he can login to the application providing his credentials and use CLup. |
+| Exceptions        | 1. The provided email is already registered.<br>2. The user inserts not valid informations in one or more mandatory fields.<br><br>All exceptions are handled notifying the issue to the user and taking back the event flow to the point 2. |
+<br>
+
+| UserLogsIn        |                                                                              |
+|-------------------|------------------------------------------------------------------------------|
+| Actors            | User                                                                         |
+| Goals             | G1, G2, G3, G4, G5, G6, G7, G8, G9                                           |
+| Input conditions  | The user is already on the home page.                                        |
+| Events flow       | 1. The user clicks on the "Sign In" button to start the login process.<br>2. The User inserts his email and password into the corresponding fields.<br>3. The user clicks the "Login" button.<br>4. The system redirects the user to the map page. |
+| Output conditions | The user successfully logs in. From now on he can use the CLup services. |
+| Exceptions        | 1. The inserted email is not valid.<br>2. The inserted password is not valid.<br><br>All exceptions are handled notifying the issue to the user and taking back the event flow to the point 2. |
+| Alternatives      | If the user is a store manager:<br>4. The system redirects the user to the overview page. |
+<br>
+
+| ClupperSelectsStore |                                                                            |
+|-------------------|------------------------------------------------------------------------------|
+| Actors            | Clupper                                                                      |
+| Goals             | G1, G4                                                                       |
+| Input conditions  | The clupper is already logged in and on the map page.                        |
+| Events flow       | 1. The clupper inserts an address or clicks on the "Current Position" button<br>2. The system retrieves the GPS location and loads the stores on the map<br> 3. The clupper looks at the map and selects one of the available stores.<br>4. The system redirects the clupper to the store page. |
+| Output conditions | The clupper successfully selects the store. Now he can see its details, queue up or book a visit for it. |
+| Exceptions        | 1. The system does not contain any store.<br><br>All exceptions are handled notifying the issue to the clupper and redirecting him to the map page. |
+<br>
+
+| ClupperJoinsQueue |                                                                              |
+|-------------------|------------------------------------------------------------------------------|
+| Actors            | Clupper                                                                      |
 | Goals             | G1                                                                           |
-| Input conditions  | The Visitor is already on the home page.                                     |
-| Events flow       | 1. The Visitor clicks on the "Sign Up" button to start the registration process.<br>2. The Visitor inserts his information in the mandatory fields.<br>3. The visitor clicks the "Register" button.<br>4. The system saves the data and redirects the Visitor to the login page. |
-| Output conditions | The Visitor successfully ends the registration process and becomes a new User. From now on he can log in to the application providing his credentials and use CLup. |
-| Exceptions        | 1. The Visitor is already a User.<br>2. The Visitor inserts not valid informations in one or more mandatory fields.<br>3.The Visitor chooses an email that has been associated with another user.<br><br>All exceptions are handled notifying the issue to the Visitor and taking back the event flow to the point 2. |
+| Input conditions  | The clupper is already logged in, has chosen the desired store and is on its page. |
+| Events flow       | 1. The clupper clicks on the "Line Up" button on the store page.<br>2. The system generates a ticket and adds it to the store queue.<br>3. The system redirects the clupper to the queue page. |
+| Output conditions | The clupper is successfully in the store queue. |
+| Exceptions        | 1. The clupper is already in a queue.<br><br>All exceptions are handled notifying the issue to the clupper and redirecting him to the map page. |
 
-##### B.1.2. User login
-
-| Actors            | User                                                                         |
+| ClupperLeavesQueue|                                                                              |
 |-------------------|------------------------------------------------------------------------------|
-| Goals             | G1, G3                                                                       |
-| Input conditions  | The User is already on the home page.                                        |
-| Events flow       | 1. The User clicks on the "Sign In" button to start the login process.<br>2. The User inserts his email and password into the corresponding fields.<br>3. The User clicks the "Login" button.<br>4. The User is redirected to the map and the system searches for accessible stores nearby automatically. |
-| Output conditions | The User successfully logs in. From now on he can use the CLup services. |
-| Exceptions        | 1. The email is not valid.<br>2. The password is not valid.<br><br>All exceptions are handled notifying the issue to the User and taking back the event flow to the point 2. |
+| Actors            | Clupper                                                                      |
+| Goals             | G3                                                                           |
+| Input conditions  | The clupper is already logged into the system and in the queue page.         |
+| Events flow       | 1. The clupper clicks on the "Leave the Queue" button.<br>2. The system removes the clupper's ticket from the store queue and deletes it.<br>3. The system redirects the clupper to the map page. |
+| Output conditions | The clupper is no longer in the store queue. |
+| Exceptions        | 1. The clupper is not currently in a queue.<br><br>All exceptions are handled notifying the issue to the clupper and redirecting him to the queue page. |
+<br>
 
-##### B.1.3. User join a store queue
-
-| Actors            | User                                                                         |
+| ClupperWatchesTicketDetails |                                                                    |
 |-------------------|------------------------------------------------------------------------------|
-| Goals             | G3, G4                                                                       |
-| Input conditions  | The User is already logged into the system and in the map.                   |
-| Events flow       | 1. The User looks at the map that shows accessible stores.<br>2. The User chooses one of the available stores.<br>3. The User clicks on the "Line Up" button on the store page.<br>4. The system adds the User to the store queue, generates a ticket and redirects him to the queue page. |
-| Output conditions | The User is successfully in the store queue. |
-| Exceptions        | 1. The User is already in a queue.<br><br>All exceptions are handled notifying the issue to the User and redirecting him to the map. |
+| Actors            | Clupper                                                                      |
+| Goals             | G6, G8, G9                                                                   |
+| Input conditions  | The clupper is already logged in.         |
+| Events flow       | 1. The clupper clicks goes to the queue page or the reservations page depending on the type of ticket that he wants to watch.<br>2. If the clupper is in the reserviations page, he selects a ticket from the list of bookings.<br>3. The system fetches the details of the selected ticket.<br>4. The system redirects the clupper to the ticket page. |
+| Output conditions | The clupper can see ticket details. |
+| Exceptions        | 1. The clupper is not currently in a queue. 2 The clupper doesn't have an active booking.<br><br>All exceptions are handled notifying the issue to the clupper and redirecting him to the queue page. |
+<br>
 
-##### B.1.4. User leaves a store queue
-
-| Actors            | User                                                                         |
+| ClupperBooksVisit |                                                                              |
 |-------------------|------------------------------------------------------------------------------|
-| Goals             | G6                                                                           |
-| Input conditions  | The User is already logged into the system and in the queue page.            |
-| Events flow       | 1. The User clicks on the "Leave the Queue" button.<br>2. The system removes the User from the store queue and redirects the User to the map. |
-| Output conditions | The User is no longer in the store queue. |
-| Exceptions        | 1. The User clicks on the "Leave the Queue" button but the ticket has already been inspected.<br><br>All exceptions are handled notifying the issue to the User and redirecting him to the queue page. |
+| Actors            | Clupper                                                                      |
+| Goals             | G4                                                                           |
+| Input conditions  | The clupper is already logged in, has chosen the desired store and is on its page. |
+| Events flow       | 1. The clupper clicks on the "Book a Visit" button on the store page.<br>2. The clupper selects one or more avaiable time slots.<br>3. The system generates a ticket and acquires the selected time slots.<br>4. The system redirects the clupper to the reservations page. |
+| Output conditions | The clupper has a reservation for the store.                                 |
+| Exceptions        | 1. The clupper has already a reservation during one of the selected time slots.<br>2. One or more of the selected time slots is not free.<br><br>All exceptions are handled notifying the issue to the clupper and taking back the event flow to the point 2. |
+<br>
 
-##### B.1.5. User books a visit to the store
+| ClupperCancelsVisit |                                                                              |
+|---------------------|------------------------------------------------------------------------------|
+| Actors              | Clupper                                                                      |
+| Goals               | G5                                                                           |
+| Input conditions    | The clupper is already logged into the system and in the reservations page.  |
+| Events flow         | 1. The clupper looks at the list of active reservations.<br>2. The clupper selects the booking he wants to cancel.<br>3. The clupper clicks on the "Cancel Booking" button.<br>3. The system removes the clupper's ticket from the store reservations and deletes it.<br>4. The system redirects the clupper to the reservations page. |
+| Output conditions   | The clupper has no longer a reservation for that store. |
+| Exceptions          | 1. The clupper does not have a reservation for that store.<br><br>All exceptions are handled notifying the issue to the clupper and redirecting him to the reservations page. |
+<br>
 
-| Actors            | User                                                                         |
+| StoreManagerPrintsTicket |                                                                       |
 |-------------------|------------------------------------------------------------------------------|
-| Goals             | G3, G5                                                                       |
-| Input conditions  | The User is already logged into the system and in the map.                   |
-| Events flow       | 1. The User looks at the map that shows accessible stores.<br>2. The User chooses one of the available stores.<br>3. The User clicks on the "Book a Visit" button on the store page.<br>4. The User selects one or more avaiable time frames.<br>5. The system adds the User to the store reservations, generates a ticket and redirects him to the reservations page. |
-| Output conditions | The User is booked for the store visit.                                      |
-| Exceptions        | 1. The User has already a reservation during one of the selected time slots.<br><br>All exceptions are handled notifying the issue to the User and taking back the event flow to the point 4. |
-
-##### B.1.6. User cancels a reservation
-
-| Actors            | User                                                                         |
-|-------------------|------------------------------------------------------------------------------|
-| Goals             | G6                                                                           |
-| Input conditions  | The User is already logged into the system and in the reservations page.     |
-| Events flow       | 1. The User looks at the list of active reservations.<br>2. The User selects the booking he wants to cancel.<br>3. The User clicks on the "Cancel Booking" button.<br>2. The system removes the User's booking and redirects the User to the reservations page. |
-| Output conditions | The User has no longer a reservation for those time slots. |
-| Exceptions        | 1. The User clicks on the "Cancel Booking" button but the ticket has already been inspected.<br><br>All exceptions are handled notifying the issue to the User and redirecting him to the reservations page. |
-
-##### B.1.7. Store Manager prints a physical ticket
-
-| Actors            | Store Manager                                                                |
-|-------------------|------------------------------------------------------------------------------|
-| Goals             | G7                                                                           |
-| Input conditions  | The Store Manager is already logged into the system and in the home page.    |
-| Events flow       | 1. The Store Manager clicks on the "Issue Ticket" button.<br>2. The system adds a mock User to the store queue, generates a ticket and redirects the Store Manager to the ticket page. |
-| Output conditions | The Store Manager is able to print the newly issued ticket. |
-| Exceptions        | _None_ |
+| Actors            | Store manager, Guest                                                         |
+| Goals             | G2                                                                           |
+| Input conditions  | The store manager is already logged into the system and in the overview page. |
+| Events flow       | 1. The guest approaches the store manager asking for a ticket.<br>2. The store manager clicks on the "Issue Ticket" button.<br>3. The system generates a ticket and adds it to the store queue<br>4. The system redirects the store manager to the ticket page.<br>4. The store manager clicks on the "Print Ticket" button |
+| Output conditions | The store manager is able to print the newly issued ticket and hand it out to the guest. |
+| Exceptions        | *None* |
 | Special Requirements | The Store Manager's device must be connected to a printer. |
+<br>
 
-##### B.1.8. Store Manager scans a ticket at the entrance
-
-| Actors            | Store Manager                                                                |
+| StoreManagerScansTicket |                                                                        |
 |-------------------|------------------------------------------------------------------------------|
-| Goals             | G8                                                                           |
-| Input conditions  | The Store Manager is already logged into the system and in the home page.    |
-| Events flow       | 1. The Store Manager clicks on the "Scan Ticket" button.<br>2. The Store Manager uses the device camera to scan the Customer's ticket.<br>3. The system removes the corresponding User from the store queue or the list of reservations.<br>4. The system decreases the store capacity and redirects the Store Manager to the home page. |
-| Output conditions | The Store Manager can let the Customer into the store. |
-| Exceptions        | 1. The store has reached its maximum capacity and cannot allow any other Customer inside.<br>2. The ticket is invalid.<br>All exceptions are handled notifying the issue to the Store Manager and redirecting him to the home page. |
+| Actors            | Store manager, Customer                                                      |
+| Goals             | G8, G9                                                                       |
+| Input conditions  | The store manager is already logged into the system and in the overview page. |
+| Events flow       | 1. The store manager clicks on the "Scan Ticket" button.<br>2. The store manager uses the device camera to scan the customer's ticket.<br>3. The system validates and removes the ticket from the store queue or the list of reservations.<br>4. The system updates the store overview data.<br>5. The system redirects the store manager to the overview page. |
+| Output conditions | The store manager can let the customer in/out. The store overview has been updated. |
+| Exceptions        | 1. The store has reached its maximum capacity and cannot allow any other Customer inside.<br>2. The ticket is invalid.<br>All exceptions are handled notifying the issue to the Store Manager and redirecting him to the overview page. |
 | Special Requirements | The Store Manager's device must be connected to a camera. |
+<br>
 
-##### B.1.9. Store Manager scans a ticket at the exit
-
-| Actors            | Store Manager                                                                |
+| StoreManagerGetsOverview |                                                                       |
 |-------------------|------------------------------------------------------------------------------|
-| Goals             | G9                                                                           |
-| Input conditions  | The Store Manager is already logged into the system and in the home page.    |
-| Events flow       | 1. The Store Manager clicks on the "Scan Ticket" button.<br>2. The Store Manager uses the device camera to scan the Customer's ticket.<br>3. The system removes the ticket from the User's profile.<br>4. The system increases the store capacity and redirects the Store Manager to the home page. |
-| Output conditions | The Store Manager can let the Customer into the store. |
-| Exceptions        | 1. The ticket was never scanned at the entrance.<br>2. The ticket is invalid.<br>All exceptions are handled notifying the issue to the Store Manager and redirecting him to the home page. |
-| Special Requirements | The Store Manager's device must be connected to a camera. |
+| Actors            | Store manager                                                                |
+| Goals             | G7                                                                           |
+| Input conditions  | The store manager is already logged into the system and in the overview page. |
+| Events flow       | 1. The system loads up the details about the store and displays it into the overview page. |
+| Output conditions | The store manager is able see the details about his store. |
+| Exceptions        | *None* |
 
 #### B.2. Use case diagrams
 TODO
@@ -422,96 +501,126 @@ TODO
 
 #### B.4. Mapping on requirements
 
-#### B.4.1. Allow a Visitor to become registered User.
-
-| G1  | Allow a Visitor to become registered User after providing credentials.                     |
-|:----|:-------------------------------------------------------------------------------------------|
-| R1  | A Visitor must be able to begin the registration process. During the process the system will ask him to provide credentials. |
-| D1  | The provided email during the registration is valid and unique.                            |
+| G1 | Allow a clupper to join a store queue without having to physically approach the store                           |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| D2 | The positions retrieved by GPS are always correct |
+| R1 | A person is able to register to the system as a user. During the process, the system will ask him to provide the information required for the specific type of user |
+| R2 | The system is able to verify that the email provided by a person during the registration process is unique |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R6 | The system is able to generate a new ticket after receiving a request |
+| R7 | A clupper is able to join at most one queue at any time (for any store) |
+| R8 | The system is able to insert a ticket into a store queue |
+| R24 | The system is able to retrieve the customer’s GPS location |
+| R25 | The system is able to retrieve the GPS location from a specific address |
+| R26 | The system is able to estimate the distance between two GPS locations |
+| R27 | The system is able to get a list of stores around a GPS location |
+| R28 | The system is able to retrieve the name and GPS location of a store |
+| R31 | The system is able to retrieve the number of customers currently in a store queue |
 <br>
 
-#### B.4.2. Allow a Store Manager to add a store to the system.
-
-| G2  | Allow a Store Manager to add a store to the system after providing credentials.            |
-|:----|:-------------------------------------------------------------------------------------------|
-| R2  | A Store Manager must be able to begin the registration process. During the process the system will ask him to provide credentials. |
-| D1  | The provided email during the registration is valid and unique.                            |
-| D2  | The information provided by the Store Manager are always correct.                          |
+| G2 | Allow a guest to join a store queue by requesting it to the store manager                                       |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| D3 | The store manager will always add to the store queue any guest requesting it |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R6 | The system is able to generate a new ticket after receiving a request |
+| R8 | The system is able to insert a ticket into a store queue |
 <br>
 
-#### B.4.3. Allow a User to find locations of accessible stores.
-
-| G3  | Allow a User to find locations of accessible stores.                                       |
-|:----|:-------------------------------------------------------------------------------------------|
-| R3  | A registered User must be able to login to the system using his credentials.               |
-| R4  | The system must be able to provide the list of accessible stores within a certain area, encoded as the coordinates of an origin point and the maximum distance from it, from the current position of a User. |
-| R5  | The system must be able to provide the list of accessible stores within a certain area, encoded as the coordinates of an origin point and the maximum distance from it, from an address specified by a User. |
-| D3  | Users and stores locations are retreived by GPS.                                           |
-| D4  | The GPS positions are always correct.                                                      | 
+| G3 | Allow a clupper to leave a store queue before entering                                                          |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R9 | The system is able to remove a ticket from a store queue |
+| R16 | A clupper is able to retrieve a previously obtained ticket |
 <br>
 
-#### B.4.4. Allow a User to request a digital ticket to enter a specific store as soon as possible.
-
-| G4  | Allow a User to request a digital ticket to enter a specific store as soon as possible.    |
-|:----|:-------------------------------------------------------------------------------------------|
-| R3  | A registered User must be able to login to the system using his credentials.               |
-| R6  | The system must be able to permit a User to line-up for an accessible store.               |
-| R7  | The system must be able to issue a digital ticket to a User if the process is successful.  |
-| D5  | The queue is never full.                                                                   |
-<br> 
-
-#### B.4.5. Allow a User to request a digital ticket to enter a specific store at a chosen time.
-
-| G5  | Allow a User to request a digital ticket to enter a specific store at a chosen time.       |
-|:----|:-------------------------------------------------------------------------------------------|
-| R3  | A registered User must be able to login to the system using his credentials.               |
-| R7  | The system must be able to issue a digital ticket to a User if the process is successful.  |
-| R8  | The system must be able to permit a User to book a visit for an accessible Store.          |
-| D6  | The number of bookings in a time slot cannot exceed three-quarters of the store capacity.  |
+| G4 | Allow a clupper to book a visit to the store                                                                    |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| D2 | The positions retrieved by GPS are always correct |
+| R1 | A person is able to register to the system as a user. During the process, the system will ask him to provide the information required for the specific type of user |
+| R2 | The system is able to verify that the email provided by a person during the registration process is unique |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R6 | The system is able to generate a new ticket after receiving a request |
+| R10 | A clupper is able to select as many consecutive free time slots as he wants while booking a visit to a store |
+| R11 | A clupper cannot have multiple reservations in the same time slots |
+| R12 | The system is able to retrieve the list of free time slots for each store |
+| R13 | The system is able to acquire the selected free time slots when creating a new reservation to a store |
+| R18 | The system is able to infer the number of time slots to be proposed to a clupper when booking a visit to the store |
+| R24 | The system is able to retrieve the customer’s GPS location |
+| R25 | The system is able to retrieve the GPS location from a specific address |
+| R26 | The system is able to estimate the distance between two GPS locations |
+| R27 | The system is able to get a list of stores around a GPS location |
+| R28 | The system is able to retrieve the name and GPS location of a store |
 <br>
 
-#### B.4.6. Allow a User to delete a previously requested digital ticket before the inspection.
-
-| G6  | Allow a User to delete a previously requested digital ticket before the inspection.        |
-|:----|:-------------------------------------------------------------------------------------------|
-| R3  | A registered User must be able to login to the system using his credentials.               |
-| D6  | The number of bookings in a time slot cannot exceed three-quarters of the store capacity.  |
-| D10 | When a User deletes a reservation, the acquired time slots are released.                   |
+| G5 | Allow a clupper to cancel a reservation to a store before entering                                              |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R14 | The system is able to release the time slots acquired by a reservation when a clupper cancels it |
+| R16 | A clupper is able to retrieve a previously obtained ticket |
 <br>
 
-#### B.4.7. Allow a Store Manager to issue a physical ticket.
-
-| G7  | Allow a Store Manager to issue a physical ticket.                                          |
-|:----|:-------------------------------------------------------------------------------------------|
-| R9  | A Store Manager must be able to login to the system using the store credentials.           |
-| R10 | A Store Manager must be able to add to the queue a Customer that's not registered to CLup. |
-| R11 | A Store Manager must be able to physically print a ticket.                                 |
-| D5  | The queue is never full.                                                                   |
+| G6 | Allow a clupper to approach at the right time the store he has a ticket for                                     |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| D2 | The positions retrieved by GPS are always correct |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R15 | The system is able to notify a clupper the time in which he should approach the store |
+| R24 | The system is able to retrieve the customer’s GPS location |
+| R26 | The system is able to estimate the distance between two GPS locations |
+| R28 | The system is able to retrieve the name and GPS location of a store |
+| R29 | The system is able to retrieve the position of a clupper in a store queue |
+| R30 | The system is able to estimate the waiting time for a clupper in a store queue |
 <br>
 
-#### B.4.8. Allow a Store Manager to inspect a ticket at the entrance.
-
-| G8  | Allow a Store Manager to inspect a ticket at the entrance.                                 |
-|:----|:-------------------------------------------------------------------------------------------|
-| R9  | A Store Manager must be able to login to the system using the Store credentials.           |
-| R12 | A Store Manager must be able to validate a scanned ticket.                                 |
-| R13 | A Store Manager must be able to see the remaining capacity of the store.                   |
-| D7  | When a ticket is inspected at the entrance of a store, its remaining capacity is decreased.|
-| D9  | A User with a valid reservation always takes precedence over Customers in the queue.       |
+| G7 | Allow a store manager to have an overview of the store                                                          |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| R1 | A person is able to register to the system as a user. During the process, the system will ask him to provide the information required for the specific type of user |
+| R2 | The system is able to verify that the email provided by a person during the registration process is unique |
+| R3 | The system is able to verify that the VAT number provided by a store manager during the registration process is unique |
+| R4 | The system is able to create a new store after the registration of store manager |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R31 | The system is able to retrieve the number of customers currently in a store queue |
+| R32 | The system is able to retrieve the number of customers currently inside a store |
+| R33 | The system is able to retrieve the number of reservations for a store during the current time slot |
 <br>
 
-#### B.4.9. Allow a Store Manager to inspect a ticket at the exit.
+| G8 | Allow a store manager to regulate the entrances to the store                                                    |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| D4 | The store manager will always grant the precedence of a customer with a reservation over those in the queue |
+| D5 | The store manager will always keep enough space inside the store to accomodate the users with a reservation |
+| D8 | A customer is not able to enter a store before providing a valid ticket to the store manager |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R16 | A clupper is able to retrieve a previously obtained ticket |
+| R17 | A store manager is able to change the maximum store capacity at any time |
+| R19 | A store manager is able to scan a customer’s ticket at the entrance of the store before letting him in only if the number of customers currently inside does not exceed its maximum capacity |
+| R21 | The system is able to perform a validity check on a ticket scanned by a store manager and to inform him about the result |
+| R22 | The system is able to remove a customer's ticket from the store queue when it is scanned at the entrance |
+<br>
 
-| G9  | Allow a Store Manager to inspect a ticket at the exit.                                     |
-|:----|:-------------------------------------------------------------------------------------------|
-| R9  | A Store Manager must be able to login to the system using the store credentials.           |
-| R12 | A Store Manager must be able to validate a scanned ticket.                                 |
-| D8  | When a ticket is inspected at the exit of a store, its remaining capacity is increased.    |
+| G9 | Allow a store manager to regulate the exits from the store                                                      |
+|----|:----------------------------------------------------------------------------------------------------------------|
+| D1 | The information provided by a user during the registration process is valid |
+| D6 | At any time during the visit to a store, the customer shall be able to show the ticket with which he entered to the store manager |
+| D7 | A clupper with a reservation should leave the store before the end of the acquired time slots |
+| D9 | A customer is not able to leave a store before providing a valid ticket to the store manager |
+| R5 | A user is able to log into the system by entering his personal credentials |
+| R16 | A clupper is able to retrieve a previously obtained ticket |
+| R20 | A store manager is always able to scan a customer’s ticket at the exit of the store before letting him out |
+| R21 | The system is able to perform a validity check on a ticket scanned by a store manager and to inform him about the result |
+| R23 | The system is able to invalidate a customer’s ticket when it is scanned at the exit |
 <br>
 
 ### C. Performance requirements
 
-The system must be able to handle a great number of concurrent requests especially during peak times (typically lunch and dinner). We are planning to launch this service in Milan (1.35 million people), so we can estimate, in the first year, approximately 750.000 Users with a maximum of 125.000 simultaneous connections.
+The system must be able to handle a great number of concurrent requests especially during peak times (typically lunch and dinner).  
+We are planning to launch this service in Milan (1.35 million people), so we can size the system to handle, at least in the first year, 750.000 Users with a maximum of 125.000 simultaneous connections.
 
 ### D. Design constraints
 
@@ -521,7 +630,8 @@ The code should follow the requirements contained in this document. Minor deviat
 
 #### D.2. Hardware limitations
 
-The first implementation of CLup will include only a web application available for any modern browser able to retreive User's location. The Store Manager's device must be equipped with a camera to be able to scan the tickets. The Store must be provided with a printer to print tickets, allowing the physical line-up.
+The first implementation of CLup will include only a web application available for any modern browser able to retreive a clupper's GPS location.  
+The store manager's device must be equipped with a camera to be able to scan customer tickets. The store must also be provided with a printer to print tickets, thus allowing their distribution to guests.
 
 #### D.3. Any other constraint
 
@@ -531,20 +641,23 @@ In the first release no public interfaces will be opened and third party service
 
 #### E.1. Reliability and avaiability
 
-The estimated waiting time in the queue should be as close as possible to the ideal one. The count of reservations for every time slot must be correct to avoid overbooking with the effect of letting people wait outside the store or letting them inside violating the capacity limit.
-The presence of CLup in the everyday life enforces security rules aimed to prevent the spreading of the pandemic. In any case a limited period of downtime is admissible outside of the most common opening time of the stores. A 95% uptime is plausible so the MTTR must be contained in ~18 days.
+The estimated waiting time in the queue should be as close as possible to the ideal one.  
+The count of reservations for every time slot must be correct to avoid overbooking with the effect of letting people wait outside the store or letting them inside violating the capacity limit.
+The presence of CLup in the everyday life enforces regulations aimed to prevent the spreading of the pandemic. In any case a limited period of downtime is admissible outside of the most common opening time of the stores. A 95% uptime is plausible so the MTTR must be contained in ~18 days a year.
 In order to comply the required uptime the system must be supported by an appropriate infrastructure composed of redundant services.
 
 #### E.2. Security
 
-The CLup application is not involved in any payment process, so no critical information is stored nor used. Regarding the data that the User provides (e.g. GPS location, personal or contact information), none of those will be used for purposes outside the CLup scope.
-Common security standards should be implemented in the management and storage of Users data.
+The CLup application is not involved in any payment process, so no critical information is stored nor used.  
+Regarding the data that the users provides (e.g. GPS location, personal or contact information), none of those will be used for purposes outside the CLup scope.  
+Common security standards should be implemented in the management and storage of private data.
+The system must also ensure that each user can have access only to the features provided for their category.
 
 #### E.3. Maintainability
 
 The system must be written in a widely used programming language and must ensure a high level of maintainability.
 Code must be written following standards with high level of abstractions without hard-code as well and must be highly commented in any aspect. 
-Code must provide testing routine that covers at least 70% of the entire code, excluding software interface.
+Code must provide testing routine that covers at least 85% of the entire code, excluding software interface.
 The system has also to be built considering a future expansion, guaranteeing an high level of scalability both on the number of store and the available cities.
 
 ### E.4. Portability
@@ -566,6 +679,8 @@ TODO
 | Domain assumption, functional requirements and mapping           |       2.0h |
 | Structure adaptation, edit on previous parts, more on third part |       2.5h |
 | Scenarios and use cases                                          |       3.0h |
+| Overall RASD revision                                            |       3.5h |
+| Scenarios and use cases revision                                 |       1.5h |
 <br>
 
 ## 6. References
