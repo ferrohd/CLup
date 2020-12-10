@@ -163,7 +163,18 @@ After careful analysis, we decided to not include it in this document for the fo
     - [B. Functional requirements](#b-functional-requirements)
       - [B.1. Use cases](#b1-use-cases)
       - [B.2. Use case diagrams](#b2-use-case-diagrams)
+        - [B.2.1 Visitor](#b21-visitor)
+        - [B.2.2 User](#b22-user)
+        - [B.2.2 Store Manager](#b22-store-manager)
       - [B.3. Sequence diagrams](#b3-sequence-diagrams)
+        - [B.3.1 Visitor Registration](#b31-visitor-registration)
+        - [B.3.2 User Login](#b32-user-login)
+        - [B.3.3 User Queue Up](#b33-user-queue-up)
+        - [B.3.4 User Leave Queue](#b34-user-leave-queue)
+        - [B.3.5 User Booking a Visit](#b35-user-booking-a-visit)
+        - [B.3.6 User Cancels a Booking](#b36-user-cancels-a-booking)
+        - [B.3.7 Store Manager Issue Ticket](#b37-store-manager-issue-ticket)
+        - [B.3.7 Store Manager Scan Ticket](#b37-store-manager-scan-ticket)
       - [B.4. Mapping on requirements](#b4-mapping-on-requirements)
     - [C. Performance requirements](#c-performance-requirements)
     - [D. Design constraints](#d-design-constraints)
@@ -503,10 +514,30 @@ A store manager always needs a stable internet connection in order to have acces
 | Exceptions        | *None* |
 
 #### B.2. Use case diagrams
-TODO
+##### B.2.1 Visitor
+![Visitor](assets/use/../use_cases/use_case_visitor_registration.svg "Visitor")
+##### B.2.2 User
+![User](assets/use/../use_cases/use_case_user.svg "User")
+##### B.2.2 Store Manager
+![Store Manager](assets/use/../use_cases/use_case_store_manager.svg "Store Manager")
 
 #### B.3. Sequence diagrams
-TODO
+##### B.3.1 Visitor Registration
+![Visitor Registration](assets/use/../sequence_diagrams/sequence_diagram_visitor_registration.svg "Visitor Registration")
+##### B.3.2 User Login
+![User Login](assets/use/../sequence_diagrams/sequence_diagram_user_login.svg "User Login")
+##### B.3.3 User Queue Up
+![User Queue Up](assets/use/../sequence_diagrams/sequence_diagram_user_queue_up.svg "User Queue Up")
+##### B.3.4 User Leave Queue
+![User Leave Queue](assets/use/../sequence_diagrams/sequence_diagram_user_leave_queue.svg "User Leave Queue")
+##### B.3.5 User Booking a Visit
+![Booking a Visit](assets/use/../sequence_diagrams/sequence_diagram_user_booking.svg "Booking a Visit")
+##### B.3.6 User Cancels a Booking
+![User Cancels a Booking](assets/use/../sequence_diagrams/sequence_diagram_user_cancel_booking.svg "User Cancels a Booking")
+##### B.3.7 Store Manager Issue Ticket
+![Store Manager Issue Ticket](assets/use/../sequence_diagrams/sequence_diagram_store_manager_issue_ticket.svg "Store Manager Issue Ticket")
+##### B.3.7 Store Manager Scan Ticket
+![Store Manager Scan Ticket](assets/use/../sequence_diagrams/sequence_diagram_store_manager_scan_ticket.svg "Store Manager Scan Ticket")
 
 #### B.4. Mapping on requirements
 
