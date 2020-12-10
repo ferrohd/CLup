@@ -4,8 +4,8 @@
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.0.7
-#### Date: 05/12/2020
+#### Version: 0.0.8
+#### Date: 10/12/2020
 #### Professor: Elisabetta Di Nitto
 <br>
 
@@ -115,8 +115,8 @@ After careful analysis, we decided to not include it in this document for the fo
 
 - [Requirements Analysis and Specification Document](#requirements-analysis-and-specification-document)
   - [Authors:](#authors)
-      - [Version: 0.0.6](#version-006)
-      - [Date: 27/11/2020](#date-27112020)
+      - [Version: 0.0.8](#version-008)
+      - [Date: 10/12/2020](#date-10122020)
       - [Professor: Elisabetta Di Nitto](#professor-elisabetta-di-nitto)
   - [1. Introduction](#1-introduction)
     - [A. Purpose](#a-purpose)
@@ -124,6 +124,7 @@ After careful analysis, we decided to not include it in this document for the fo
       - [B.1. Description of the given problem](#b1-description-of-the-given-problem)
       - [B.2. Current system](#b2-current-system)
       - [B.3. Goals](#b3-goals)
+      - [B.4. Discarded Features](#b4-discarded-features)
     - [C. Definitions, acronyms and abbreviations](#c-definitions-acronyms-and-abbreviations)
       - [C.1. Definitions](#c1-definitions)
       - [C.2. Acronyms](#c2-acronyms)
@@ -141,11 +142,15 @@ After careful analysis, we decided to not include it in this document for the fo
         - [A.1.5. Scenario 5](#a15-scenario-5)
         - [A.1.6. Scenario 6](#a16-scenario-6)
     - [B. Product functions](#b-product-functions)
-      - [B.1. Digital line-up](#b1-digital-line-up)
-      - [B.2 Physical line-up](#b2-physical-line-up)
-      - [B.3. Book a visit](#b3-book-a-visit)
-      - [B.4. Ticket inspection](#b4-ticket-inspection)
+      - [B.1. Join the queue (digital) - Basic service](#b1-join-the-queue-digital---basic-service)
+      - [B.2. Book a visit - Basic service](#b2-book-a-visit---basic-service)
+      - [B.3. Join the queue (physical) - Managerial service](#b3-join-the-queue-physical---managerial-service)
+      - [B.4. Store overview - Managerial service](#b4-store-overview---managerial-service)
+      - [B.5. Ticket scan - Managerial service](#b5-ticket-scan---managerial-service)
     - [C. User characteristics](#c-user-characteristics)
+      - [C.1. Clupper](#c1-clupper)
+      - [C.2. Store manager](#c2-store-manager)
+      - [C.3. Other stakeholders](#c3-other-stakeholders)
     - [D. Assumptions, dependecies and constraints](#d-assumptions-dependecies-and-constraints)
       - [D.1. Text assumptions](#d1-text-assumptions)
       - [D.2. Domain assumptions](#d2-domain-assumptions)
@@ -157,27 +162,20 @@ After careful analysis, we decided to not include it in this document for the fo
       - [A.4. Communication interfaces](#a4-communication-interfaces)
     - [B. Functional requirements](#b-functional-requirements)
       - [B.1. Use cases](#b1-use-cases)
-        - [B.1.1. Visitor registration](#b11-visitor-registration)
-        - [B.1.2. User login](#b12-user-login)
-        - [B.1.3. User join a store queue](#b13-user-join-a-store-queue)
-        - [B.1.4. User leaves a store queue](#b14-user-leaves-a-store-queue)
-        - [B.1.5. User books a visit to the store](#b15-user-books-a-visit-to-the-store)
-        - [B.1.6. User cancels a reservation](#b16-user-cancels-a-reservation)
-        - [B.1.7. Store Manager prints a physical ticket](#b17-store-manager-prints-a-physical-ticket)
-        - [B.1.8. Store Manager scans a ticket at the entrance](#b18-store-manager-scans-a-ticket-at-the-entrance)
-        - [B.1.9. Store Manager scans a ticket at the exit](#b19-store-manager-scans-a-ticket-at-the-exit)
       - [B.2. Use case diagrams](#b2-use-case-diagrams)
+        - [B.2.1 Visitor](#b21-visitor)
+        - [B.2.2 User](#b22-user)
+        - [B.2.2 Store Manager](#b22-store-manager)
       - [B.3. Sequence diagrams](#b3-sequence-diagrams)
+        - [B.3.1 Visitor Registration](#b31-visitor-registration)
+        - [B.3.2 User Login](#b32-user-login)
+        - [B.3.3 User Queue Up](#b33-user-queue-up)
+        - [B.3.4 User Leave Queue](#b34-user-leave-queue)
+        - [B.3.5 User Booking a Visit](#b35-user-booking-a-visit)
+        - [B.3.6 User Cancels a Booking](#b36-user-cancels-a-booking)
+        - [B.3.7 Store Manager Issue Ticket](#b37-store-manager-issue-ticket)
+        - [B.3.7 Store Manager Scan Ticket](#b37-store-manager-scan-ticket)
       - [B.4. Mapping on requirements](#b4-mapping-on-requirements)
-      - [B.4.1. Allow a Visitor to become registered User.](#b41-allow-a-visitor-to-become-registered-user)
-      - [B.4.2. Allow a Store Manager to add a store to the system.](#b42-allow-a-store-manager-to-add-a-store-to-the-system)
-      - [B.4.3. Allow a User to find locations of accessible stores.](#b43-allow-a-user-to-find-locations-of-accessible-stores)
-      - [B.4.4. Allow a User to request a digital ticket to enter a specific store as soon as possible.](#b44-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-as-soon-as-possible)
-      - [B.4.5. Allow a User to request a digital ticket to enter a specific store at a chosen time.](#b45-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-at-a-chosen-time)
-      - [B.4.6. Allow a User to delete a previously requested digital ticket before the inspection.](#b46-allow-a-user-to-delete-a-previously-requested-digital-ticket-before-the-inspection)
-      - [B.4.7. Allow a Store Manager to issue a physical ticket.](#b47-allow-a-store-manager-to-issue-a-physical-ticket)
-      - [B.4.8. Allow a Store Manager to inspect a ticket at the entrance.](#b48-allow-a-store-manager-to-inspect-a-ticket-at-the-entrance)
-      - [B.4.9. Allow a Store Manager to inspect a ticket at the exit.](#b49-allow-a-store-manager-to-inspect-a-ticket-at-the-exit)
     - [C. Performance requirements](#c-performance-requirements)
     - [D. Design constraints](#d-design-constraints)
       - [D.1. Standards compliance](#d1-standards-compliance)
@@ -494,10 +492,30 @@ A store manager always needs a stable internet connection in order to have acces
 | Exceptions        | *None* |
 
 #### B.2. Use case diagrams
-TODO
+##### B.2.1 Visitor
+![Visitor](assets/use/../use_cases/use_case_visitor_registration.svg "Visitor")
+##### B.2.2 User
+![User](assets/use/../use_cases/use_case_user.svg "User")
+##### B.2.2 Store Manager
+![Store Manager](assets/use/../use_cases/use_case_store_manager.svg "Store Manager")
 
 #### B.3. Sequence diagrams
-TODO
+##### B.3.1 Visitor Registration
+![Visitor Registration](assets/use/../sequence_diagrams/sequence_diagram_visitor_registration.svg "Visitor Registration")
+##### B.3.2 User Login
+![User Login](assets/use/../sequence_diagrams/sequence_diagram_user_login.svg "User Login")
+##### B.3.3 User Queue Up
+![User Queue Up](assets/use/../sequence_diagrams/sequence_diagram_user_queue_up.svg "User Queue Up")
+##### B.3.4 User Leave Queue
+![User Leave Queue](assets/use/../sequence_diagrams/sequence_diagram_user_leave_queue.svg "User Leave Queue")
+##### B.3.5 User Booking a Visit
+![Booking a Visit](assets/use/../sequence_diagrams/sequence_diagram_user_booking.svg "Booking a Visit")
+##### B.3.6 User Cancels a Booking
+![User Cancels a Booking](assets/use/../sequence_diagrams/sequence_diagram_user_cancel_booking.svg "User Cancels a Booking")
+##### B.3.7 Store Manager Issue Ticket
+![Store Manager Issue Ticket](assets/use/../sequence_diagrams/sequence_diagram_store_manager_issue_ticket.svg "Store Manager Issue Ticket")
+##### B.3.7 Store Manager Scan Ticket
+![Store Manager Scan Ticket](assets/use/../sequence_diagrams/sequence_diagram_store_manager_scan_ticket.svg "Store Manager Scan Ticket")
 
 #### B.4. Mapping on requirements
 
