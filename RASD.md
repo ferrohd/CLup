@@ -4,8 +4,8 @@
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.0.7
-#### Date: 05/12/2020
+#### Version: 0.0.8
+#### Date: 10/12/2020
 #### Professor: Elisabetta Di Nitto
 <br>
 
@@ -115,8 +115,8 @@ After careful analysis, we decided to not include it in this document for the fo
 
 - [Requirements Analysis and Specification Document](#requirements-analysis-and-specification-document)
   - [Authors:](#authors)
-      - [Version: 0.0.6](#version-006)
-      - [Date: 27/11/2020](#date-27112020)
+      - [Version: 0.0.8](#version-008)
+      - [Date: 10/12/2020](#date-10122020)
       - [Professor: Elisabetta Di Nitto](#professor-elisabetta-di-nitto)
   - [1. Introduction](#1-introduction)
     - [A. Purpose](#a-purpose)
@@ -124,6 +124,7 @@ After careful analysis, we decided to not include it in this document for the fo
       - [B.1. Description of the given problem](#b1-description-of-the-given-problem)
       - [B.2. Current system](#b2-current-system)
       - [B.3. Goals](#b3-goals)
+      - [B.4. Discarded Features](#b4-discarded-features)
     - [C. Definitions, acronyms and abbreviations](#c-definitions-acronyms-and-abbreviations)
       - [C.1. Definitions](#c1-definitions)
       - [C.2. Acronyms](#c2-acronyms)
@@ -138,14 +139,18 @@ After careful analysis, we decided to not include it in this document for the fo
         - [A.1.2. Scenario 2](#a12-scenario-2)
         - [A.1.3. Scenario 3](#a13-scenario-3)
         - [A.1.4. Scenario 4](#a14-scenario-4)
-        - [A.1.5. Scenario 5](#a15-scenario-5)
-        - [A.1.6. Scenario 6](#a16-scenario-6)
+      - [A.2. Class Diagram](#a2-class-diagram)
+      - [A.3. State Diagrams](#a3-state-diagrams)
     - [B. Product functions](#b-product-functions)
-      - [B.1. Digital line-up](#b1-digital-line-up)
-      - [B.2 Physical line-up](#b2-physical-line-up)
-      - [B.3. Book a visit](#b3-book-a-visit)
-      - [B.4. Ticket inspection](#b4-ticket-inspection)
+      - [B.1. Join the queue (digital) - Basic service](#b1-join-the-queue-digital---basic-service)
+      - [B.2. Book a visit - Basic service](#b2-book-a-visit---basic-service)
+      - [B.3. Join the queue (physical) - Managerial service](#b3-join-the-queue-physical---managerial-service)
+      - [B.4. Store overview - Managerial service](#b4-store-overview---managerial-service)
+      - [B.5. Ticket scan - Managerial service](#b5-ticket-scan---managerial-service)
     - [C. User characteristics](#c-user-characteristics)
+      - [C.1. Clupper](#c1-clupper)
+      - [C.2. Store manager](#c2-store-manager)
+      - [C.3. Other stakeholders](#c3-other-stakeholders)
     - [D. Assumptions, dependecies and constraints](#d-assumptions-dependecies-and-constraints)
       - [D.1. Text assumptions](#d1-text-assumptions)
       - [D.2. Domain assumptions](#d2-domain-assumptions)
@@ -157,27 +162,9 @@ After careful analysis, we decided to not include it in this document for the fo
       - [A.4. Communication interfaces](#a4-communication-interfaces)
     - [B. Functional requirements](#b-functional-requirements)
       - [B.1. Use cases](#b1-use-cases)
-        - [B.1.1. Visitor registration](#b11-visitor-registration)
-        - [B.1.2. User login](#b12-user-login)
-        - [B.1.3. User join a store queue](#b13-user-join-a-store-queue)
-        - [B.1.4. User leaves a store queue](#b14-user-leaves-a-store-queue)
-        - [B.1.5. User books a visit to the store](#b15-user-books-a-visit-to-the-store)
-        - [B.1.6. User cancels a reservation](#b16-user-cancels-a-reservation)
-        - [B.1.7. Store Manager prints a physical ticket](#b17-store-manager-prints-a-physical-ticket)
-        - [B.1.8. Store Manager scans a ticket at the entrance](#b18-store-manager-scans-a-ticket-at-the-entrance)
-        - [B.1.9. Store Manager scans a ticket at the exit](#b19-store-manager-scans-a-ticket-at-the-exit)
       - [B.2. Use case diagrams](#b2-use-case-diagrams)
       - [B.3. Sequence diagrams](#b3-sequence-diagrams)
       - [B.4. Mapping on requirements](#b4-mapping-on-requirements)
-      - [B.4.1. Allow a Visitor to become registered User.](#b41-allow-a-visitor-to-become-registered-user)
-      - [B.4.2. Allow a Store Manager to add a store to the system.](#b42-allow-a-store-manager-to-add-a-store-to-the-system)
-      - [B.4.3. Allow a User to find locations of accessible stores.](#b43-allow-a-user-to-find-locations-of-accessible-stores)
-      - [B.4.4. Allow a User to request a digital ticket to enter a specific store as soon as possible.](#b44-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-as-soon-as-possible)
-      - [B.4.5. Allow a User to request a digital ticket to enter a specific store at a chosen time.](#b45-allow-a-user-to-request-a-digital-ticket-to-enter-a-specific-store-at-a-chosen-time)
-      - [B.4.6. Allow a User to delete a previously requested digital ticket before the inspection.](#b46-allow-a-user-to-delete-a-previously-requested-digital-ticket-before-the-inspection)
-      - [B.4.7. Allow a Store Manager to issue a physical ticket.](#b47-allow-a-store-manager-to-issue-a-physical-ticket)
-      - [B.4.8. Allow a Store Manager to inspect a ticket at the entrance.](#b48-allow-a-store-manager-to-inspect-a-ticket-at-the-entrance)
-      - [B.4.9. Allow a Store Manager to inspect a ticket at the exit.](#b49-allow-a-store-manager-to-inspect-a-ticket-at-the-exit)
     - [C. Performance requirements](#c-performance-requirements)
     - [D. Design constraints](#d-design-constraints)
       - [D.1. Standards compliance](#d1-standards-compliance)
@@ -191,6 +178,8 @@ After careful analysis, we decided to not include it in this document for the fo
   - [4. Formal analysis using alloy](#4-formal-analysis-using-alloy)
   - [5. Effort spent](#5-effort-spent)
     - [Pair programming](#pair-programming)
+    - [Ferrara Alessandro](#ferrara-alessandro)
+    - [Fratus Lorenzo](#fratus-lorenzo)
   - [6. References](#6-references)
 
 ## 2 Overall description
@@ -198,38 +187,59 @@ After careful analysis, we decided to not include it in this document for the fo
 ### A. Product perspective
 
 #### A.1. Scenarios
-1: CLUPPER REGISTRATION, LOGIN, BOOK VISIT, SEE DETAILS, CANCEL VISIT
-2: CLUPPER LOGIN, JOIN QUEUE, SEE DETAILS, SCAN EXIT, STORE OVERVIEW, SCAN ENTRANCE
-3: SM REGISTRATION, LOGIN, STORE OVERVIEW
 4: GUEST APPROACH SM, ADD TO QUEUE, PRINT TICKET
 
 ##### A.1.1. Scenario 1
-Jonathan looks at his watch, it's already half past eleven and his pantry is almost empty, it will be better to fill it quickly!
-He takes his smartphone and, after logging into CLup, he is able to enter the queue of his neighborhood shop while getting dressed.
-The waiting time is approximately 15 minutes, just enough to put on his shoes and approach the supermarket.
-Arrived at the store, Jonathan is asked for his ticket, so he unlocks his phone so that the store manager can scan it and let him in.
+
+The project manager has left the call with his team to answer another phone call, once again, so Kevin and his colleagues have a chance of taking a break.  
+
+Beatrix starts talking about this new software called Customers Line-up and how useful it is and since Kevin was already planning to go to the supermarket after work, he decides to give it a try.  
+
+The registration proces is very simple, as she said, just go to the website, insert your data, and you are in!  
+After selecting the nearest store on the map, Kevin decides to book an half hour visit from 7 pm; the whole process took just a few minutes just as long as he had before he went back to work.  
+
+At 6:45 pm the meeting is finally over and Kevin is so tired that he would rather order something from his favorite restaurant than go to the shop, so he logs into CLup again and goes to the page called "Reservations" where he finds his ticket and deletes it.  
+Sorry Beatrix, I will try it another day, he thinks.
 
 ##### A.1.2. Scenario 2
-Clarice is an old lady and she's not very good with technology. Her phone doesn't have a data plan because she doesn't surf the web much frequently. She must go shopping to buy groceries but her phone is unable to connect to the CLup applicative. One she has reached the store Clarice ask the Store Manager for a physical ticket. The Store Manager prints the ticket and Clarice can now wait her turn without worring about overcrowding the store.
+
+Glancing out of the shop, Constance realizes that the queue has become absurdly long, managing customers has become increasingly difficult since the beginning of the emergency.  
+She was afraid of introducing new software to her store, but she has to find a solution and, in any case, the service she has seen advertised in recent weeks, CLup, seems very simple to use and almost every store in the neighborhood is adopting it.  
+
+That evening, after closing, Constance takes out her phone to register to the system, all she has to do is enter some details about herself and her business.  
+She already has all the necessary equipment, so the only things left to do is inform her employees of the news and put up a sign to let customers know.  
+
+The next day Lucas is in charge of managing the flow of customers, all he has to do is pick up his phone and log into the system using the store credentials. Now he can get a complete overview of the store and start welcoming customers. 
 
 ##### A.1.3. Scenario 3
-It's 8am and Beatrix is working. She has just been informed that her husband has been discharged from the hospital after being hospitalized for COVID. She wants to have a nice dinner but does't have the necessary food at home. Knowing that the lunch break is the only free time she has, she decides to book a visit for that time. Beatrix opens up the CLup application and logs in, then she proceeds to select the nearest store and book a visit with the prefered time. Happy dinner Beatrix and remeber to wear a face-mask!
+
+Jonathan looks at his watch, it is already 11:30 and his pantry is almost empty, it will be better to fill it up quickly!  
+
+He takes out his smartphone and, after logging into CLup using his credentials, he can join the queue of his favorite neighborhood store, all while dressing up.  
+The waiting time is about 15 minutes, just enough to put on your shoes, put on a mask and take a walk to the supermarket.  
+
+Once at the store, Jonathan goes to the page called "Queue" and sees that he is next to enter.  
+As soon as Chad, the store manager, greets one customer and calls the next, Jonathan approaches him with his phone already unlocked.  
+Chad clicks the "Scan Ticket" button, points the camera at the customer's device and, after confirming that the ticket is valid, lets him in.  
+
+After paying for his groceries, Jonathan heads to the exit where he already knows he will have to show his ticket to Chad again before running home to prepare lunch.
 
 ##### A.1.4. Scenario 4
-Like every Saturday, Kevin doesn't work today, cool! He has all morning for himself, aside for that little task. 
-His wife Karen has booked a visit to the store at 10 o'clock but she is at work so it's Kevin's turn to run errands.
-He is approaching the supermarket when his car suddenly stops working, he is still far away from his destination and will never arrive in time, so he logs into his wife CLup account and cancels her reservation, he will take care of it after having the car repaired.
 
-##### A.1.5. Scenario 5
-The plague is spreading non-stop and the intensive care units of the hospitals are full. Tomorrow the new DPCM signed by the Prime Minister comes into force. The new regulations impose that every grocery store must halve the original maximum capacity. Chad, the store manager, must once again make his store compliant to the new regulations. He opens up CLup and after logging in, selects his store and edit in the new capaciy. No overcrowding under his watch!
+Clarice is an elderly lady and not very good with technology, she has an old phone without a data plan because she doesn't surf the web very often, and when she does she is together with her grandson Award.  
 
-##### A.1.6. Scenario 6
-Taking a look outside the shop, Constance realizes that the queue has become absurdly long, managing the customers is getting harder since the beginning of the emergency. Noticing the frightened face of his boss, Lucas decides to recommend her the application that he has heard of in the last few days: CLup. 
-Constance welcomes his advice with enthusiasm and immediately downloads the app to register her store. She has already all the equipment required so the only thing left to do is to thank Lucas for saving the day, perhaps with a salary increase!
+She needs to buy groceries but due to the current situation her neighborhood supermarket has introduced a system called the Customers Line-up and she doesn't feel confident about upgrading her equipment.  
+In this regard, Award told her not to worry because she can simply ask the manager for a ticket and that she has to wait her turn even if she is the only one outside the store.  
 
+Clarice doesn't understand this technology, but she trusts her grandson and after arriving at the shop she kindly asks the boy at the entrance if she can enter.  
+The boy nods and she can see him click on the PC before handing her a paper ticket with a strange symbol on it.  
+After a few minutes, Clarice is called by the boy who photographs the ticket and explains to keep it with her until the exit.
+
+#### A.2. Class Diagram
 TODO
-CLASS DIAGRAMS
-STATECHARTS
+
+#### A.3. State Diagrams
+TODO
 
 ### B. Product functions
 
@@ -293,7 +303,7 @@ In order to better clarify the presentation and avoid any ambiguities we decided
 #### D.1. Text assumptions
 
 - Credentials that a person has to provide to become a clupper are: name, surname, address, email and password.
-- Credentials that a person has to provide to become a store manager are: name, surname, email and password. He must also provide information about the store: name, address, VAT number, maximum capacity.
+- Credentials that a person has to provide to become a store manager are: name, surname, email and password. He must also provide information about the store: name, address, VAT number, maximum capacity and opening time.
 - Credentials that a user has to provide to login are: email and password.
 - A User with a reservation can enter the store at any time during the booked time slots.
 
@@ -321,7 +331,6 @@ In order to better clarify the presentation and avoid any ambiguities we decided
 The following mockups represent an idea of what the application will look like in the first release.
 
 TODO
-MOCKUPS
 
 #### A.2. Hardware interfaces
 
@@ -681,6 +690,23 @@ TODO
 | Scenarios and use cases                                          |       3.0h |
 | Overall RASD revision                                            |       3.5h |
 | Scenarios and use cases revision                                 |       1.5h |
+| Alloy                                                            |       2.0h |
+<br>
+
+### Ferrara Alessandro
+
+| Topic                                                            |      Hours |
+|:-----------------------------------------------------------------|-----------:|
+<br>
+
+### Fratus Lorenzo
+
+| Topic                                                            |      Hours |
+|:-----------------------------------------------------------------|-----------:|
+| Mockup UI                                                        |       4.0h |
+| State diagrams                                                   |       2.0h |
+| Scenarios                                                        |       1.5h |
+| Alloy                                                            |       6.0h |
 <br>
 
 ## 6. References
