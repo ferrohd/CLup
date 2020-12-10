@@ -728,6 +728,9 @@ TODO
 
 | Topic                                                            |      Hours |
 |:-----------------------------------------------------------------|-----------:|
+| Sequence Diagrams                                                |       3.0h |
+| Use Cases                                                        |       1.0h |
+| Alloy                                                            |       2.0h |
 <br>
 
 ### Fratus Lorenzo
