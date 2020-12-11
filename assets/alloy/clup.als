@@ -189,6 +189,9 @@ fact accessibleStoreCondition {
 fact noOverlappingBookingsForClupper {
     all c: Clupper | no disj bt1, bt2: c.bookings | bt1.overlaps[bt2]
 }
+fact oneInsideTicketAtATime {
+    all c: Clupper | lone t: Ticket | c.requested[t] and t.isInside
+}
 
 pred show {
     //Constraints to generate a more interesting world

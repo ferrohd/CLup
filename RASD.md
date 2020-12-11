@@ -4,8 +4,8 @@
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.0.8
-#### Date: 10/12/2020
+#### Version: 0.1.0
+#### Date: 11/12/2020
 #### Professor: Elisabetta Di Nitto
 <br>
 
@@ -58,7 +58,7 @@ The development of the system starts from scratch, for this reason no legacy sys
 | G9 | Allow a store manager to regulate the exits from the store |
 <br>
 
-#### B.4. Discarded Features
+#### B.4. Discarded features
 
 The assignment document contains an additional feature regarding the function called "Book a visit", we report here an excerpt:
 
@@ -74,6 +74,7 @@ After careful analysis, we decided to not include it in this document for the fo
 
 #### C.1. Definitions
 
+- **Visitor**: person which is not registered to the system but is performing the operations to register.
 - **User**: person which is correctly registered to the system, it abstracts the concepts of clupper and store manager.
 - **Customer**: person which wants to enter a store, it abstracts the concepts of clupper and guest.
 - **Clupper**: person (both user and customer) which is able to use the basic services offered by CLup (join a queue and book a visit).
@@ -115,8 +116,8 @@ After careful analysis, we decided to not include it in this document for the fo
 
 - [Requirements Analysis and Specification Document](#requirements-analysis-and-specification-document)
   - [Authors:](#authors)
-      - [Version: 0.0.8](#version-008)
-      - [Date: 10/12/2020](#date-10122020)
+      - [Version: 0.1.0](#version-010)
+      - [Date: 11/12/2020](#date-11122020)
       - [Professor: Elisabetta Di Nitto](#professor-elisabetta-di-nitto)
   - [1. Introduction](#1-introduction)
     - [A. Purpose](#a-purpose)
@@ -124,7 +125,7 @@ After careful analysis, we decided to not include it in this document for the fo
       - [B.1. Description of the given problem](#b1-description-of-the-given-problem)
       - [B.2. Current system](#b2-current-system)
       - [B.3. Goals](#b3-goals)
-      - [B.4. Discarded Features](#b4-discarded-features)
+      - [B.4. Discarded features](#b4-discarded-features)
     - [C. Definitions, acronyms and abbreviations](#c-definitions-acronyms-and-abbreviations)
       - [C.1. Definitions](#c1-definitions)
       - [C.2. Acronyms](#c2-acronyms)
@@ -135,12 +136,8 @@ After careful analysis, we decided to not include it in this document for the fo
   - [2 Overall description](#2-overall-description)
     - [A. Product perspective](#a-product-perspective)
       - [A.1. Scenarios](#a1-scenarios)
-        - [A.1.1. Scenario 1](#a11-scenario-1)
-        - [A.1.2. Scenario 2](#a12-scenario-2)
-        - [A.1.3. Scenario 3](#a13-scenario-3)
-        - [A.1.4. Scenario 4](#a14-scenario-4)
-      - [A.2. Class Diagram](#a2-class-diagram)
-      - [A.3. State Diagrams](#a3-state-diagrams)
+      - [A.2. Class diagram](#a2-class-diagram)
+      - [A.3. State diagrams](#a3-state-diagrams)
     - [B. Product functions](#b-product-functions)
       - [B.1. Join the queue (digital) - Basic service](#b1-join-the-queue-digital---basic-service)
       - [B.2. Book a visit - Basic service](#b2-book-a-visit---basic-service)
@@ -163,18 +160,7 @@ After careful analysis, we decided to not include it in this document for the fo
     - [B. Functional requirements](#b-functional-requirements)
       - [B.1. Use cases](#b1-use-cases)
       - [B.2. Use case diagrams](#b2-use-case-diagrams)
-        - [B.2.1 Visitor](#b21-visitor)
-        - [B.2.2 User](#b22-user)
-        - [B.2.2 Store Manager](#b22-store-manager)
       - [B.3. Sequence diagrams](#b3-sequence-diagrams)
-        - [B.3.1 Visitor Registration](#b31-visitor-registration)
-        - [B.3.2 User Login](#b32-user-login)
-        - [B.3.3 User Queue Up](#b33-user-queue-up)
-        - [B.3.4 User Leave Queue](#b34-user-leave-queue)
-        - [B.3.5 User Booking a Visit](#b35-user-booking-a-visit)
-        - [B.3.6 User Cancels a Booking](#b36-user-cancels-a-booking)
-        - [B.3.7 Store Manager Issue Ticket](#b37-store-manager-issue-ticket)
-        - [B.3.7 Store Manager Scan Ticket](#b37-store-manager-scan-ticket)
       - [B.4. Mapping on requirements](#b4-mapping-on-requirements)
     - [C. Performance requirements](#c-performance-requirements)
     - [D. Design constraints](#d-design-constraints)
@@ -185,8 +171,13 @@ After careful analysis, we decided to not include it in this document for the fo
       - [E.1. Reliability and avaiability](#e1-reliability-and-avaiability)
       - [E.2. Security](#e2-security)
       - [E.3. Maintainability](#e3-maintainability)
-    - [E.4. Portability](#e4-portability)
+      - [E.4. Portability](#e4-portability)
   - [4. Formal analysis using alloy](#4-formal-analysis-using-alloy)
+    - [A. Alloy code](#a-alloy-code)
+    - [B. Execution result](#b-execution-result)
+    - [C. Generated worlds](#c-generated-worlds)
+      - [C.1. World 1](#c1-world-1)
+      - [C.2. World 2](#c2-world-2)
   - [5. Effort spent](#5-effort-spent)
     - [Pair programming](#pair-programming)
     - [Ferrara Alessandro](#ferrara-alessandro)
@@ -200,7 +191,7 @@ After careful analysis, we decided to not include it in this document for the fo
 #### A.1. Scenarios
 4: GUEST APPROACH SM, ADD TO QUEUE, PRINT TICKET
 
-##### A.1.1. Scenario 1
+##### A.1.1. Scenario 1 <!-- omit in toc -->
 
 The project manager has left the call with his team to answer another phone call, once again, so Kevin and his colleagues have a chance of taking a break.  
 
@@ -212,7 +203,7 @@ After selecting the nearest store on the map, Kevin decides to book an half hour
 At 6:45 pm the meeting is finally over and Kevin is so tired that he would rather order something from his favorite restaurant than go to the shop, so he logs into CLup again and goes to the page called "Reservations" where he finds his ticket and deletes it.  
 Sorry Beatrix, I will try it another day, he thinks.
 
-##### A.1.2. Scenario 2
+##### A.1.2. Scenario 2 <!-- omit in toc -->
 
 Glancing out of the shop, Constance realizes that the queue has become absurdly long, managing customers has become increasingly difficult since the beginning of the emergency.  
 She was afraid of introducing new software to her store, but she has to find a solution and, in any case, the service she has seen advertised in recent weeks, CLup, seems very simple to use and almost every store in the neighborhood is adopting it.  
@@ -222,7 +213,7 @@ She already has all the necessary equipment, so the only things left to do is in
 
 The next day Lucas is in charge of managing the flow of customers, all he has to do is pick up his phone and log into the system using the store credentials. Now he can get a complete overview of the store and start welcoming customers. 
 
-##### A.1.3. Scenario 3
+##### A.1.3. Scenario 3 <!-- omit in toc -->
 
 Jonathan looks at his watch, it is already 11:30 and his pantry is almost empty, it will be better to fill it up quickly!  
 
@@ -235,7 +226,7 @@ Chad clicks the "Scan Ticket" button, points the camera at the customer's device
 
 After paying for his groceries, Jonathan heads to the exit where he already knows he will have to show his ticket to Chad again before running home to prepare lunch.
 
-##### A.1.4. Scenario 4
+##### A.1.4. Scenario 4 <!-- omit in toc -->
 
 Clarice is an elderly lady and not very good with technology, she has an old phone without a data plan because she doesn't surf the web very often, and when she does she is together with her grandson Award.  
 
@@ -246,11 +237,19 @@ Clarice doesn't understand this technology, but she trusts her grandson and afte
 The boy nods and she can see him click on the PC before handing her a paper ticket with a strange symbol on it.  
 After a few minutes, Clarice is called by the boy who photographs the ticket and explains to keep it with her until the exit.
 
-#### A.2. Class Diagram
-TODO
+#### A.2. Class diagram
+![Class diagram](assets/use/../class_diagram/class_diagram_rasd.svg "Class diagram")
 
-#### A.3. State Diagrams
-TODO
+#### A.3. State diagrams
+
+##### A.3.1. Ticket state <!-- omit in toc -->
+![Ticket state](assets/use/../state_diagrams/ticket_state.svg "Ticket state")
+
+##### A.3.2. Store state <!-- omit in toc -->
+![Store state](assets/use/../state_diagrams/store_state.svg "Store state")
+
+##### A.3.3. Time slot state <!-- omit in toc -->
+![Time slot state](assets/use/../state_diagrams/time_slot_state.svg "Time slot state")
 
 ### B. Product functions
 
@@ -402,14 +401,14 @@ A store manager always needs a stable internet connection in order to have acces
 
 #### B.1. Use cases
 
-| UserRegisters     |                                                                              |
+| VisitorRegisters  |                                                                              |
 |-------------------|------------------------------------------------------------------------------|
-| Actors            | User                                                                         |
+| Actors            | Visitor                                                                      |
 | Goals             | G1, G4, G7                                                                   |
-| Input conditions  | The user-to-be is already on the home page.                                  |
-| Events flow       | 1. The user clicks on the "Sign Up" button to start the registration process.<br>2. The user inserts his information in the mandatory fields.<br>3. The user clicks the "Register" button.<br>4. The system stores the inserted data<br>5. The system redirects the user to the login page. |
-| Output conditions | The user-to-be successfully ends the registration process and becomes a CLup user. From now on he can login to the application providing his credentials and use CLup. |
-| Exceptions        | 1. The provided email is already registered.<br>2. The user inserts not valid informations in one or more mandatory fields.<br><br>All exceptions are handled notifying the issue to the user and taking back the event flow to the point 2. |
+| Input conditions  | The visitor is already on the home page.                                     |
+| Events flow       | 1. The visitor clicks on the "Sign Up" button to start the registration process.<br>2. The visitor inserts his information in the mandatory fields.<br>3. The visitor clicks the "Register" button.<br>4. The system stores the inserted data.<br>5. The system redirects the visitor to the login page. |
+| Output conditions | The visitor successfully ends the registration process and becomes a CLup user. From now on he can login to the application providing his credentials and use CLup. |
+| Exceptions        | 1. The provided email is already registered.<br>2. The visitor inserts not valid informations in one or more mandatory fields.<br><br>All exceptions are handled notifying the issue to the visitor and taking back the event flow to the point 2. |
 <br>
 
 | UserLogsIn        |                                                                              |
@@ -514,29 +513,40 @@ A store manager always needs a stable internet connection in order to have acces
 | Exceptions        | *None* |
 
 #### B.2. Use case diagrams
-##### B.2.1 Visitor
+
+##### B.2.1 Visitor <!-- omit in toc -->
 ![Visitor](assets/use/../use_cases/use_case_visitor_registration.svg "Visitor")
-##### B.2.2 User
+
+##### B.2.2 User <!-- omit in toc -->
 ![User](assets/use/../use_cases/use_case_user.svg "User")
-##### B.2.2 Store Manager
+
+##### B.2.2 Store Manager <!-- omit in toc -->
 ![Store Manager](assets/use/../use_cases/use_case_store_manager.svg "Store Manager")
 
 #### B.3. Sequence diagrams
-##### B.3.1 Visitor Registration
+
+##### B.3.1 Visitor Registration <!-- omit in toc -->
 ![Visitor Registration](assets/use/../sequence_diagrams/sequence_diagram_visitor_registration.svg "Visitor Registration")
-##### B.3.2 User Login
+
+##### B.3.2 User Login <!-- omit in toc -->
 ![User Login](assets/use/../sequence_diagrams/sequence_diagram_user_login.svg "User Login")
-##### B.3.3 User Queue Up
+
+##### B.3.3 User Queue Up <!-- omit in toc -->
 ![User Queue Up](assets/use/../sequence_diagrams/sequence_diagram_user_queue_up.svg "User Queue Up")
-##### B.3.4 User Leave Queue
+
+##### B.3.4 User Leave Queue <!-- omit in toc -->
 ![User Leave Queue](assets/use/../sequence_diagrams/sequence_diagram_user_leave_queue.svg "User Leave Queue")
-##### B.3.5 User Booking a Visit
+
+##### B.3.5 User Booking a Visit <!-- omit in toc -->
 ![Booking a Visit](assets/use/../sequence_diagrams/sequence_diagram_user_booking.svg "Booking a Visit")
-##### B.3.6 User Cancels a Booking
+
+##### B.3.6 User Cancels a Booking <!-- omit in toc -->
 ![User Cancels a Booking](assets/use/../sequence_diagrams/sequence_diagram_user_cancel_booking.svg "User Cancels a Booking")
-##### B.3.7 Store Manager Issue Ticket
+
+##### B.3.7 Store Manager Issue Ticket <!-- omit in toc -->
 ![Store Manager Issue Ticket](assets/use/../sequence_diagrams/sequence_diagram_store_manager_issue_ticket.svg "Store Manager Issue Ticket")
-##### B.3.7 Store Manager Scan Ticket
+
+##### B.3.7 Store Manager Scan Ticket <!-- omit in toc -->
 ![Store Manager Scan Ticket](assets/use/../sequence_diagrams/sequence_diagram_store_manager_scan_ticket.svg "Store Manager Scan Ticket")
 
 #### B.4. Mapping on requirements
@@ -700,7 +710,7 @@ Code must be written following standards with high level of abstractions without
 Code must provide testing routine that covers at least 85% of the entire code, excluding software interface.
 The system has also to be built considering a future expansion, guaranteeing an high level of scalability both on the number of store and the available cities.
 
-### E.4. Portability
+#### E.4. Portability
 
 The software must be available from the vast majority of the devices to meet the need of having a wide spread application. To do so the system must be independent from the operating system of the single device.
 
@@ -710,7 +720,228 @@ This section is dedicated to the Alloy model of the Customers Line-up software. 
 In particular, the purpose of this section is to validate the consistency of the world generated by the union of the previous assumptions and requirements, with the help of this specification language.  
 In order to improve readability, we have introduced some minor assumptions that we are sure will not interfere with our goal.
 
-TODO
+### A. Alloy code
+
+```alloy
+abstract sig TimeSlotState {}
+one sig Free extends TimeSlotState {}
+one sig Full extends TimeSlotState {}
+
+abstract sig TicketState {}
+one sig Waiting extends TicketState {}
+one sig Inside extends TicketState {}
+
+abstract sig StoreState {}
+one sig Accessible extends StoreState {}
+one sig Inaccessible extends StoreState {}
+
+sig Queue {
+    store: one Store,
+    waiting: seq QueueTicket,
+}
+pred Queue.contains [qt: QueueTicket] {
+    qt in this.waiting.elems
+}
+
+sig TimeSlot {
+    status: one TimeSlotState,
+    store: one Store,
+    index: one Int,
+    capacity: one Int,
+    bookings: set BookingTicket,
+}
+pred TimeSlot.contains [bt: BookingTicket] {
+    bt in this.bookings
+}
+pred TimeSlot.isFree {
+    this.status = Free
+}
+
+abstract sig Ticket {
+    status: one TicketState,
+}
+sig QueueTicket extends Ticket {
+    queue: one Queue,
+}
+sig BookingTicket extends Ticket {
+    timeSlot: one TimeSlot,
+}
+pred Ticket.isWaiting {
+    this.status = Waiting
+}
+pred Ticket.isInside {
+    not this.isWaiting
+}
+pred BookingTicket.isCurrent {
+    this.timeSlot = this.store.current
+}
+pred BookingTicket.overlaps [other: BookingTicket] {
+    this.timeSlot.index = other.timeSlot.index
+}
+fun QueueTicket.store: one Store {
+    this.queue.store
+}
+fun BookingTicket.store: one Store {
+    this.timeSlot.store
+}
+
+sig Store {
+    status: one StoreState,
+    capacity: one Int,
+    queue: one Queue,
+    timeSlots: seq TimeSlot,
+    inside: set Ticket,
+}
+pred Store.isAccessible {
+    this.status = Accessible
+}
+pred Store.offers [ts: TimeSlot] {
+    ts in this.timeSlots.elems
+}
+pred Store.letIn [t: Ticket] {
+    t in this.inside
+}
+fun Store.current: one TimeSlot {
+    this.timeSlots.first
+}
+fun Store.idxOf [ts: TimeSlot]: one Int {
+    this.timeSlots.idxOf[ts]
+}
+
+abstract sig User {}
+sig StoreManager extends User {
+    store: one Store,
+    tickets: set QueueTicket,
+}
+sig Clupper extends User {
+    queue: lone QueueTicket,
+    bookings: set BookingTicket,
+}
+pred StoreManager.issued [t: Ticket] {
+    t in this.tickets
+}
+pred Clupper.requested [t: Ticket] {
+    t in (this.queue + this.bookings)
+}
+
+//Associations between signatures
+fact oneQueuePerQueueTicket {
+    all qt: QueueTicket, q: Queue | 
+        q.contains[qt] iff (qt.isWaiting and qt.queue = q)
+}
+fact oneTimeSlotPerBookingTicket {
+    all bt: BookingTicket, ts: TimeSlot | 
+        ts.contains[bt] iff (bt.isWaiting and bt.timeSlot = ts)
+}
+fact oneUserPerTicket {
+    all qt: QueueTicket | (
+            (one sm: StoreManager | sm.issued[qt]) and
+            (no c: Clupper | c.requested[qt])
+        ) or (
+            (no sm: StoreManager | sm.issued[qt]) and
+            (one c: Clupper | c.requested[qt])
+        )
+    
+    all bt: BookingTicket |
+        one c: Clupper | c.requested[bt]
+}
+fact oneStorePerStoreManager {
+    all s: Store | one sm: StoreManager | sm.store = s
+}
+fact storeManagerIssuesTicketsFromThatStore {
+    all sm: StoreManager | all qt: sm.tickets | qt.store = sm.store
+}
+fact storeTicketInsideCondition {
+    all s: Store, qt: QueueTicket |
+        s.letIn[qt] iff (qt.isInside and qt.store = s)
+
+    all s: Store, bt: BookingTicket |
+        s.letIn[bt] iff (bt.isInside and bt.store = s)
+}
+fact oneStorePerQueue {
+    all s: Store, q: Queue | s.queue = q iff q.store = s
+}
+fact oneStorePerTimeSlot {
+    all s: Store, ts: TimeSlot | s.offers[ts] iff ts.store = s
+}
+
+//Queue constraints
+fact disjointTicketsInQueue {
+    no q: Queue | q.waiting.hasDups
+}
+
+//TimeSlot constraints
+fact disjointBookingsInTimeSlot {
+    all ts: TimeSlot | no disj bt1, bt2: ts.bookings | bt1 = bt2
+}
+fact bookingsFromSameStoreInTimeSlot {
+    all ts: TimeSlot, bt: ts.bookings | bt.store = ts.store
+}
+fact capacityValueInTimeSlot {
+    all ts: TimeSlot | ts.capacity = div[ts.store.capacity, 4]
+}
+fact maxNumberOfBookingsPerTimeSlot {
+    all ts: TimeSlot | ts.capacity >= #ts.bookings
+}
+fact freeTimeSlotCondition {
+    all ts: TimeSlot | ts.isFree iff #ts.bookings < ts.capacity
+}
+
+//BookingTicket constraints 
+fact canBeInsideDuringCurrentTimeSlot {
+    all bt: BookingTicket | bt.isInside implies bt.isCurrent
+}
+
+//Store constraints
+fact disjointNonEmptyTimeSlotsInStore {
+    no s: Store | s.timeSlots.isEmpty or s.timeSlots.hasDups
+}
+fact consecutiveTimeSlotsInStore {
+    all s: Store, ts: s.timeSlots.elems |
+        ts.index = plus[s.current.index, s.idxOf[ts]]
+}
+fact nonNegativeCapacityInStore {
+    all s: Store | s.capacity > 0
+}
+fact maxNumberOfInsidePerStore {
+    all s: Store | s.capacity >= plus[(#s.inside), (#s.current.bookings)]
+}
+fact accessibleStoreCondition {
+    all s: Store | s.isAccessible iff #s.inside < s.capacity
+}
+
+//Clupper constraints
+fact noOverlappingBookingsForClupper {
+    all c: Clupper | no disj bt1, bt2: c.bookings | bt1.overlaps[bt2]
+}
+fact oneInsideTicketAtATime {
+    all c: Clupper | lone t: Ticket | c.requested[t] and t.isInside
+}
+
+pred show {
+    //Constraints to generate a more interesting world
+    #Clupper >= 4
+    #StoreManager = 1
+    #QueueTicket = 4
+    #BookingTicket = 4
+    #TimeSlot >= 3
+    all s: Store | s.capacity >= 4
+    some c: Clupper, qt: QueueTicket | c.requested[qt]
+}
+
+run show for 10
+```
+
+### B. Execution result
+![Execution result](assets/use/../alloy/execution_result.png "Execution result")
+
+### C. Generated worlds
+
+#### C.1. World 1
+![World 1](assets/use/../alloy/world_1.png "World 1")
+
+#### C.2. World 2
+![World 2](assets/use/../alloy/world_2.png "World 2")
 
 ## 5. Effort spent
 
