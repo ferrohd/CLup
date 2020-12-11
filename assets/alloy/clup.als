@@ -110,8 +110,12 @@ fact oneTimeSlotPerBookingTicket {
 }
 fact oneUserPerTicket {
     all qt: QueueTicket | (
-        (one sm: StoreManager | sm.issued[qt]) or
-        (one c: Clupper | c.requested[qt]))
+            (one sm: StoreManager | sm.issued[qt]) and
+            (no c: Clupper | c.requested[qt])
+        ) or (
+            (no sm: StoreManager | sm.issued[qt]) and
+            (one c: Clupper | c.requested[qt])
+        )
     
     all bt: BookingTicket |
         one c: Clupper | c.requested[bt]
@@ -187,6 +191,7 @@ fact noOverlappingBookingsForClupper {
 }
 
 pred show {
+    //Constraints to generate a more interesting world
     #Clupper >= 4
     #StoreManager = 1
     #QueueTicket = 4
@@ -196,4 +201,4 @@ pred show {
     some c: Clupper, qt: QueueTicket | c.requested[qt]
 }
 
-run show for 8
+run show for 10
