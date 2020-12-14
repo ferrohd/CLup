@@ -4,10 +4,80 @@
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.1.0
-#### Date: 11/12/2020
+#### Version: 0.1.1
+#### Date: 14/12/2020
 #### Professor: Elisabetta Di Nitto
 <br>
+
+- [Requirements Analysis and Specification Document](#requirements-analysis-and-specification-document)
+  - [Authors:](#authors)
+      - [Version: 0.1.1](#version-011)
+      - [Date: 14/12/2020](#date-14122020)
+      - [Professor: Elisabetta Di Nitto](#professor-elisabetta-di-nitto)
+  - [1. Introduction](#1-introduction)
+    - [A. Purpose](#a-purpose)
+    - [B. Scope](#b-scope)
+      - [B.1. Description of the given problem](#b1-description-of-the-given-problem)
+      - [B.2. Current system](#b2-current-system)
+      - [B.3. Goals](#b3-goals)
+      - [B.4. Discarded features](#b4-discarded-features)
+    - [C. Definitions, acronyms and abbreviations](#c-definitions-acronyms-and-abbreviations)
+      - [C.1. Definitions](#c1-definitions)
+      - [C.2. Acronyms](#c2-acronyms)
+      - [C.3. Abbreviations](#c3-abbreviations)
+    - [D. Revision history](#d-revision-history)
+    - [E. Reference documents](#e-reference-documents)
+    - [F. Document structure](#f-document-structure)
+  - [2 Overall description](#2-overall-description)
+    - [A. Product perspective](#a-product-perspective)
+      - [A.1. Scenarios](#a1-scenarios)
+      - [A.2. Class diagram](#a2-class-diagram)
+      - [A.3. State diagrams](#a3-state-diagrams)
+    - [B. Product functions](#b-product-functions)
+      - [B.1. Join the queue (digital) - Basic service](#b1-join-the-queue-digital---basic-service)
+      - [B.2. Book a visit - Basic service](#b2-book-a-visit---basic-service)
+      - [B.3. Join the queue (physical) - Managerial service](#b3-join-the-queue-physical---managerial-service)
+      - [B.4. Store overview - Managerial service](#b4-store-overview---managerial-service)
+      - [B.5. Ticket scan - Managerial service](#b5-ticket-scan---managerial-service)
+    - [C. User characteristics](#c-user-characteristics)
+      - [C.1. Clupper](#c1-clupper)
+      - [C.2. Store manager](#c2-store-manager)
+      - [C.3. Other stakeholders](#c3-other-stakeholders)
+    - [D. Assumptions, dependecies and constraints](#d-assumptions-dependecies-and-constraints)
+      - [D.1. Text assumptions](#d1-text-assumptions)
+      - [D.2. Domain assumptions](#d2-domain-assumptions)
+  - [3. Secific requirements](#3-secific-requirements)
+    - [A. External interface requirements](#a-external-interface-requirements)
+      - [A.1. User interfaces](#a1-user-interfaces)
+      - [A.2. Hardware interfaces](#a2-hardware-interfaces)
+      - [A.3. Software interfaces](#a3-software-interfaces)
+      - [A.4. Communication interfaces](#a4-communication-interfaces)
+    - [B. Functional requirements](#b-functional-requirements)
+      - [B.1. Use cases](#b1-use-cases)
+      - [B.2. Use case diagrams](#b2-use-case-diagrams)
+      - [B.3. Sequence diagrams](#b3-sequence-diagrams)
+      - [B.4. Mapping on requirements](#b4-mapping-on-requirements)
+    - [C. Performance requirements](#c-performance-requirements)
+    - [D. Design constraints](#d-design-constraints)
+      - [D.1. Standards compliance](#d1-standards-compliance)
+      - [D.2. Hardware limitations](#d2-hardware-limitations)
+      - [D.3. Any other constraint](#d3-any-other-constraint)
+    - [E. Software System Attributes](#e-software-system-attributes)
+      - [E.1. Reliability and avaiability](#e1-reliability-and-avaiability)
+      - [E.2. Security](#e2-security)
+      - [E.3. Maintainability](#e3-maintainability)
+      - [E.4. Portability](#e4-portability)
+  - [4. Formal analysis using Alloy](#4-formal-analysis-using-alloy)
+    - [A. Alloy code](#a-alloy-code)
+    - [B. Execution result](#b-execution-result)
+    - [C. Generated worlds](#c-generated-worlds)
+      - [C.1. World 1](#c1-world-1)
+      - [C.2. World 2](#c2-world-2)
+  - [5. Effort spent](#5-effort-spent)
+    - [Pair programming](#pair-programming)
+    - [Ferrara Alessandro](#ferrara-alessandro)
+    - [Fratus Lorenzo](#fratus-lorenzo)
+  - [6. References](#6-references)
 
 ## 1. Introduction
 
@@ -114,82 +184,17 @@ After careful analysis, we decided to not include it in this document for the fo
 
 ### F. Document structure
 
-- [Requirements Analysis and Specification Document](#requirements-analysis-and-specification-document)
-  - [Authors:](#authors)
-      - [Version: 0.1.0](#version-010)
-      - [Date: 11/12/2020](#date-11122020)
-      - [Professor: Elisabetta Di Nitto](#professor-elisabetta-di-nitto)
-  - [1. Introduction](#1-introduction)
-    - [A. Purpose](#a-purpose)
-    - [B. Scope](#b-scope)
-      - [B.1. Description of the given problem](#b1-description-of-the-given-problem)
-      - [B.2. Current system](#b2-current-system)
-      - [B.3. Goals](#b3-goals)
-      - [B.4. Discarded features](#b4-discarded-features)
-    - [C. Definitions, acronyms and abbreviations](#c-definitions-acronyms-and-abbreviations)
-      - [C.1. Definitions](#c1-definitions)
-      - [C.2. Acronyms](#c2-acronyms)
-      - [C.3. Abbreviations](#c3-abbreviations)
-    - [D. Revision history](#d-revision-history)
-    - [E. Reference documents](#e-reference-documents)
-    - [F. Document structure](#f-document-structure)
-  - [2 Overall description](#2-overall-description)
-    - [A. Product perspective](#a-product-perspective)
-      - [A.1. Scenarios](#a1-scenarios)
-      - [A.2. Class diagram](#a2-class-diagram)
-      - [A.3. State diagrams](#a3-state-diagrams)
-    - [B. Product functions](#b-product-functions)
-      - [B.1. Join the queue (digital) - Basic service](#b1-join-the-queue-digital---basic-service)
-      - [B.2. Book a visit - Basic service](#b2-book-a-visit---basic-service)
-      - [B.3. Join the queue (physical) - Managerial service](#b3-join-the-queue-physical---managerial-service)
-      - [B.4. Store overview - Managerial service](#b4-store-overview---managerial-service)
-      - [B.5. Ticket scan - Managerial service](#b5-ticket-scan---managerial-service)
-    - [C. User characteristics](#c-user-characteristics)
-      - [C.1. Clupper](#c1-clupper)
-      - [C.2. Store manager](#c2-store-manager)
-      - [C.3. Other stakeholders](#c3-other-stakeholders)
-    - [D. Assumptions, dependecies and constraints](#d-assumptions-dependecies-and-constraints)
-      - [D.1. Text assumptions](#d1-text-assumptions)
-      - [D.2. Domain assumptions](#d2-domain-assumptions)
-  - [3. Secific requirements](#3-secific-requirements)
-    - [A. External interface requirements](#a-external-interface-requirements)
-      - [A.1. User interfaces](#a1-user-interfaces)
-      - [A.2. Hardware interfaces](#a2-hardware-interfaces)
-      - [A.3. Software interfaces](#a3-software-interfaces)
-      - [A.4. Communication interfaces](#a4-communication-interfaces)
-    - [B. Functional requirements](#b-functional-requirements)
-      - [B.1. Use cases](#b1-use-cases)
-      - [B.2. Use case diagrams](#b2-use-case-diagrams)
-      - [B.3. Sequence diagrams](#b3-sequence-diagrams)
-      - [B.4. Mapping on requirements](#b4-mapping-on-requirements)
-    - [C. Performance requirements](#c-performance-requirements)
-    - [D. Design constraints](#d-design-constraints)
-      - [D.1. Standards compliance](#d1-standards-compliance)
-      - [D.2. Hardware limitations](#d2-hardware-limitations)
-      - [D.3. Any other constraint](#d3-any-other-constraint)
-    - [E. Software System Attributes](#e-software-system-attributes)
-      - [E.1. Reliability and avaiability](#e1-reliability-and-avaiability)
-      - [E.2. Security](#e2-security)
-      - [E.3. Maintainability](#e3-maintainability)
-      - [E.4. Portability](#e4-portability)
-  - [4. Formal analysis using alloy](#4-formal-analysis-using-alloy)
-    - [A. Alloy code](#a-alloy-code)
-    - [B. Execution result](#b-execution-result)
-    - [C. Generated worlds](#c-generated-worlds)
-      - [C.1. World 1](#c1-world-1)
-      - [C.2. World 2](#c2-world-2)
-  - [5. Effort spent](#5-effort-spent)
-    - [Pair programming](#pair-programming)
-    - [Ferrara Alessandro](#ferrara-alessandro)
-    - [Fratus Lorenzo](#fratus-lorenzo)
-  - [6. References](#6-references)
+- **Section 1: Introduction**: The first section provides an introduction to the purpose of the document and the objectives of the project. Included here is an analysis of the context in which the system will operate, along with a glossary including definitions, acronyms and abbreviations used in this document.
+- **Section 2: Overall description**: This section opens with the description of some scenarios that demonstrate the possible uses of the application, followed by a description of the domain (done through class and state diagrams). Subsequently, the section includes the main functions of the application and the description of user characteristics. At the end of the section, the main assumptions relevant to the functioning of the system are then presented, divided into text and domain assumptions.
+- **Section 3: Specific requirements**: This part of the document provides more details, which may be useful to the development team, on the aspects presented in the previous section. Included here are the system requirements (both functional and non-functional) and their mapping to the goals presented in section 2. The specific use cases, developed here from the scenarios, are then enriched with different UML diagrams.
+- **Section 4: Formal analysis using Alloy**: This section includes the Alloy code accompanied by some of the worlds obtained by running it. A brief introduction clarifies the goal of the modeling activity itself.
+- **Section 5: Effort spent**: This section includes information on the number of hours each group member worked for this document.
 
 ## 2 Overall description
 
 ### A. Product perspective
 
 #### A.1. Scenarios
-4: GUEST APPROACH SM, ADD TO QUEUE, PRINT TICKET
 
 ##### A.1.1. Scenario 1 <!-- omit in toc -->
 
@@ -338,7 +343,7 @@ In order to better clarify the presentation and avoid any ambiguities we decided
 
 #### A.1. User interfaces
 
-The following mockups represent an idea of what the application will look like in the first release.
+The following mockups represent an idea of what the application shall look like in the first release.
 
 TODO
 
@@ -714,7 +719,7 @@ The system has also to be built considering a future expansion, guaranteeing an 
 
 The software must be available from the vast majority of the devices to meet the need of having a wide spread application. To do so the system must be independent from the operating system of the single device.
 
-## 4. Formal analysis using alloy
+## 4. Formal analysis using Alloy
 
 This section is dedicated to the Alloy model of the Customers Line-up software. In this model we have described the main components of the system together with their relationships and their (most important) properties.  
 In particular, the purpose of this section is to validate the consistency of the world generated by the union of the previous assumptions and requirements, with the help of this specification language.  
@@ -977,6 +982,7 @@ run show for 10
 | State diagrams                                                   |       2.0h |
 | Scenarios                                                        |       1.5h |
 | Alloy                                                            |       6.0h |
+| RASD revision                                                    |       1.0h |
 <br>
 
 ## 6. References
