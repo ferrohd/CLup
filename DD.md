@@ -30,7 +30,13 @@
   - [C. Deployment view](#c-deployment-view)
     - [C.1. Recommended implementation](#c1-recommended-implementation)
   - [D. Runtime view](#d-runtime-view)
+    - [D.1 User Login](#d1-user-login)
+    - [D.1 Clupper Booking](#d1-clupper-booking)
+    - [D.1 Store Manager Scan Ticket](#d1-store-manager-scan-ticket)
   - [E. Component interface](#e-component-interface)
+    - [E.1 Clupper Interface](#e1-clupper-interface)
+    - [E.1 Store Manager Interface](#e1-store-manager-interface)
+    - [E.1 Account Management](#e1-account-management)
   - [F. Selected architectural styles and patterns](#f-selected-architectural-styles-and-patterns)
   - [G. Other design decisions](#g-other-design-decisions)
 - [3. User interface design](#3-user-interface-design)
@@ -103,10 +109,20 @@ TODO
 
 ### D. Runtime view
 *[Describe the way components interact to accomplish specific tasks (related to use cases)]*
-TODO (SEQUENCE DIAGRAMS)
+#### D.1 User Login
+![Clupper Sequence Diagrams](assets/class_sequence_diagrams/user_login_class_sequence_diagram.svg)
+#### D.1 Clupper Booking
+![Clupper Sequence Diagrams](assets/class_sequence_diagrams/clupper_booking_class_sequence_diagram.svg)
+#### D.1 Store Manager Scan Ticket
+![Clupper Sequence Diagrams](assets/class_sequence_diagrams/store_manager_scan_class_sequence_diagram.svg)
 
 ### E. Component interface
-TODO (COMPONENT INTERFACE DIAGRAM)
+#### E.1 Clupper Interface
+![Clupper Interface Diagram](assets/component_interface_diagrams/clupper_component_interface_diagram.svg)
+#### E.1 Store Manager Interface
+![Store Manager Interface Diagram](assets/component_interface_diagrams/store_manager_component_interface_diagram.svg)
+#### E.1 Account Management
+![Accounte Management Interface Diagram](assets/component_interface_diagrams/account_management_component_interface_diagram.svg)
 
 ### F. Selected architectural styles and patterns
 *[Styles/patterns used, why and how]*
@@ -154,6 +170,8 @@ TODO
 
 | Topic                                                            |      Hours |
 |:-----------------------------------------------------------------|-----------:|
+| Component Interface Diagrams                                     |       1.0h |
+| Sequence Diagrams                                                |       1.0h |
 <br>
 
 ### Fratus Lorenzo
