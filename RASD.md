@@ -1,12 +1,12 @@
-![Logo Politecnico di Milano](assets/polimi_logo.jpg "Politecnico di Milano")
+![Logo Politecnico di Milano](assets/use/../polimi_logo.jpg "Politecnico di Milano")
 # Requirements Analysis and Specification Document <!-- omit in toc -->
 ## Customers Line-up <!-- omit in toc -->
 ### Authors: <!-- omit in toc -->
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.1.1 <!-- omit in toc -->
-#### Date: 14/12/2020 <!-- omit in toc -->
+#### Version: 0.1.2 <!-- omit in toc -->
+#### Date: 19/12/2020 <!-- omit in toc -->
 #### Professor: Elisabetta Di Nitto <!-- omit in toc -->
 <br>
 
@@ -39,7 +39,7 @@
     - [C.1. Clupper](#c1-clupper)
     - [C.2. Store manager](#c2-store-manager)
     - [C.3. Other stakeholders](#c3-other-stakeholders)
-  - [D. Assumptions, dependecies and constraints](#d-assumptions-dependecies-and-constraints)
+  - [D. Assumptions, dependencies and constraints](#d-assumptions-dependencies-and-constraints)
     - [D.1. Text assumptions](#d1-text-assumptions)
     - [D.2. Domain assumptions](#d2-domain-assumptions)
 - [3. Secific requirements](#3-secific-requirements)
@@ -59,7 +59,7 @@
     - [D.2. Hardware limitations](#d2-hardware-limitations)
     - [D.3. Any other constraint](#d3-any-other-constraint)
   - [E. Software System Attributes](#e-software-system-attributes)
-    - [E.1. Reliability and avaiability](#e1-reliability-and-avaiability)
+    - [E.1. Reliability and availability](#e1-reliability-and-availability)
     - [E.2. Security](#e2-security)
     - [E.3. Maintainability](#e3-maintainability)
     - [E.4. Portability](#e4-portability)
@@ -300,20 +300,20 @@ To do so the system offers a set of functions (called "managerial services") wit
 
 #### C.3. Other stakeholders
 
-As explained in the previous sections, the system shall be able to provide fallback options for customers that need to enter a store but do not have access to the application. We define as **guest** any person who:
+As explained in the previous sections, the system shall be able to provide fallback options for customers that need to enter a store but do not have access to the application. We define as *guest* any person who:
 - Is not registered to the system (regardless of whether they have access to the required technology or not);
 - Is registered to the system but is currently unable to use the application (e.g. no device with him, dead battery, no internet connection, ...);
 
 The goal of a guest is the same as that of a clupper (the risk of infection is technically lower due to the fact that the majority of customers should be cluppers).  
 By definition, a guest cannot directly take advantage of the services offered by the system, for this reason he is only able to join a queue by addressing the store manager.
 
-### D. Assumptions, dependecies and constraints
+### D. Assumptions, dependencies and constraints
 
 In order to better clarify the presentation and avoid any ambiguities we decided to introduce the following assumptions.
 
 #### D.1. Text assumptions
 
-- Credentials that a person has to provide to become a clupper are: name, surname, address, email and password.
+- Credentials that a person has to provide to become a clupper are: name, surname, email and password.
 - Credentials that a person has to provide to become a store manager are: name, surname, email and password. He must also provide information about the store: name, address, VAT number, maximum capacity and opening time.
 - Credentials that a user has to provide to login are: email and password.
 - A User with a reservation can enter the store at any time during the booked time slots.
@@ -690,7 +690,7 @@ In the first release no public interfaces will be opened and third party service
 
 ### E. Software System Attributes
 
-#### E.1. Reliability and avaiability
+#### E.1. Reliability and availability
 
 The estimated waiting time in the queue should be as close as possible to the ideal one.  
 The count of reservations for every time slot must be correct to avoid overbooking with the effect of letting people wait outside the store or letting them inside violating the capacity limit.

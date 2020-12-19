@@ -5,8 +5,8 @@
 - [Alessandro Ferrara](https://github.com/ferrohd)
 - [Lorenzo Fratus](https://github.com/lorenzofratus)
 
-#### Version: 0.0.1 <!-- omit in toc -->
-#### Date: 15/12/2020 <!-- omit in toc -->
+#### Version: 0.0.2 <!-- omit in toc -->
+#### Date: 19/12/2020 <!-- omit in toc -->
 #### Professor: Elisabetta Di Nitto <!-- omit in toc -->
 <br>
 
@@ -19,8 +19,6 @@
   - [F. Document structure](#f-document-structure)
 - [2. Architectural design](#2-architectural-design)
   - [A. Overview](#a-overview)
-    - [A.1. Physical architecture](#a1-physical-architecture)
-    - [A.2. High level layers](#a2-high-level-layers)
   - [B. Component view](#b-component-view)
     - [B.1. High level component](#b1-high-level-component)
     - [B.2. Clupper Services projection](#b2-clupper-services-projection)
@@ -30,13 +28,13 @@
   - [C. Deployment view](#c-deployment-view)
     - [C.1. Recommended implementation](#c1-recommended-implementation)
   - [D. Runtime view](#d-runtime-view)
-    - [D.1 User Login](#d1-user-login)
-    - [D.1 Clupper Booking](#d1-clupper-booking)
-    - [D.1 Store Manager Scan Ticket](#d1-store-manager-scan-ticket)
+    - [D.1 User login](#d1-user-login)
+    - [D.2 Clupper booking](#d2-clupper-booking)
+    - [D.3 Store manager scan ticket](#d3-store-manager-scan-ticket)
   - [E. Component interface](#e-component-interface)
-    - [E.1 Clupper Interface](#e1-clupper-interface)
-    - [E.1 Store Manager Interface](#e1-store-manager-interface)
-    - [E.1 Account Management](#e1-account-management)
+    - [E.1 Clupper interface](#e1-clupper-interface)
+    - [E.2 Store manager interface](#e2-store-manager-interface)
+    - [E.3 Account management](#e3-account-management)
   - [F. Selected architectural styles and patterns](#f-selected-architectural-styles-and-patterns)
   - [G. Other design decisions](#g-other-design-decisions)
 - [3. User interface design](#3-user-interface-design)
@@ -62,77 +60,114 @@
 ### F. Document structure
 
 ## 2. Architectural design
-### A. Overview
-*[High level components and their interaction]*  
-TODO
 
-#### A.1. Physical architecture
+### A. Overview
+
+The Customers Line-up system has a four-tier architecture that can be grouped into 3 logical layers: presentation, application and data.  
+
 ![Physical architecture diagram](assets/use/../architecture_overview/physical_architecture_diagram.svg "Physical architecture diagram")
 
-TODO
+On the client side there is nothing but a browser used to connect to the web server and to dynamically update the *Web App View* when needed (only for minor changes).  
 
-#### A.2. High level layers
+The web server, on the other hand, acts as a middleware between the client interface and the system logic, communicating with the user via the standard HTTP protocol (or HTTPS), receiving requests and providing adequate responses. To do this, this node also interacts with the application server to submit changes in user data and to request pieces of information needed to generate and update the UI.  
+
+Finally, the business logic of the system resides on the application server (*Backend*). This node is able to manage the connection with the DBMS and takes care of carrying out the necessary processing for the correct functioning of the system.  
+
 ![High level layers diagram](assets/use/../architecture_overview/high_level_layers.svg "High level layers diagram")
 
-TODO
-
 ### B. Component view
-TODO
+
+The following diagrams show the main components of the CLup system and the interfaces through which they interact.  
+For clarity, the first diagram shows a high level view of the components, which are then further explored individually.
+
+The system exposes a RESTful API with multiple public endpoint and resources, some of them require a proper authentication and authorization to be used.
 
 #### B.1. High level component
 ![High level component diagram](assets/use/../components_view/high_level_component_diagram.svg "High level component diagram")
-TODO
+
+The client side consists of a single component that refers to the web application, the only access point to this system.
+
+The server side, on the other end, is made of three subsystems:
+- **Clupper Services**: provides access to the basic services of the application after the login, this services are reserved to the cluppers.
+- **Store Manager Services**: provides access to the managerial services of the application after the login, this services are reserved to the store managers.
+- **Account Services**: provides support to registration, login and logout operations for any type of user.
 
 #### B.2. Clupper Services projection
 ![Clupper Services projection diagram](assets/use/../components_view/clupper_services_projection.svg "Clupper Services projection diagram")
-TODO
+
+The Clupper Services subsystem contains three components:
+- **Queue Module**: offers the *QueueManagement* interface to handle all the operations related to the join the queue function. 
+- **Booking Module**: offers the *BookingManagement* interface to handle all the operations related to the book a visit function.
+- **Store Locator**: offers the *StoreLocator* interface that allows the client to retrieve information about the stores.
+
+In order to fulfill their goals, these components need to communicate with the DBMS and the Maps API through the corresponding interfaces.
 
 #### B.3. Store Manager Services projection
 ![Store Manager Services projection diagram](assets/use/../components_view/store_manager_services_projection.svg "Store Manager Services projection diagram")
+
+The Store Manager Services subsystem contains three components:
+- **Store Module**: offers the *StoreOverview* and the *StoreManagement* interfaces used to receive store status updates and to edit the store maximum capacity respectively.
+- **Ticket Module**: offers the *ScanTicket* interface to receive feedback on scanned tickets.
+- **Guest Module**: offers the *IssueTicket* interface to request a queue ticket for a guest.
+
+In order to fulfill their goals, these components need to communicate with the DBMS.
 
 *[Camera, Printer external interfaces?]*  
 TODO
 
 #### B.4. Account Services projection
 ![Account Services projection diagram](assets/use/../components_view/account_services_projection.svg "Account Services projection diagram")
-TODO
+The Account Services subsystem contains one component:
+- **Account Module**: offers the *AccountManagement* interface to handle the operations of register, login and logout
+
+In order to fulfill its goals, this component needs to communicate with the DBMS.
 
 #### B.5. ER diagram
 TODO
 
 ### C. Deployment view
 ![Deployment diagram](assets/use/../deployment_view/deployment_diagram.svg "Deployment diagram")
-Thte system architecture is divided in 4 tiers.
-- The first tier is the *client tier*:it's composed by any device capable of rendering a web page (smartphones, tablets, ecc.). It communicates with the web tier through the HTTP protocol.
+
+The system architecture is divided in 4 tiers:
+- The first tier is the *client tier*: it is composed by any device capable of rendering a web page (smartphones, tablets, PC). It communicates with the web tier through the HTTP protocol.
 - The *web tier* contains the web server implemented with Nginx platform. This tier is provided with a load balancer to distribute the load between the multiple istances of the application tier.
-- The third tier is the *application tier*. The CLup backend is built on a Express application which is managed by a docker-like process manager to spawn multiple istances. The execution enviroment is the NodeJS runtime.
+- The third tier is the *application tier*. The CLup backend is built on an Express application which is managed by a docker-like process manager to spawn multiple istances. The execution enviroment is the NodeJS runtime.
 - The *data tier* is the fourth tier composed by the Database server.
 
 #### C.1. Recommended implementation
+
 - **Client tier**: The client web browser may be an arbitrary one, the only costraint is that it must be recent enough to render HTML5 and CSS3 web pages and execute Javascript.
-- **Web tier**: The web tier must be implemented with Nginx web server. A load balancer is also needed to distribute the load between the multiple istances of the application. It's strongly recommended to setup the load balancer to use a Round Robin algorithm to distribute the load, to avoid overloading a single application istance.
-- **application tier**: The runtime engine where the backend lives is NodeJS and a docker-like process manager (PM2) is used to spawn multiple istances of the application, which uses ExpressJS to expose services.
-- **data tier**: The database is relational and is implemented using MySQL.
+- **Web tier**: The web tier must be implemented with Nginx web server. A load balancer is also needed to distribute the load between the multiple istances of the application. It is strongly recommended to setup the load balancer to use a Round Robin algorithm to distribute the load, to avoid overloading a single application istance.
+- **Application tier**: The runtime engine where the backend lives is NodeJS and a docker-like process manager (PM2) is used to spawn multiple istances of the application, which uses ExpressJS to expose services.
+- **Data tier**: The database is relational and is implemented using MySQL.
 
 ### D. Runtime view
-The following sequence diagrams describe the interactions between the main compontents of the product when utilizing the most common features. This is stil a high-level description of the actual interactions so they can be modified during the developement process.
-#### D.1 User Login
+
+The following sequence diagrams describe the interactions between the main compontents of the product when utilizing the most common features. This is still a high-level description of the actual interactions so that they can be slightly modified during the developement process.
+
+#### D.1 User login
 ![Clupper Sequence Diagrams](assets/class_sequence_diagrams/user_login_class_sequence_diagram.svg)
-#### D.1 Clupper Booking
+
+#### D.2 Clupper booking
 ![Clupper Sequence Diagrams](assets/class_sequence_diagrams/clupper_booking_class_sequence_diagram.svg)
-#### D.1 Store Manager Scan Ticket
+
+#### D.3 Store manager scan ticket
 ![Clupper Sequence Diagrams](assets/class_sequence_diagrams/store_manager_scan_class_sequence_diagram.svg)
 
 ### E. Component interface
-These diagrams show the main method provided by each component.
-- The interface *ClupperServices* provide every method the Clupper could need to acces every functionality of the app. In particular there are methods for join/leave the queue, book a visit and find Stores.
-- Like CustomerServices, *StoreManagerServices* provides all methods a Store Manager needs to manage the Store. Infact he's allowed to edit the store capacity, check the queue status and the number of people inside and lend out physical tickets.
-- *AccountServices* is a interface accessible by all the Users and Visitors. It let's the Users log-in and logout and allows the registration of new Cluppers or Store Managers.
-#### E.1 Clupper Interface
+
+These diagrams show the main methods provided by each component:
+- The *ClupperServices* interface provides every method the clupper could need to acces every functionality of the application. In particular there are methods to join the queue, book a visit and find stores.
+- Like CustomerServices, *StoreManagerServices* provides all methods a store manager needs to manage the store. In fact, he's allowed to edit the store capacity, check the number of customers inside, in line and with a reservation and lend out physical tickets to guests. 
+- *AccountServices* is an interface accessible by both users and visitors. It let's the users login and logout and allows the registration of new cluppers or store managers.
+
+#### E.1 Clupper interface
 ![Clupper Interface Diagram](assets/component_interface_diagrams/clupper_component_interface_diagram.svg)
-#### E.1 Store Manager Interface
+
+#### E.2 Store manager interface
 ![Store Manager Interface Diagram](assets/component_interface_diagrams/store_manager_component_interface_diagram.svg)
-#### E.1 Account Management
+
+#### E.3 Account management
 ![Accounte Management Interface Diagram](assets/component_interface_diagrams/account_management_component_interface_diagram.svg)
 
 ### F. Selected architectural styles and patterns
@@ -143,22 +178,38 @@ TODO
 TODO (API USAGE)
 
 ## 3. User interface design
-TODO (BCE DIAGRAMS?)
 
 ### A. UI mockups
+
+The following mockups (already presented in section *3.A.1. User interfaces* of the RASD) provide an idea of how the web application offered by CLup will look like.
+
+Since the main devices that will use the system are portable, a mobile-first approach is recommended in the UI development, however, the client view must be designed responsively to best fit any screen size.
+
 TODO
 
 ### B. UX diagrams
-TODO
+
+The following UX diagrams provide additional information about the journey of the various users inside the CLup web application.
+
+The paths represented in the following diagrams take for granted the absence of exceptions of any kind. Each exception is handled as explained in the section *3.B.1. Use cases* of the RASD.
+
+Using the *back* button provided by the web browser or the device will result in the default behaviour (previous page in history) and will therefore be ignored in this context.  
 
 #### B.1. Visitor
 ![Visitor diagram](assets/use/../ux_diagrams/ux_visitor.svg "Visitor diagram")
 
+The direct path from the *Home* page to the *UserLogin* page is considered as the default behaviour and therefore omitted in the next diagrams. The *LoginCredentials* form is also not reported for clarity.
+
 #### B.2. Clupper
 ![Clupper diagram](assets/use/../ux_diagrams/ux_clupper.svg "Clupper diagram")
 
+The *NavBar* component is included in every page accessible by the clupper except the "UserLogin" page, the arrow is omitted to improve readability.  
+The *StoreTile* and *BookingTile* can be included multiple times on the same page (with different data), they are classified as *clickable* since they behave like a button.
+
 #### B.3. Store manager
 ![Store manager diagram](assets/use/../ux_diagrams/ux_store_manager.svg "Store manager diagram")
+
+*Camera* and *Printer* represent the use of that specific external component (required for the correct functioning of the application) and have been included in the diagram to better clarify the sequence of actions that the store manager will perform.
 
 ## 4. Requirements traceability
 *[How requirements (RASD) map to the design elements (DD)]*
@@ -191,6 +242,7 @@ TODO
 |:-----------------------------------------------------------------|-----------:|
 | UX diagrams                                                      |       2.0h |
 | DD structure                                                     |       1.0h |
+| Sections 2 and 3                                                 |       2.5h |
 <br>
 
 ## 7. References

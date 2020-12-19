@@ -1,15 +1,92 @@
-\includegraphics{assets/polimi_logo.jpg} \# Requirements Analysis and
-Specification Document \#\# Customers Line-up \#\#\# Authors: -
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{}
+
+\begin{document}
+
+\includegraphics{assets/use/../polimi_logo.jpg} \# Requirements Analysis
+and Specification Document \#\# Customers Line-up \#\#\# Authors: -
 \href{https://github.com/ferrohd}{Alessandro Ferrara} -
 \href{https://github.com/lorenzofratus}{Lorenzo Fratus}
 
-\hypertarget{version-0.1.1}{%
-\paragraph{\texorpdfstring{Version: 0.1.1
-}{Version: 0.1.1 }}\label{version-0.1.1}}
+\hypertarget{version-0.1.2}{%
+\paragraph{\texorpdfstring{Version: 0.1.2
+}{Version: 0.1.2 }}\label{version-0.1.2}}
 
-\hypertarget{date-14122020}{%
-\paragraph{\texorpdfstring{Date: 14/12/2020
-}{Date: 14/12/2020 }}\label{date-14122020}}
+\hypertarget{date-19122020}{%
+\paragraph{\texorpdfstring{Date: 19/12/2020
+}{Date: 19/12/2020 }}\label{date-19122020}}
 
 \hypertarget{professor-elisabetta-di-nitto}{%
 \paragraph{\texorpdfstring{Professor: Elisabetta Di Nitto
@@ -110,8 +187,8 @@ Specification Document \#\# Customers Line-up \#\#\# Authors: -
       \protect\hyperlink{c3-other-stakeholders}{C.3. Other stakeholders}
     \end{itemize}
   \item
-    \protect\hyperlink{d-assumptions-dependecies-and-constraints}{D.
-    Assumptions, dependecies and constraints}
+    \protect\hyperlink{d-assumptions-dependencies-and-constraints}{D.
+    Assumptions, dependencies and constraints}
 
     \begin{itemize}
     \tightlist
@@ -185,8 +262,8 @@ Specification Document \#\# Customers Line-up \#\#\# Authors: -
     \begin{itemize}
     \tightlist
     \item
-      \protect\hyperlink{e1-reliability-and-avaiability}{E.1.
-      Reliability and avaiability}
+      \protect\hyperlink{e1-reliability-and-availability}{E.1.
+      Reliability and availability}
     \item
       \protect\hyperlink{e2-security}{E.2. Security}
     \item
@@ -761,11 +838,11 @@ dealing with the store and to approve their entrances.
 
 As explained in the previous sections, the system shall be able to
 provide fallback options for customers that need to enter a store but do
-not have access to the application. We define as \textbf{guest} any
-person who: - Is not registered to the system (regardless of whether
-they have access to the required technology or not); - Is registered to
-the system but is currently unable to use the application (e.g.~no
-device with him, dead battery, no internet connection, \ldots);
+not have access to the application. We define as \emph{guest} any person
+who: - Is not registered to the system (regardless of whether they have
+access to the required technology or not); - Is registered to the system
+but is currently unable to use the application (e.g.~no device with him,
+dead battery, no internet connection, \ldots);
 
 The goal of a guest is the same as that of a clupper (the risk of
 infection is technically lower due to the fact that the majority of
@@ -774,9 +851,9 @@ By definition, a guest cannot directly take advantage of the services
 offered by the system, for this reason he is only able to join a queue
 by addressing the store manager.
 
-\hypertarget{d.-assumptions-dependecies-and-constraints}{%
-\subsubsection{D. Assumptions, dependecies and
-constraints}\label{d.-assumptions-dependecies-and-constraints}}
+\hypertarget{d.-assumptions-dependencies-and-constraints}{%
+\subsubsection{D. Assumptions, dependencies and
+constraints}\label{d.-assumptions-dependencies-and-constraints}}
 
 In order to better clarify the presentation and avoid any ambiguities we
 decided to introduce the following assumptions.
@@ -788,7 +865,7 @@ decided to introduce the following assumptions.
 \tightlist
 \item
   Credentials that a person has to provide to become a clupper are:
-  name, surname, address, email and password.
+  name, surname, email and password.
 \item
   Credentials that a person has to provide to become a store manager
   are: name, surname, email and password. He must also provide
@@ -1652,9 +1729,9 @@ services won't be able to interoperate with CLup.
 \subsubsection{E. Software System
 Attributes}\label{e.-software-system-attributes}}
 
-\hypertarget{e.1.-reliability-and-avaiability}{%
+\hypertarget{e.1.-reliability-and-availability}{%
 \paragraph{E.1. Reliability and
-avaiability}\label{e.1.-reliability-and-avaiability}}
+availability}\label{e.1.-reliability-and-availability}}
 
 The estimated waiting time in the queue should be as close as possible
 to the ideal one.\\
@@ -2024,3 +2101,5 @@ RASD revision & 1.0h \\ \addlinespace
   \href{https://www.gazzettaufficiale.it/atto/vediPermalink?atto.dataPubblicazioneGazzetta=2020-11-09\&atto.codiceRedazionale=20G00170\&tipoSerie=serie_generale\&tipoVigenza=originario\&tipoProvvedimento=*}{Decreto
   Ministeriale}
 \end{itemize}
+
+\end{document}
