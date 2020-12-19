@@ -65,7 +65,7 @@
 
 The Customers Line-up system has a four-tier architecture that can be grouped into 3 logical layers: presentation, application and data.  
 
-![Physical architecture diagram](assets/use/../architecture_overview/physical_architecture_diagram.svg "Physical architecture diagram")
+![Physical architecture diagram](assets/dd/architecture_overview/physical_architecture_diagram.svg "Physical architecture diagram")
 
 On the client side there is nothing but a browser used to connect to the web server and to dynamically update the *Web App View* when needed (only for minor changes).  
 
@@ -73,7 +73,7 @@ The web server, on the other hand, acts as a middleware between the client inter
 
 Finally, the business logic of the system resides on the application server (*Backend*). This node is able to manage the connection with the DBMS and takes care of carrying out the necessary processing for the correct functioning of the system.  
 
-![High level layers diagram](assets/use/../architecture_overview/high_level_layers.svg "High level layers diagram")
+![High level layers diagram](assets/dd/architecture_overview/high_level_layers.svg "High level layers diagram")
 
 ### B. Component view
 
@@ -83,7 +83,7 @@ For clarity, the first diagram shows a high level view of the components, which 
 The system exposes a RESTful API with multiple public endpoint and resources, some of them require a proper authentication and authorization to be used.
 
 #### B.1. High level component
-![High level component diagram](assets/use/../components_view/high_level_component_diagram.svg "High level component diagram")
+![High level component diagram](assets/dd/components_view/high_level_component_diagram.svg "High level component diagram")
 
 The client side consists of a single component that refers to the web application, the only access point to this system.
 
@@ -93,7 +93,7 @@ The server side, on the other end, is made of three subsystems:
 - **Account Services**: provides support to registration, login and logout operations for any type of user.
 
 #### B.2. Clupper Services projection
-![Clupper Services projection diagram](assets/use/../components_view/clupper_services_projection.svg "Clupper Services projection diagram")
+![Clupper Services projection diagram](assets/dd/components_view/clupper_services_projection.svg "Clupper Services projection diagram")
 
 The Clupper Services subsystem contains three components:
 - **Queue Module**: offers the *QueueManagement* interface to handle all the operations related to the join the queue function. 
@@ -103,7 +103,7 @@ The Clupper Services subsystem contains three components:
 In order to fulfill their goals, these components need to communicate with the DBMS and the Maps API through the corresponding interfaces.
 
 #### B.3. Store Manager Services projection
-![Store Manager Services projection diagram](assets/use/../components_view/store_manager_services_projection.svg "Store Manager Services projection diagram")
+![Store Manager Services projection diagram](assets/dd/components_view/store_manager_services_projection.svg "Store Manager Services projection diagram")
 
 The Store Manager Services subsystem contains three components:
 - **Store Module**: offers the *StoreOverview* and the *StoreManagement* interfaces used to receive store status updates and to edit the store maximum capacity respectively.
@@ -116,7 +116,7 @@ In order to fulfill their goals, these components need to communicate with the D
 TODO
 
 #### B.4. Account Services projection
-![Account Services projection diagram](assets/use/../components_view/account_services_projection.svg "Account Services projection diagram")
+![Account Services projection diagram](assets/dd/components_view/account_services_projection.svg "Account Services projection diagram")
 The Account Services subsystem contains one component:
 - **Account Module**: offers the *AccountManagement* interface to handle the operations of register, login and logout
 
@@ -126,7 +126,7 @@ In order to fulfill its goals, this component needs to communicate with the DBMS
 TODO
 
 ### C. Deployment view
-![Deployment diagram](assets/use/../deployment_view/deployment_diagram.svg "Deployment diagram")
+![Deployment diagram](assets/dd/deployment_view/deployment_diagram.svg "Deployment diagram")
 
 The system architecture is divided in 4 tiers:
 - The first tier is the *client tier*: it is composed by any device capable of rendering a web page (smartphones, tablets, PC). It communicates with the web tier through the HTTP protocol.
@@ -146,13 +146,13 @@ The system architecture is divided in 4 tiers:
 The following sequence diagrams describe the interactions between the main compontents of the product when utilizing the most common features. This is still a high-level description of the actual interactions so that they can be slightly modified during the developement process.
 
 #### D.1 User login
-![Clupper Sequence Diagrams](assets/class_sequence_diagrams/user_login_class_sequence_diagram.svg)
+![Clupper Sequence Diagrams](assets/dd/sequence_diagrams/user_login_sequence_diagram.svg)
 
 #### D.2 Clupper booking
-![Clupper Sequence Diagrams](assets/class_sequence_diagrams/clupper_booking_class_sequence_diagram.svg)
+![Clupper Sequence Diagrams](assets/dd/sequence_diagrams/clupper_booking_sequence_diagram.svg)
 
 #### D.3 Store manager scan ticket
-![Clupper Sequence Diagrams](assets/class_sequence_diagrams/store_manager_scan_class_sequence_diagram.svg)
+![Clupper Sequence Diagrams](assets/dd/sequence_diagrams/store_manager_scan_sequence_diagram.svg)
 
 ### E. Component interface
 
@@ -162,13 +162,13 @@ These diagrams show the main methods provided by each component:
 - *AccountServices* is an interface accessible by both users and visitors. It let's the users login and logout and allows the registration of new cluppers or store managers.
 
 #### E.1 Clupper interface
-![Clupper Interface Diagram](assets/component_interface_diagrams/clupper_component_interface_diagram.svg)
+![Clupper Interface Diagram](assets/dd/component_interface_diagrams/clupper_component_interface_diagram.svg)
 
 #### E.2 Store manager interface
-![Store Manager Interface Diagram](assets/component_interface_diagrams/store_manager_component_interface_diagram.svg)
+![Store Manager Interface Diagram](assets/dd/component_interface_diagrams/store_manager_component_interface_diagram.svg)
 
 #### E.3 Account management
-![Accounte Management Interface Diagram](assets/component_interface_diagrams/account_management_component_interface_diagram.svg)
+![Accounte Management Interface Diagram](assets/dd/component_interface_diagrams/account_management_component_interface_diagram.svg)
 
 ### F. Selected architectural styles and patterns
 *[Styles/patterns used, why and how]*
@@ -196,18 +196,18 @@ The paths represented in the following diagrams take for granted the absence of 
 Using the *back* button provided by the web browser or the device will result in the default behaviour (previous page in history) and will therefore be ignored in this context.  
 
 #### B.1. Visitor
-![Visitor diagram](assets/use/../ux_diagrams/ux_visitor.svg "Visitor diagram")
+![Visitor diagram](assets/dd/ux_diagrams/ux_visitor.svg "Visitor diagram")
 
 The direct path from the *Home* page to the *UserLogin* page is considered as the default behaviour and therefore omitted in the next diagrams. The *LoginCredentials* form is also not reported for clarity.
 
 #### B.2. Clupper
-![Clupper diagram](assets/use/../ux_diagrams/ux_clupper.svg "Clupper diagram")
+![Clupper diagram](assets/dd/ux_diagrams/ux_clupper.svg "Clupper diagram")
 
 The *NavBar* component is included in every page accessible by the clupper except the "UserLogin" page, the arrow is omitted to improve readability.  
 The *StoreTile* and *BookingTile* can be included multiple times on the same page (with different data), they are classified as *clickable* since they behave like a button.
 
 #### B.3. Store manager
-![Store manager diagram](assets/use/../ux_diagrams/ux_store_manager.svg "Store manager diagram")
+![Store manager diagram](assets/dd/ux_diagrams/ux_store_manager.svg "Store manager diagram")
 
 *Camera* and *Printer* represent the use of that specific external component (required for the correct functioning of the application) and have been included in the diagram to better clarify the sequence of actions that the store manager will perform.
 
