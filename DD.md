@@ -102,13 +102,20 @@ TODO
 
 ### C. Deployment view
 ![Deployment diagram](assets/use/../deployment_view/deployment_diagram.svg "Deployment diagram")
-TODO
+Thte system architecture is divided in 4 tiers.
+- The first tier is the *client tier*:it's composed by any device capable of rendering a web page (smartphones, tablets, ecc.). It communicates with the web tier through the HTTP protocol.
+- The *web tier* contains the web server implemented with Nginx platform. This tier is provided with a load balancer to distribute the load between the multiple istances of the application tier.
+- The third tier is the *application tier*. The CLup backend is built on a Express application which is managed by a docker-like process manager to spawn multiple istances. The execution enviroment is the NodeJS runtime.
+- The *data tier* is the fourth tier composed by the Database server.
 
 #### C.1. Recommended implementation
-TODO
+- **Client tier**: The client web browser may be an arbitrary one, the only costraint is that it must be recent enough to render HTML5 and CSS3 web pages and execute Javascript.
+- **Web tier**: The web tier must be implemented with Nginx web server. A load balancer is also needed to distribute the load between the multiple istances of the application. It's strongly recommended to setup the load balancer to use a Round Robin algorithm to distribute the load, to avoid overloading a single application istance.
+- **application tier**: The runtime engine where the backend lives is NodeJS and a docker-like process manager (PM2) is used to spawn multiple istances of the application, which uses ExpressJS to expose services.
+- **data tier**: The database is relational and is implemented using MySQL.
 
 ### D. Runtime view
-*[Describe the way components interact to accomplish specific tasks (related to use cases)]*
+The following sequence diagrams describe the interactions between the main compontents of the product when utilizing the most common features. This is stil a high-level description of the actual interactions so they can be modified during the developement process.
 #### D.1 User Login
 ![Clupper Sequence Diagrams](assets/class_sequence_diagrams/user_login_class_sequence_diagram.svg)
 #### D.1 Clupper Booking
@@ -117,6 +124,10 @@ TODO
 ![Clupper Sequence Diagrams](assets/class_sequence_diagrams/store_manager_scan_class_sequence_diagram.svg)
 
 ### E. Component interface
+These diagrams show the main method provided by each component.
+- The interface *ClupperServices* provide every method the Clupper could need to acces every functionality of the app. In particular there are methods for join/leave the queue, book a visit and find Stores.
+- Like CustomerServices, *StoreManagerServices* provides all methods a Store Manager needs to manage the Store. Infact he's allowed to edit the store capacity, check the queue status and the number of people inside and lend out physical tickets.
+- *AccountServices* is a interface accessible by all the Users and Visitors. It let's the Users log-in and logout and allows the registration of new Cluppers or Store Managers.
 #### E.1 Clupper Interface
 ![Clupper Interface Diagram](assets/component_interface_diagrams/clupper_component_interface_diagram.svg)
 #### E.1 Store Manager Interface
