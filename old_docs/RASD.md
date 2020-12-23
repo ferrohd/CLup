@@ -1,4 +1,4 @@
-![Logo Politecnico di Milano](assets//polimi_logo.jpg "Politecnico di Milano")
+![Logo Politecnico di Milano](../assets/polimi_logo.jpg "Politecnico di Milano")
 # Requirements Analysis and Specification Document <!-- omit in toc -->
 ## Customers Line-up <!-- omit in toc -->
 ### Authors: <!-- omit in toc -->
@@ -239,18 +239,18 @@ The boy nods and she can see him click on the PC before handing her a paper tick
 After a few minutes, Clarice is called by the boy who photographs the ticket and explains to keep it with her until the exit.
 
 #### A.2. Class diagram
-![Class diagram](assets/rasd/class_diagram/class_diagram_rasd.jpg "Class diagram")
+![Class diagram](../assets/rasd/class_diagram/class_diagram_rasd.jpg "Class diagram")
 
 #### A.3. State diagrams
 
 ##### A.3.1. Ticket state <!-- omit in toc -->
-![Ticket state](assets/rasd/state_diagrams/ticket_state.jpg "Ticket state")
+![Ticket state](../assets/rasd/state_diagrams/ticket_state.jpg "Ticket state")
 
 ##### A.3.2. Store state <!-- omit in toc -->
-![Store state](assets/rasd/state_diagrams/store_state.jpg "Store state")
+![Store state](../assets/rasd/state_diagrams/store_state.jpg "Store state")
 
 ##### A.3.3. Time slot state <!-- omit in toc -->
-![Time slot state](assets/rasd/state_diagrams/time_slot_state.jpg "Time slot state")
+![Time slot state](../assets/rasd/state_diagrams/time_slot_state.jpg "Time slot state")
 
 ### B. Product functions
 
@@ -516,39 +516,39 @@ A store manager always needs a stable internet connection in order to have acces
 #### B.2. Use case diagrams
 
 ##### B.2.1 Visitor <!-- omit in toc -->
-![Visitor](assets/rasd/use_cases/use_case_visitor_registration.jpg "Visitor")
+![Visitor](../assets/rasd/use_cases/use_case_visitor_registration.jpg "Visitor")
 
 ##### B.2.2 User <!-- omit in toc -->
-![User](assets/rasd/use_cases/use_case_user.jpg "User")
+![User](../assets/rasd/use_cases/use_case_user.jpg "User")
 
 ##### B.2.2 Store Manager <!-- omit in toc -->
-![Store Manager](assets/rasd/use_cases/use_case_store_manager.jpg "Store Manager")
+![Store Manager](../assets/rasd/use_cases/use_case_store_manager.jpg "Store Manager")
 
 #### B.3. Sequence diagrams
 
 ##### B.3.1 Visitor Registration <!-- omit in toc -->
-![Visitor Registration](assets/rasd/sequence_diagrams/sequence_diagram_visitor_registration.jpg "Visitor Registration")
+![Visitor Registration](../assets/rasd/sequence_diagrams/sequence_diagram_visitor_registration.jpg "Visitor Registration")
 
 ##### B.3.2 User Login <!-- omit in toc -->
-![User Login](assets/rasd/sequence_diagrams/sequence_diagram_user_login.jpg "User Login")
+![User Login](../assets/rasd/sequence_diagrams/sequence_diagram_user_login.jpg "User Login")
 
 ##### B.3.3 User Queue Up <!-- omit in toc -->
-![User Queue Up](assets/rasd/sequence_diagrams/sequence_diagram_user_queue_up.jpg "User Queue Up")
+![User Queue Up](../assets/rasd/sequence_diagrams/sequence_diagram_user_queue_up.jpg "User Queue Up")
 
 ##### B.3.4 User Leave Queue <!-- omit in toc -->
-![User Leave Queue](assets/rasd/sequence_diagrams/sequence_diagram_user_leave_queue.jpg "User Leave Queue")
+![User Leave Queue](../assets/rasd/sequence_diagrams/sequence_diagram_user_leave_queue.jpg "User Leave Queue")
 
 ##### B.3.5 User Booking a Visit <!-- omit in toc -->
-![Booking a Visit](assets/rasd/sequence_diagrams/sequence_diagram_user_booking.jpg "Booking a Visit")
+![Booking a Visit](../assets/rasd/sequence_diagrams/sequence_diagram_user_booking.jpg "Booking a Visit")
 
 ##### B.3.6 User Cancels a Booking <!-- omit in toc -->
-![User Cancels a Booking](assets/rasd/sequence_diagrams/sequence_diagram_user_cancel_booking.jpg "User Cancels a Booking")
+![User Cancels a Booking](../assets/rasd/sequence_diagrams/sequence_diagram_user_cancel_booking.jpg "User Cancels a Booking")
 
 ##### B.3.7 Store Manager Issue Ticket <!-- omit in toc -->
-![Store Manager Issue Ticket](assets/rasd/sequence_diagrams/sequence_diagram_store_manager_issue_ticket.jpg "Store Manager Issue Ticket")
+![Store Manager Issue Ticket](../assets/rasd/sequence_diagrams/sequence_diagram_store_manager_issue_ticket.jpg "Store Manager Issue Ticket")
 
 ##### B.3.7 Store Manager Scan Ticket <!-- omit in toc -->
-![Store Manager Scan Ticket](assets/rasd/sequence_diagrams/sequence_diagram_store_manager_scan_ticket.jpg "Store Manager Scan Ticket")
+![Store Manager Scan Ticket](../assets/rasd/sequence_diagrams/sequence_diagram_store_manager_scan_ticket.jpg "Store Manager Scan Ticket")
 
 #### B.4. Mapping on requirements
 
@@ -934,15 +934,15 @@ run show for 10
 ```
 
 ### B. Execution result
-![Execution result](assets/rasd/alloy/execution_result.png "Execution result")
+![Execution result](../assets/rasd/alloy/execution_result.png "Execution result")
 
 ### C. Generated worlds
 
 #### C.1. World 1
-![World 1](assets/rasd/alloy/world_1.png "World 1")
+![World 1](../assets/rasd/alloy/world_1.png "World 1")
 
 #### C.2. World 2
-![World 2](assets/rasd/alloy/world_2.png "World 2")
+![World 2](../assets/rasd/alloy/world_2.png "World 2")
 
 ## 5. Effort spent
 
