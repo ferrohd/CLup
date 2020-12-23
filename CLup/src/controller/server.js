@@ -19,7 +19,7 @@ app.use(session({
     resave: false,
     cookie: {
         secure: false,
-        maxAge: 60 * 60 * 24
+        maxAge: 60 * 60
     }
 
 }))

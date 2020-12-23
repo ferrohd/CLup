@@ -1,5 +1,8 @@
+const { Store } = require('express-session')
+
 const router = require('express').Router()
-const storeManagerServices = require('../services/StoreManagerServices').StoreManagerServices()
+const StoreManagerServices = require('../services/StoreManagerServices')
+const storeManagerServices = new StoreManagerServices()
 
 //---------STORE OVERVIEW ROUTES------------------
 

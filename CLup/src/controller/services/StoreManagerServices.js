@@ -1,4 +1,4 @@
-export class StoreManagerServices {
+module.exports = class StoreManagerServices {
     storeOverview = new StoreOverview()
     storeManagement = new StoreManagement()
     scanTicket = new ScanTicket()
