@@ -1,7 +1,5 @@
 export class AccountServices {
-    constructor() {
-        this.accountManagement = new AccountManagement()
-    }
+    accountManagement = new AccountManagement()
 }
 
 class AccountManagement {

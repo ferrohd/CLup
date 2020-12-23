@@ -1,9 +1,7 @@
 export class StoreManagerServices {
-    constructor() {
-        this.storeOverview = new StoreOverview()
-        this.storeManagement = new StoreManagement()
-        this.scanTicket = new ScanTicket()
-    }
+    storeOverview = new StoreOverview()
+    storeManagement = new StoreManagement()
+    scanTicket = new ScanTicket()
 }
 
 class StoreOverview {

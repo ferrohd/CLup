@@ -1,9 +1,7 @@
 export class ClupperServices {
-    constructor() {
-        this.bookingManagement = new BookingManagement()
-        this.queueManagement = new QueueManagement()
-        this.storeLocator = new StoreLocator()
-    }
+    bookingManagement = new BookingManagement()
+    queueManagement = new QueueManagement()
+    storeLocator = new StoreLocator()
 }
 
 class BookingManagement {
