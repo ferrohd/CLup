@@ -4,9 +4,11 @@ const app = express()
 const http = require('http').createServer(app)
 const session = require('express-session')
 const loginMiddleware = require('./middlewares/loginMiddleware')
-var io = require('socket.io')(http)
+const accountRoutes = require('./routes/AccoutRoutes')
+const clupperRoutes = require('./routes/ClupperRoutes')
+const storeManagerRoutes = require('./routes/StoreManagerRoutes')
 
-//---LOAD MIDDLEWARES
+//-----LOAD MIDDLEWARES----
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
@@ -22,13 +24,13 @@ app.use(session({
 
 }))
 app.use(loginMiddleware)
+//-----LOAD ROUTES------
+app.use(accountRoutes)
+app.use(clupperRoutes)
+app.use(storeManagerRoutes)
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
-})
-
-io.on('connection', (socket) => {
-    console.log('a user connected')
 })
 
 http.listen(3000, () => {

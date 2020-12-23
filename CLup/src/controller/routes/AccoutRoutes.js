@@ -1,5 +1,3 @@
-const { route } = require('./StoreManagerRoutes')
-
 const router = require('express').Router()
 const accountManagement = require('../services/AccountServices').AccountServices()
 
@@ -17,7 +15,7 @@ router.post('/login', (req, res) => {
 })
 
 // Logout user
-route.post('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     accountManagement.logout()
 })
 
