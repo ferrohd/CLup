@@ -7,8 +7,8 @@
 \author{\href{https://github.com/ferrohd}{Alessandro Ferrara} -
 \href{https://github.com/lorenzofratus}{Lorenzo Fratus}}
 \professor{Elisabetta di Nitto}
-\date{December 22, 2020}
-\version{0.1}
+\date{December 24, 2020}
+\version{0.2}
 
 \begin{document}
 
@@ -43,7 +43,7 @@ To do so, the system offers to the users the possibility to:
 The system should be very simple to use (to adapt to all demographics) and provide fallback options for those who do not have access to the application.
 
 \section{C. Definitions, acronyms and abbreviations}
-TODO \emph{[Update]}
+FIXME \emph{[Update]}
 
 \subsection{C.1. Definitions}
 
@@ -94,6 +94,10 @@ TODO \emph{[Update]}
   \textbf{DD}: Design Document.
 \item
   \textbf{GPS}: Global Positioning System.
+\item
+  \textbf{JSON}: JavaScript Object Notation
+\item
+  \textbf{REST}: Representational State Transfer
 \end{itemize}
 
 \subsection{C.3. Abbreviations}
@@ -157,7 +161,7 @@ The Customers Line-up system has a four-tier architecture that can be grouped in
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{assets/dd/architecture_overview/physical_architecture_diagram}
+\includegraphics[width=0.95\textwidth]{architecture_overview/physical_architecture_diagram}
 \caption{Physical architecture diagram}
 \end{figure}
 
@@ -169,7 +173,7 @@ Finally, the business logic of the system resides on the application server (\em
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/architecture_overview/high_level_layers}
+\includegraphics{architecture_overview/high_level_layers}
 \caption{High level layers diagram}
 \end{figure}
 
@@ -184,7 +188,7 @@ The system exposes a RESTful API with multiple public endpoint and resources, so
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/components_view/high_level_component_diagram}
+\includegraphics{components_view/high_level_component_diagram}
 \caption{High level component diagram}
 \end{figure}
 
@@ -204,7 +208,7 @@ The server side, on the other end, is made of three subsystems:
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/components_view/clupper_services_projection}
+\includegraphics{components_view/clupper_services_projection}
 \caption{Clupper Services projection diagram}
 \end{figure}
 
@@ -223,7 +227,7 @@ In order to fulfill their goals, these components need to communicate with the D
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/components_view/store_manager_services_projection}
+\includegraphics{components_view/store_manager_services_projection}
 \caption{Store Manager Services projection diagram}
 \end{figure}
 
@@ -240,11 +244,11 @@ The Store Manager Services subsystem contains three components:
 
 In order to fulfill their goals, these components need to communicate with the DBMS.
 
-TODO \emph{[Camera, Printer external interfaces?]}
+FIXME \emph{[Camera, Printer external interfaces?]}
 
 \subsection{B.4. Account Services projection}
 
-\includegraphics{assets/dd/components_view/account_services_projection}
+\includegraphics{components_view/account_services_projection}
 The Account Services subsystem contains one component:
 \begin{itemize}
 \item
@@ -255,13 +259,19 @@ In order to fulfill its goals, this component needs to communicate with the DBMS
 
 \subsection{B.5. ER diagram}
 
-TODO
+The following diagram provides a graphical representation of the conceptual model of the database.
+
+\begin{figure}[H]
+\centering
+\includegraphics{components_view/er_diagram}
+\caption{Entity-relationship diagram}
+\end{figure}
 
 \section{C. Deployment view}
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/deployment_view/deployment_diagram}
+\includegraphics{deployment_view/deployment_diagram}
 \caption{Deployment diagram}
 \end{figure}
 
@@ -299,7 +309,7 @@ This is still a high-level description of the actual interactions so that they c
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/sequence_diagrams/user_login_sequence_diagram}
+\includegraphics{sequence_diagrams/user_login_sequence_diagram}
 \caption{User login sequence diagram}
 \end{figure}
 
@@ -307,7 +317,7 @@ This is still a high-level description of the actual interactions so that they c
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/sequence_diagrams/clupper_booking_sequence_diagram}
+\includegraphics{sequence_diagrams/clupper_booking_sequence_diagram}
 \caption{User book a visit sequence diagram}
 \end{figure}
 
@@ -315,7 +325,7 @@ This is still a high-level description of the actual interactions so that they c
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/sequence_diagrams/store_manager_scan_sequence_diagram}
+\includegraphics{sequence_diagrams/store_manager_scan_sequence_diagram}
 \caption{Store manager scan ticket sequence diagram}
 \end{figure}
 
@@ -335,7 +345,7 @@ These diagrams show the main methods provided by each component:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{assets/dd/component_interface_diagrams/clupper_component_interface_diagram}
+\includegraphics[width=0.93\textwidth]{component_interface_diagrams/clupper_component_interface_diagram}
 \caption{ClupperServices interface diagram}
 \end{figure}
 
@@ -343,7 +353,7 @@ These diagrams show the main methods provided by each component:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{assets/dd/component_interface_diagrams/store_manager_component_interface_diagram}
+\includegraphics[width=0.93\textwidth]{component_interface_diagrams/store_manager_component_interface_diagram}
 \caption{StoreManagerServices interface diagram}
 \end{figure}
 
@@ -351,17 +361,40 @@ These diagrams show the main methods provided by each component:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{assets/dd/component_interface_diagrams/account_management_component_interface_diagram}
+\includegraphics[width=0.93\textwidth]{component_interface_diagrams/account_management_component_interface_diagram}
 \caption{AccountServices interface diagram}
 \end{figure}
 
 \section{F. Selected architectural styles and patterns}
+FIXME \emph{[Update]}
 
-TODO \emph{[Styles/patterns used, why and how]}
+\subsection{F.1. MVC pattern}
+
+The Model-View-Controller pattern is used in order to obtain a clear division between the internal representation of information, the way in which that information is presented to the user and the business logic of the system.\\
+This is one of the most common and effective ways to drastically reduce the level of coupling between the various parts of the system.
+
+\subsection{F.2. RESTful API with JSON}
+
+The application layer of the system offers a set of services that each client is able to address via HTTP protocol.\\
+As prescribed by the REST principles, for each incoming request the server provides a response that can also include a JSON representation of one or more objects.
+
+\subsection{F.3. Other design patterns}
+
+\begin{itemize}
+    \item \textbf{Facade pattern}: supplies a single interface to a set of interfaces within the system.
+    \item \textbf{Factory pattern}: exposes a method for creating objects, allowing subclasses to control the actual creation process.
+    \item \textbf{Observer pattern}: notifies the subscribed objects when the state of the observed object is updated.
+    \item \textbf{Proxy pattern}: allows object level access control by acting as a pass through entity or a placeholder object.
+    \item \textbf{Singleton pattern}: provides a single instance of a class that is able to coordinate all the actions across the system.
+\end{itemize}
 
 \section{G. Other design decisions}
 
-TODO \emph{[API usage]}
+\subsection{G.1. Maps API}
+
+To implement some of the system functions (which require GPS information), the use of an external service is unavoidable.\\
+When dealing with third party software it is important to be able to trust its source, for this reason CLup will use the API offered by Google Maps.\\
+In particular, as this system will be developed as a web application, the \emph{Google Maps Javascript API} is recommended.
 
 \chapter{3. User interface design}
 
@@ -450,7 +483,7 @@ Using the \emph{back} button provided by the web browser or the device will resu
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/ux_diagrams/ux_visitor}
+\includegraphics{ux_diagrams/ux_visitor}
 \caption{Visitor diagram}
 \end{figure}
 
@@ -460,7 +493,7 @@ The direct path from the \emph{Home} page to the \emph{UserLogin} page is consid
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/ux_diagrams/ux_clupper}
+\includegraphics{ux_diagrams/ux_clupper}
 \caption{Clupper diagram}
 \end{figure}
 
@@ -472,7 +505,7 @@ The \emph{StoreTile} and \emph{BookingTile} can be included multiple times on th
 
 \begin{figure}[H]
 \centering
-\includegraphics{assets/dd/ux_diagrams/ux_store_manager}
+\includegraphics{ux_diagrams/ux_store_manager}
 \caption{Store manager diagram}
 \end{figure}
 
@@ -480,7 +513,57 @@ The \emph{StoreTile} and \emph{BookingTile} can be included multiple times on th
 
 \chapter{4. Requirements traceability}
 
-TODO \emph{[How requirements (RASD) map to the design elements (DD)]}
+While making the design choices presented in this document, the main objective was to fulfill in a complete and correct way the previously identified goals of the system.
+
+Here is provided a mapping between the goals defined in the RASD and the system components illustrated in the DD.
+
+\begin{itemize}
+\item \textbf{G1}: Allow a clupper to join a store queue without having to physically approach the store.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Clupper Services (\emph{Queue Module})
+    \end{itemize}
+\item \textbf{G2}: Allow a guest to join a store queue by requesting it to the store manager.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Store Manager Services (\emph{Guest Module})
+    \end{itemize}
+\item \textbf{G3}: Allow a clupper to leave a store queue before entering.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Clupper Services (\emph{Queue Module})
+    \end{itemize}
+\item \textbf{G4}: Allow a clupper to book a visit to the store.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Clupper Services (\emph{Booking Module})
+    \end{itemize}
+\item \textbf{G5}: Allow a clupper to cancel a reservation to a store before entering.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Clupper Services (\emph{Booking Module})
+    \end{itemize}
+\item \textbf{G6}: Allow a clupper to approach at the right time the store he has a ticket for.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Clupper Services (\emph{Queue Module}, \emph{Booking Module})
+    \end{itemize}
+\item \textbf{G7}: Allow a store manager to have an overview of the store.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Store Manager Services (\emph{Store Module})
+    \end{itemize}
+\item \textbf{G8}: Allow a store manager to regulate the entrances to the store.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Store Manager Services (\emph{Store Module}, \emph{Ticket Module})
+    \end{itemize}
+\item \textbf{G9}: Allow a store manager to regulate the exits from the store.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Store Manager Services (\emph{Store Module}, \emph{Ticket Module})
+    \end{itemize}
+\end{itemize}
 
 \chapter{5. Implementation, integration and test plan}
 
@@ -512,6 +595,7 @@ Topic & Hours \\ \addlinespace
 \endhead
 Component Interface Diagrams & 1.0h \\ \addlinespace
 Sequence Diagrams & 1.0h \\ \addlinespace
+Section 2 & 2.0h \\ \addlinespace
 \bottomrule
 \end{longtable}
 
@@ -527,7 +611,8 @@ Topic & Hours \\ \addlinespace
 UX diagrams & 2.0h \\ \addlinespace
 DD structure & 1.0h \\ \addlinespace
 Sections 2 and 3 & 2.5h \\ \addlinespace
-Sections 1 & 2.0h \\ \addlinespace
+Section 1 & 2.0h \\ \addlinespace
+Section 4 & 1.0h \\ \addlinespace
 \bottomrule
 \end{longtable}
 
