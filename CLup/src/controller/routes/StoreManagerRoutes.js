@@ -18,12 +18,6 @@ router.get('/store/queue', (req, res) => {
     const queueStatus = storeManagerServices.storeOverview.getQueueStatus(storeManager)
 })
 
-// Get number of booking for the store
-router.get('/store/booking', (req, res) => {
-    const storeManager = req.session.user
-    const bookingStatus = storeManagerServices.storeOverview.getVookingStatus(storeManager)
-})
-
 //-------SCAN TICKET ROUTES-----------
 
 // Scan ticket at entrance

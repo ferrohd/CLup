@@ -26,43 +26,6 @@ router.post('/queue/leave', (req, res) => {
     res.send(200)
 })
 
-//-------------BOOKING ROUTES---------------------
-// Get booking list
-router.get('/booking/list', (req, res) => {
-    const email = req.session.user
-    const bookingList = clupperServices.bookingManagement.getBookingList(email)
-    res.json(bookingList)
-})
-
-// Get booking status
-router.get('/booking/status', (req, res) => {
-    const { booking } = req.body
-    const bookingStatus = clupperServices.bookingManagement.getBookingStatus(booking)
-    res.json(bookingStatus)
-})
-
-// Create Booking
-router.post('/booking/create', (req, res) => {
-    const { store, from, to } = req.body
-    const email = req.session.user
-    const ticket = clupperServices.bookingManagement.createBooking(email, store, from, to)
-    res.json(ticket.toJSON())
-})
-
-// Delete booking
-router.post('/booking/delete', (req, res) => {
-    const { booking } = req.body
-    clupperServices.bookingManagement.deleteBooking(booking)
-    res.send(200)
-})
-
-// Get avaiable timeSlots
-router.get('/booking/avaiableTimeslots', (req, res) => {
-    const { store } = req.body
-    const timeSlots = clupperServices.bookingManagement.getAvaiableTimeSlots(store)
-    res.json(timeSlots)
-})
-
 //-------------STORE LOCATOR ROUTES---------------------
 // Find store
 router.get('/map/find', (req, res) => {

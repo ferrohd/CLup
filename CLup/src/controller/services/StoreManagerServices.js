@@ -1,4 +1,5 @@
 module.exports = class StoreManagerServices {
+    constructor() {}
     storeOverview = new StoreOverview()
     storeManagement = new StoreManagement()
     scanTicket = new ScanTicket()
@@ -8,7 +9,6 @@ class StoreOverview {
     constructor() {}
     getInsideStatus(store) {}
     getQueueStatus(store) {}
-    getBookingStatus(store) {}
 }
 
 class StoreManagement {
