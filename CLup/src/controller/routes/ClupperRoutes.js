@@ -3,7 +3,7 @@ const ClupperServices = require('../services/ClupperServices')
 const clupperServices = new ClupperServices()
 //-------------QUEUE ROUTES---------------------
 
-// Get queue status
+// Get queue position
 router.get('/queue/status', (req, res) => {
     const { store } = req.body
     const email = req.session.user
@@ -27,10 +27,17 @@ router.post('/queue/leave', (req, res) => {
 })
 
 //-------------BOOKING ROUTES---------------------
+// Get booking list
+router.get('/booking/list', (req, res) => {
+    const email = req.session.user
+    const bookingList = clupperServices.bookingManagement.getBookingList(email)
+    res.json(bookingList)
+})
+
 // Get booking status
 router.get('/booking/status', (req, res) => {
-    const { ticket } = req.body
-    const bookingStatus = clupperServices.bookingManagement.getBookingStatus(ticket)
+    const { booking } = req.body
+    const bookingStatus = clupperServices.bookingManagement.getBookingStatus(booking)
     res.json(bookingStatus)
 })
 
@@ -44,8 +51,8 @@ router.post('/booking/create', (req, res) => {
 
 // Delete booking
 router.post('/booking/delete', (req, res) => {
-    const { ticket } = req.body
-    clupperServices.bookingManagement.deleteBooking(ticket)
+    const { booking } = req.body
+    clupperServices.bookingManagement.deleteBooking(booking)
     res.send(200)
 })
 

@@ -17,8 +17,8 @@ module.exports = class Store {
         },
         capacity: this.capacity,
         open: {
-            from: this.from,
-            to: this.to
+            from: this.openFrom,
+            to: this.openTo
         }
     }}
 }

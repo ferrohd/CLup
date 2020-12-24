@@ -31,7 +31,7 @@ router.post('/login', (req, res) => {
 
 // Logout user
 router.post('/logout', (req, res) => {
-    req.session.user = null
+    req.session.destroy()
 })
 
 module.exports = router
