@@ -1,5 +1,6 @@
 const DatabaseConnection = require('../database/DatabaseConnection')
 const Ticket = require('./../../model/TicketModel')
+const crypto = require('crypto')
 
 module.exports = class ClupperServices {
     constructor() {
@@ -18,11 +19,26 @@ class QueueManagement {
         return new Promise( (resolve, _reject) => {
             if (alreadyInQueue) resolve(null)
             else {
-                const stmnt = 'INSERT INTO'
+                const stmnt = 'INSERT INTO ticket (id, date, inside, user, store) VALUES(?,?,?,?,?)'
+                const ticketID = crypto.randomBytes(40).toString('hex')
+                const date = Date.now()
+                const values = [ticketID, date, false, email, store]
+                this.dbConn.query(stmnt, values, (err, _results, _fields) => {
+                    if (err) resolve(null)
+                    else resolve(new Ticket(ticketID, date, email, store, false))
+                })
             }
         })
     }
-    leaveQueue(email, store) {}
+    async leaveQueue(email, store) {
+        return new Promise( (resolve, _reject) => {
+            const stmt = 'DELETE FROM ticket WHERE user = ? AND store = ?'
+            const values = [email, store]
+            this.dbConn.query(stmt, values, (err, _results, _fields) => {
+                err ? resolve(false) : resolve(true)
+            })
+        })
+    }
     async getQueueStatus(email, store) {
         const stmt = `SELECT ticket.id, user.email FROM user JOIN ticket JOIN store WHERE user.store = null AND store.vat = ? AND  ORDER BY ticket.timestamp`
         const values = [store]

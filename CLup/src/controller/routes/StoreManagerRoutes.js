@@ -23,15 +23,13 @@ router.get('/store/queue', (req, res) => {
 // Scan ticket at entrance
 router.post('/ticket/scan/entrance', (req, res) => {
     const { ticket } = req.body
-    const storeManager = req.session.user
-    const valid = storeManagerServices.scanTicket.scanEntrance(storeManager, ticket)
+    const valid = storeManagerServices.scanTicket.scanEntrance(ticket)
 })
 
 // Scan ticket at exit
 router.post('/ticket/scan/exit', (req, res) => {
     const { ticket } = req.body
-    const storeManager = req.session.user
-    const valid = storeManagerServices.scanTicket.scanExit(storeManager, ticket)
+    const valid = storeManagerServices.scanTicket.scanExit(ticket)
 })
 
 //------STORE MANAGEMENT ROUTES---------
