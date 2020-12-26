@@ -29,8 +29,19 @@ class AccountManagement {
     }
     async registerStoreManager(storeManager) {
         const { name, surname, email, password, store } = storeManager.toJSON()
+        const user = await this.getUser(email, password)
+        if (user) return false
+        else {
+            const stmt = `INSERT INTO user (email ,name, surname, password, store) VALUES(?,?,?,?,?)`
+            const values = [email, name, surname, password, store]
+            return new Promise( (resolve, _reject) => {
+                this.dbConn.query(stmt, values, (err, _results, _fields) => {
+                    err ? resolve(false) : resolve(true)
+                })
+            })
+        }
     }
-    getUser(email, password) {
+    async getUser(email, password) {
         const stmt = `SELECT * FROM user WHERE email = ? AND password = ?`
         const values = [email, password]
         return new Promise( (resolve, reject) => {
