@@ -1,0 +1,96 @@
+:root {
+    --base-font-size: 16px;
+    --small-font-size: .8em;
+    --medium-font-size: 1.2em;
+    --large-font-size: 2em;
+
+    --light-font-weight: 300;
+    --regular-font-weight: 400;
+    --bold-font-weight: 700;
+
+    --primary-font-family: "Lato", sans-serif;
+    --secodary-font-family: "Montserrat", sans-serif;
+    --icons-font-family: "Material Icon", sans-serif;
+
+    --background-color-1: #ffffff;
+    --background-color-2: #eeeeee;
+    --primary-color: #23ce6b;
+    --secondary-color: #272d2d;
+    --text-color: #000000;
+    --alt-text-color: #ffffff;
+}
+
+/**************
+ * TYPOGRAPHY *
+ **************/
+
+body {
+    font-size: var(--base-font-size);
+    background-color: var(--background-color-1);
+}
+body.alt {
+    background-color: var(--background-color-2);
+}
+
+h1, h2, h3 {
+    font-weight: var(--light-font-weight);
+    font-family: var(--primary-font-family);
+    color: var(--text-color);
+    text-align: center;
+}
+h1 {
+    font-size: var(--large-font-size);
+}
+h2 {
+    font-size: var(--medium-font-size);
+}
+h3 {
+    font-size: var(--small-font-size);
+}
+
+.btn {
+    font-size: var(--medium-font-size);
+    line-height: var(--medium-font-size);
+    font-weight: var(--bold-font-weight);
+    font-family: var(--secodary-font-family);
+    color: var(--alt-text-color);
+    text-transform: none;
+}
+
+/***********
+ * BUTTONS *
+ ***********/
+
+.btn {
+    padding: .6em 2em;
+    width: 75vw;
+    height: 2.4em;
+    border-radius: 1.2em;
+    display: block;
+    margin: 0 auto;
+}
+.btn.primary {
+    background-color: var(--primary-color);
+}
+.btn.secondary {
+    background-color: var(--secondary-color);
+}
+
+/***************************
+ * HOME - LOGIN - REGISTER *
+ ***************************/
+
+ .banner {
+     width: 100vw;
+     height: auto;
+     display: block;
+ }
+
+ .logo {
+     width: 50vw;
+     height: auto;
+     display: block;
+     margin: 3em auto 0;
+ }
+
+ 

@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <title>Queue | Store X | Customers Line-up</title>
+        <title>Camera | Store X | Customers Line-up</title>
         <meta name="description" content="">
         <link rel="canonical" href="">
 
@@ -16,19 +16,29 @@
         <link href="css/style.css" type="text/css" rel="stylesheet">
     </head>
     <body>
-        <h1>Queue page</h1>
-        <form id="form" action="#" data-src="/queue/leave">
+        <h1>Camera page, must be replaced by the QR scanner</h1>
+        <form id="form" action="#" data-src="/ticket/scan/entrance">
             <input name="id" type="text" placeholder="Id">
             <input name="date" type="date" placeholder="Date">
             <input name="user" type="text" placeholder="User">
             <input name="store" type="text" placeholder="Store">
         </form>
         
-        <button id="form-btn" type="button" class="waves-effect waves-light btn secondary">Leave the Queue</button>
+        <button id="form-btn" type="button" class="waves-effect waves-light btn secondary">Scan at Entrance</button>
+
+        <form id="form-2" action="#" data-src="/ticket/scan/exit">
+            <input name="id" type="text" placeholder="Id">
+            <input name="date" type="date" placeholder="Date">
+            <input name="user" type="text" placeholder="User">
+            <input name="store" type="text" placeholder="Store">
+        </form>
+        
+        <button id="form-btn-2" type="button" class="waves-effect waves-light btn secondary">Scan at Exit</button>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script>
             document.getElementById("form-btn").addEventListener("click", submitForm)
+            document.getElementById("form-btn-2").addEventListener("click", submitForm2)
 
             function submitForm() {
                 var form = document.getElementById("form");
@@ -42,7 +52,27 @@
                     if(req.readyState == XMLHttpRequest.DONE) {
                         if(req.status == 200) {
                             //Do something
-                            window.location.href = "explore.html";
+                            window.location.href = "store-overview.html";
+                        } else {
+                            console.log(req.responseText);
+                        }
+                    }
+                })
+            }
+
+            function submitForm2() {
+                var form = document.getElementById("form-2");
+                
+                if(!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                makeCall("POST", form.getAttribute("data-src"), form, req => {
+                    if(req.readyState == XMLHttpRequest.DONE) {
+                        if(req.status == 200) {
+                            //Do something
+                            window.location.href = "store-overview.html";
                         } else {
                             console.log(req.responseText);
                         }
