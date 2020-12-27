@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -14,41 +15,41 @@
         <link href="css/normalize.css" type="text/css" rel="stylesheet">
         <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
         <link href="css/style.css" type="text/css" rel="stylesheet">
-        
-        <script src="js/utils.js" charset="utf-8" defer></script>
     </head>
-    <body>
-        <h1>Store page</h1>
-        <form id="form" action="#" data-src="/queue/join">
-            <input name="date" type="date" placeholder="Date">
-            <input name="user" type="text" placeholder="User">
-            <input name="store" type="text" placeholder="Store">
-        </form>
-        
-        <button id="form-btn" type="button" class="waves-effect waves-light btn primary">Join the Queue</button>
+    <body class="alt no-overflow">
+        <a class="btn-floating btn-large waves-effect waves-dark top right" href="explore.html"><i class="material-icons">close</i></a>
+
+        <section id="map no-click" class="map">
+
+        </section>
+
+        <section id="bottom-container" class="bottom-container mid z-depth-3">
+            <div class="store-details">
+                <h1>Supermercato Carrefour Market</h1>
+                <h2>Via Benedetto Spinoza, 4, 20131 Milano MI</h2>
+
+                <div class="info-container">
+                    <i class="material-icons">directions_walk</i>
+                    <h2 class="ellipsis"><b>0.8</b> km away</h2>
+                </div>
+
+                <div class="info-container">
+                    <i class="material-icons">group</i>
+                    <h2 class="ellipsis"><b>12</b> users in line</h2>
+                </div>
+            </div>
+
+            <a id="form-btn" class="waves-effect waves-light btn primary">Join the Queue</a>
+        </section>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script>
-            document.getElementById("form-btn").addEventListener("click", submitForm)
+        <script type="text/javascript">
+            document.getElementById("form-btn").addEventListener("click", openTest)
 
-            function submitForm() {
-                var form = document.getElementById("form");
-                
-                if(!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
-
-                makeCall("POST", form.getAttribute("data-src"), form, req => {
-                    if(req.readyState == XMLHttpRequest.DONE) {
-                        if(req.status == 200) {
-                            //Do something
-                            window.location.href = "queue.html";
-                        } else {
-                            console.log(req.responseText);
-                        }
-                    }
-                })
+            function openTest() {
+                window.sessionStorage.setItem("data-src", "/queue/join");
+                window.sessionStorage.setItem("data-target", "queue.html");
+                window.location.href = "test-post.html";
             }
         </script>
     </body>

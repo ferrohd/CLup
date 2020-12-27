@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Test Post | Customers Line-up</title>
+        <meta name="description" content="">
+        <link rel="canonical" href="">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com"> 
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+        <link href="css/normalize.css" type="text/css" rel="stylesheet">
+        <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
+        <link href="css/style.css" type="text/css" rel="stylesheet">
+        
+        <script src="js/utils.js" charset="utf-8" defer></script>
+    </head>
+    <body class="alt">
+        <h2 id="data-src">Sending post to: </h2>
+        <h2 id="data-target">Then going to: </h2>
+
+        <form id="form" class="input-form" action="#">
+            <div class="input-field">
+                <input name="id" type="text" class="validate">
+                <label for="id">Ticket ID</label>
+            </div>     
+            <div class="input-field">
+                <input name="date" type="text" class="validate">
+                <label for="date">Issue date</label>
+            </div>          
+            <div class="input-field">
+                <input name="user" type="text" class="validate">
+                <label for="user">User email</label>
+            </div>      
+            <div class="input-field">
+                <input name="store" type="text" class="validate">
+                <label for="store">Store VAT</label>
+            </div>     
+        </form>
+        
+        <button id="form-btn" type="button" class="waves-effect waves-light btn secondary">Send Post</button>   
+        <button id="skip-btn" type="button" class="waves-effect waves-light btn primary">Skip Post</button>        
+
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script>
+            var src = String(window.sessionStorage.getItem("data-src")) || "/queue/join";
+            var target = String(window.sessionStorage.getItem("data-target")) || "explore.html";
+
+            document.getElementById("data-src").innerHTML += src;
+            document.getElementById("data-target").innerHTML += target;
+
+            document.getElementById("form").setAttribute("data-src", src);
+            document.getElementById("form").setAttribute("data-target", target);
+
+            document.getElementById("form-btn").addEventListener("click", () => submitForm());
+            document.getElementById("skip-btn").addEventListener("click", () => {
+                window.location.href = target;
+            });
+        </script>
+    </body>
+</html>
