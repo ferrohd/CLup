@@ -3,6 +3,7 @@
     --small-font-size: .8em;
     --medium-font-size: 1.2em;
     --large-font-size: 2em;
+    --extreme-font-size: 3em;
 
     --light-font-weight: 300;
     --regular-font-weight: 400;
@@ -13,11 +14,12 @@
     --icons-font-family: "Material Icon", sans-serif;
 
     --background-color-1: #ffffff;
-    --background-color-2: #eeeeee;
+    --background-color-2: #dddddd;
     --primary-color: #23ce6b;
     --secondary-color: #272d2d;
     --text-color: #000000;
     --alt-text-color: #ffffff;
+    --error-color: #f44336;
 }
 
 /**************
@@ -26,10 +28,6 @@
 
 body {
     font-size: var(--base-font-size);
-    background-color: var(--background-color-1);
-}
-body.alt {
-    background-color: var(--background-color-2);
 }
 
 h1, h2, h3 {
@@ -48,6 +46,11 @@ h3 {
     font-size: var(--small-font-size);
 }
 
+h1 a, h2 a, h3 a {
+    font-weight: var(--regular-font-weight);
+    color: var(--text-color);
+}
+
 .btn {
     font-size: var(--medium-font-size);
     line-height: var(--medium-font-size);
@@ -55,6 +58,57 @@ h3 {
     font-family: var(--secodary-font-family);
     color: var(--alt-text-color);
     text-transform: none;
+    letter-spacing: normal;
+}
+
+.input-field input[type]:not(.browser-default),
+.input-field input[type]:not(.browser-default) + label {
+    font-size: var(--medium-font-size);
+    font-weight: var(--light-font-weight);
+    font-family: var(--primary-font-family);
+    color: var(--text-color);
+}
+.input-field input[type]:not(.browser-default):focus:not(.invalid) + label {
+    color: var(--primary-color);
+}
+
+.ellipsis {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.report {
+    font-weight: var(--bold-font-weight);
+    font-size: var(--extreme-font-size);
+    font-family: var(--secodary-font-family);
+    color: var(--primary-color);
+}
+.report.minor {
+    font-size: var(--large-font-size);
+    color: var(--secodary-color);
+}
+
+/***********
+ * GENERAL *
+ ***********/
+
+body {
+    width: 100vw;
+    overflow-x: hidden;
+    background-color: var(--background-color-1);
+    margin: 0 0 5em;
+}
+body.alt {
+    background-color: var(--background-color-2);
+}
+body.no-overflow {
+    overflow: hidden;
+}
+
+.spaced {
+    margin-bottom: 3em;
 }
 
 /***********
@@ -67,7 +121,7 @@ h3 {
     height: 2.4em;
     border-radius: 1.2em;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 1em;
 }
 .btn.primary {
     background-color: var(--primary-color);
@@ -76,21 +130,227 @@ h3 {
     background-color: var(--secondary-color);
 }
 
+/**************
+ * INPUT FORM *
+ **************/
+ 
+.input-form {
+    width: 75vw;
+    margin: 4em auto 0;
+}
+ 
+.input-field {
+    margin: 1em auto 1.5em;
+}
+ 
+.input-field input[type]:not(.browser-default) {
+    padding: .6em 1.2em;
+    width: 100%;
+    height: 2.4em;
+    border-radius: 1.2em;
+    box-sizing: border-box;
+    border-bottom: none;
+    border: 2px solid var(--text-color);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.input-field input[type]:not(.browser-default).valid,
+.input-field input[type]:not(.browser-default):focus:not(.invalid) {
+    border-color: var(--primary-color);
+}
+.input-field input[type]:not(.browser-default).invalid {
+    border-color: var(--error-color);
+}
+
+.input-field > label {
+    left: 1.2em;
+    top: -.15em;
+    pointer-events: none;
+}
+.input-field > label:not(.label-icon).active {
+    transform: translateY(-1em) scale(0.7);
+}
+
 /***************************
  * HOME - LOGIN - REGISTER *
  ***************************/
 
- .banner {
-     width: 100vw;
-     height: auto;
-     display: block;
- }
+.banner {
+    width: 100vw;
+    height: auto;
+    display: block;
+}
 
- .logo {
-     width: 50vw;
-     height: auto;
-     display: block;
-     margin: 3em auto 0;
- }
+.logo {
+    width: 50vw;
+    height: auto;
+    display: block;
+    margin: 3em auto 0;
+}
 
- 
+/**************************
+* EXPLORE - STORE - QUEUE *
+***************************/
+
+.btn-floating,
+.btn-floating:hover {
+    background-color: var(--background-color-1);
+    z-index: 2;
+}
+.btn-floating.top {
+    top: 1em;
+}
+.btn-floating.left {
+    left: 1em;
+}
+.btn-floating.right {
+    right: 1em;
+}
+.btn-floating .material-icons {
+    font-size: var(--large-font-size);
+    color: var(--secondary-color);
+}
+
+.map {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+.map.no-click {
+    pointer-events: none;
+}
+
+.bottom-container {
+    background-color: var(--background-color-1);
+    position: fixed;
+    top: 50%;
+    bottom: 0;
+    width: 100vw;
+    border-radius: 2em 2em 0 0;
+    transition: top .35s ease-in-out;
+    z-index: 2;
+}
+.bottom-container.closed {
+    top: 95%;
+}
+.bottom-container.mid {
+    top: 30%;
+}
+.bottom-container.full {
+    top: 5.5em;
+}
+.bottom-toggler {
+    width: 100%;
+    height: 2em;
+    position: relative;
+}
+.bottom-toggler:before {
+    content: "";
+    width: 1.2em;
+    height: 3px;
+    background-color: var(--background-color-2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.store-list {
+    height: 100%;
+    overflow-y: auto;
+    padding: 0 0 2em;
+}
+
+.store {
+    width: 75%;
+    padding: 1em;
+    margin: .5em auto 1.5em;
+    display: flex;
+    align-items: center;
+    border-radius: 1.5em;
+    cursor: pointer;
+}
+.store-icon {
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
+    text-align: center;
+    border-radius: 50%;
+    font-size: var(--large-font-size);
+    color: var(--alt-text-color);
+    pointer-events: none;
+    flex-shrink: 0;
+}
+.store-icon.style-1 {
+    background-color: var(--primary-color);
+}
+.store-icon.style-2 {
+    background-color: var(--secondary-color);
+}
+.store-info {
+    margin: 0 0 0 1em;
+    min-width: 0;
+    width: 100%;
+}
+.store-info > * {
+    margin: 10px 0;
+}
+.store-info > h2 {
+    font-weight: var(--regular-font-weight);
+}
+
+.store-details {
+    width: 75%;
+    margin: 2em auto 4em;
+}
+.store-details > h1 {
+    font-weight: var(--regular-font-weight);
+}
+.store-details > h2 {
+    margin-bottom: 2em;
+}
+
+.info-container {
+    width: 75%;
+    margin: 2em auto;
+    display: flex;
+    align-items: center;
+}
+.info-container > .material-icons {
+    font-size: var(--extreme-font-size);
+    color: var(--secondary-color);
+}
+.info-container h2 {
+    text-align: left;
+    margin: 0 0 0 1em;
+}
+
+.qr-code {
+    width: 50%;
+    height: auto;
+    margin: 2em auto 0;
+    display: block;
+}
+.qr-code-description {
+    width: 50%;
+    margin: 1em auto 2em;
+}
+
+/***********
+* OVERVIEW *
+************/
+
+.report-wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin: 3em auto 0;
+}
+.report-container {
+    text-align: center;
+}
+.report-container > h2 {
+    margin: 0 auto;
+}

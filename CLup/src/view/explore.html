@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Explore | Customers Line-up</title>
+        <meta name="description" content="">
+        <link rel="canonical" href="">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com"> 
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+        <link href="css/normalize.css" type="text/css" rel="stylesheet">
+        <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
+        <link href="css/style.css" type="text/css" rel="stylesheet">
+    </head>
+    <body class="alt no-overflow">
+        <a class="btn-floating btn-large waves-effect waves-dark top left" href="queue.html"><i class="material-icons">shopping_cart</i></a>
+        <a class="btn-floating btn-large waves-effect waves-dark top right"><i class="material-icons">gps_fixed</i></a>
+
+        <section id="map" class="map">
+
+        </section>
+
+        <section id="bottom-container" class="bottom-container z-depth-3">
+            <div id="bottom-toggler" class="bottom-toggler"></div>
+            
+            <div class="store-list">
+            
+                <!--Store card template-->
+                <div class="store waves-effect waves-dark z-depth-1">
+                    <div class="store-icon style-1"><i class="material-icons">storefront</i></div>
+                    <div class="store-info">
+                        <h2 class="ellipsis">U2 Supermercato</h2>
+                        <h3 class="ellipsis">350m</h3>
+                        <h3 class="ellipsis">15 users in line</h3>
+                    </div>
+                </div>
+                <div class="store waves-effect waves-dark z-depth-1">
+                    <div class="store-icon style-2"><i class="material-icons">store</i></div>
+                    <div class="store-info">
+                        <h2 class="ellipsis">Supermercato Carrefour Market</h2>
+                        <h3 class="ellipsis">800m</h3>
+                        <h3 class="ellipsis">12 users in line</h3>
+                    </div>
+                </div>
+
+                <!--Padding elements-->
+                <div class="store waves-effect waves-dark z-depth-1">
+                    <div class="store-icon style-1"><i class="material-icons">storefront</i></div>
+                    <div class="store-info">
+                        <h2 class="ellipsis">U2 Supermercato</h2>
+                        <h3 class="ellipsis">350m</h3>
+                        <h3 class="ellipsis">15 users in line</h3>
+                    </div>
+                </div>
+                <div class="store waves-effect waves-dark z-depth-1">
+                    <div class="store-icon style-2"><i class="material-icons">store</i></div>
+                    <div class="store-info">
+                        <h2 class="ellipsis">Supermercato Carrefour Market</h2>
+                        <h3 class="ellipsis">800m</h3>
+                        <h3 class="ellipsis">12 users in line</h3>
+                    </div>
+                </div>
+                <div class="store waves-effect waves-dark z-depth-1">
+                    <div class="store-icon style-1"><i class="material-icons">storefront</i></div>
+                    <div class="store-info">
+                        <h2 class="ellipsis">U2 Supermercato</h2>
+                        <h3 class="ellipsis">350m</h3>
+                        <h3 class="ellipsis">15 users in line</h3>
+                    </div>
+                </div>
+                <div class="store waves-effect waves-dark z-depth-1">
+                    <div class="store-icon style-2"><i class="material-icons">store</i></div>
+                    <div class="store-info">
+                        <h2 class="ellipsis">Supermercato Carrefour Market</h2>
+                        <h3 class="ellipsis">800m</h3>
+                        <h3 class="ellipsis">12 users in line</h3>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript">
+            var bottomContainer = document.getElementById("bottom-container");
+
+            document.getElementById("bottom-toggler").addEventListener("click", () => {
+                bottomContainer.classList.toggle("full");
+            });
+
+            document.getElementById("map").addEventListener("click", () => {
+                bottomContainer.classList.remove("full");
+            });
+            
+            document.querySelectorAll(".store").forEach(store => {
+                store.addEventListener("click", () => {
+                    window.location.href = "store.html";
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,39 +17,59 @@
         <link href="css/style.css" type="text/css" rel="stylesheet">
         <script src="js/utils.js" charset="utf-8" defer></script>
     </head>
-    <body>
-        <h1>Queue page</h1>
-        <form id="form" action="#" data-src="/queue/leave">
-            <input name="id" type="text" placeholder="Id">
-            <input name="date" type="date" placeholder="Date">
-            <input name="user" type="text" placeholder="User">
-            <input name="store" type="text" placeholder="Store">
-        </form>
+    <body class="alt">
+        <h1>Be patient, your turn is coming!</h1>
+
+        <img alt="" class="qr-code" src="img/qr-code.png"/>
+        <h3 class="qr-code-description">Show this QR code to the store manager at the entrance</h3>
+
+        <div class="info-container">
+            <i class="material-icons">group</i>
+            <h2 class="ellipsis"><b>12</b> users before you</h2>
+        </div>
+
+        <div class="info-container">
+            <i class="material-icons">watch_later</i>
+            <h2 class="ellipsis"><b>25</b> minutes estimated</h2>
+        </div>
         
+        <a class="waves-effect waves-light btn primary" href="explore.html">Back to the Map</a>
         <button id="form-btn" type="button" class="waves-effect waves-light btn secondary">Leave the Queue</button>
+
+        <section id="bottom-container" class="bottom-container closed z-depth-3">
+            <div id="bottom-toggler" class="bottom-toggler"></div>
+            
+            <div class="store-details">
+                <h1>Supermercato Carrefour Market</h1>
+                <h2>Via Benedetto Spinoza, 4, 20131 Milano MI</h2>
+
+                <div class="info-container">
+                    <i class="material-icons">directions_walk</i>
+                    <h2 class="ellipsis"><b>0.8</b> km away</h2>
+                </div>
+
+                <div class="info-container">
+                    <i class="material-icons">group</i>
+                    <h2 class="ellipsis"><b>12</b> users in line</h2>
+                </div>
+            </div>
+        </section>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script>
-            document.getElementById("form-btn").addEventListener("click", submitForm)
+            var bottomContainer = document.getElementById("bottom-container");
 
-            function submitForm() {
-                var form = document.getElementById("form");
-                
-                if(!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
+            document.getElementById("bottom-toggler").addEventListener("click", () => {
+                bottomContainer.classList.toggle("closed");
+                bottomContainer.classList.toggle("full");
+            });
 
-                makeCall("POST", form.getAttribute("data-src"), form, req => {
-                    if(req.readyState == XMLHttpRequest.DONE) {
-                        if(req.status == 200) {
-                            //Do something
-                            window.location.href = "explore.html";
-                        } else {
-                            console.log(req.responseText);
-                        }
-                    }
-                })
+            document.getElementById("form-btn").addEventListener("click", openTest)
+
+            function openTest() {
+                window.sessionStorage.setItem("data-src", "/queue/leave");
+                window.sessionStorage.setItem("data-target", "explore.html");
+                window.location.href = "test-post.html";
             }
         </script>
     </body>

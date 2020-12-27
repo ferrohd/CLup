@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <title>Login | Customers Line-up</title>
+        <title>Register a Store | Customers Line-up</title>
         <meta name="description" content="">
         <link rel="canonical" href="">
 
@@ -23,9 +23,18 @@
         <a href="index.html"><img class="logo" alt="Customers Line-up" src="img/logo.png"/></a>
         <h2>Your safety is our concern</h2>
 
-        <h1>Nice to see you!</h1>
+        <h1>Welcome on board!</h1>
         
-        <form id="form" class="input-form" action="#" data-src="/login" data-target="explore.html">
+        <form id="" class="input-form" action="#" data-src="/register-store" data-target="overview.html">
+            <h3>Personal details</h3>
+            <div class="input-field">
+                <input name="name" type="text" class="validate" required>
+                <label for="name">Name</label>
+            </div>     
+            <div class="input-field">
+                <input name="surname" type="text" class="validate" required>
+                <label for="surname">Surname</label>
+            </div>     
             <div class="input-field">
                 <input name="email" type="email" class="validate" required>
                 <label for="email">Email</label>
@@ -33,37 +42,32 @@
             <div class="input-field">
                 <input name="password" type="password" class="validate" required>
                 <label for="password">Password</label>
-            </div>         
+            </div>   
+            <h3>Store details</h3>  
+            <div class="input-field">
+                <input name="store-name" type="text" class="validate" required>
+                <label for="store-name">Name</label>
+            </div>     
+            <div class="input-field">
+                <input name="address" type="text" class="validate" required>
+                <label for="address">Address</label>
+            </div>     
+            <div class="input-field">
+                <input name="vat" type="text" class="validate" required>
+                <label for="vat">VAT</label>
+            </div>     
+            <div class="input-field">
+                <input name="capacity" type="number" class="validate" required>
+                <label for="capacity">Capacity</label>
+            </div>       
         </form>
 
-        <button id="form-btn" type="button" class="waves-effect waves-light btn primary">Login</button>
-        <h3>Don't have an account? <a href="register.html">Sign Up Now</a></h3>
+        <button id="form-btn" type="button" class="waves-effect waves-light btn primary">Register</button>
+        <h3>Are you a customer? <a href="register.html">Sign Up Now</a></h3>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript">
             document.getElementById("form-btn").addEventListener("click", () => submitForm());
-
-            //Override to have contextual target
-            function submitForm(id = "form") {
-                var form = document.getElementById(id);
-
-                if(!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
-
-                var src = form.getAttribute("data-src");
-
-                makeCall("POST", form.getAttribute("data-src"), form, req => {
-                    if(req.readyState == XMLHttpRequest.DONE) {
-                        if(req.status == 200) {
-                            window.location.href = req.responseText;
-                        } else {
-                            M.toast({html: req.responseText, displayLength: (60 * 60 * 1000)});
-                        }
-                    }
-                });
-            }
         </script>
     </body>
 </html>
