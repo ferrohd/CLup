@@ -45,22 +45,24 @@ class QueueManagement {
         return new Promise( (resolve, _reject) => {
             this.dbConn.query(stmt, values, (err, results, _fields) => {
                 if (err || results.length == 0) resolve(null)
-                const peopleInQueue = results.length
-                let position = 0
-                let exists = false
-                for (res in results) {
-                    if (res.email = email ) {
-                        exists = true
-                        break
+                else {
+                    const peopleInQueue = results.length
+                    let position = 0
+                    let exists = false
+                    for (res in results) {
+                        if (res.email = email ) {
+                            exists = true
+                            break
+                        }
+                        position++
                     }
-                    position++
+                    if (exists) resolve({
+                        ticketID: res.id,
+                        position: position,
+                        peopleInQueue: peopleInQueue
+                    })
+                    else resolve(null)
                 }
-                if (exists) resolve({
-                    ticketID: res.id,
-                    position: position,
-                    peopleInQueue: peopleInQueue
-                })
-                else resolve(null)
             })
         })
     }

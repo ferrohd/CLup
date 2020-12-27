@@ -2,11 +2,12 @@ const router = require('express').Router()
 const AccountServices = require('../services/AccountServices')
 const accountServices = new AccountServices()
 const User = require('./../../model/UserModel')
+const multer = require('multer')()
 
 
 //-------ACCOUNT MANAGEMENT ROUTES-------------
 // Register user
-router.post('/register', async (req, res) => {
+router.post('/register', multer.none(), async (req, res) => {
     const { name, surname, email, password, store } = req.body
     if (!(name && surname && email && password)) res.send(400)
     else {
@@ -21,7 +22,7 @@ router.post('/register', async (req, res) => {
 })
 
 // Login user
-router.post('/login', async (req, res) => {
+router.post('/login', multer.none(), async (req, res) => {
     const { email, password } = req.body
     if (!(email && password)) res.send(400)
     else {
@@ -34,7 +35,7 @@ router.post('/login', async (req, res) => {
 })
 
 // Logout user
-router.post('/logout', (req, res) => {
+router.post('/logout', multer.none(), (req, res) => {
     //console.log(req.session)
     req.session.destroy()
     res.redirect('/login')

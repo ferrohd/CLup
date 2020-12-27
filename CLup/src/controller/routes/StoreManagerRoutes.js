@@ -1,35 +1,35 @@
 const { Store } = require('express-session')
-
 const router = require('express').Router()
 const StoreManagerServices = require('../services/StoreManagerServices')
 const storeManagerServices = new StoreManagerServices()
+const multer = require('multer')()
 
 //---------STORE OVERVIEW ROUTES------------------
 
 // Get number of people inside the store
-router.get('/store/inside', (req, res) => {
+router.get('/store/inside', async (req, res) => {
     const storeManager = req.session.user
-    const insideStatus = storeManagerServices.storeOverview.getInsideStatus(storeManager)
+    const insideStatus = await storeManagerServices.storeOverview.getInsideStatus(storeManager)
 })
 
 // Get number of people in queue
-router.get('/store/queue', (req, res) => {
+router.get('/store/queue', async (req, res) => {
     const storeManager = req.session.user
-    const queueStatus = storeManagerServices.storeOverview.getQueueStatus(storeManager)
+    const queueStatus = await storeManagerServices.storeOverview.getQueueStatus(storeManager)
 })
 
 //-------SCAN TICKET ROUTES-----------
 
 // Scan ticket at entrance
-router.post('/ticket/scan/entrance', (req, res) => {
+router.post('/ticket/scan/entrance', async (req, res) => {
     const { ticket } = req.body
-    const valid = storeManagerServices.scanTicket.scanEntrance(ticket)
+    const valid = await storeManagerServices.scanTicket.scanEntrance(ticket)
 })
 
 // Scan ticket at exit
-router.post('/ticket/scan/exit', (req, res) => {
+router.post('/ticket/scan/exit', async (req, res) => {
     const { ticket } = req.body
-    const valid = storeManagerServices.scanTicket.scanExit(ticket)
+    const valid = await storeManagerServices.scanTicket.scanExit(ticket)
 })
 
 //------STORE MANAGEMENT ROUTES---------
