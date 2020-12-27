@@ -1,37 +1,43 @@
 const router = require('express').Router()
-const AccountManagement = require('../services/AccountServices')
-const accountManagement = new AccountManagement()
+const AccountServices = require('../services/AccountServices')
+const accountServices = new AccountServices()
 const User = require('./../../model/UserModel')
-//-------ACCOUNT MANAGEMENT ROUTES-------------
 
+
+//-------ACCOUNT MANAGEMENT ROUTES-------------
 // Register user
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     const { name, surname, email, password, store } = req.body
-    if (!(name || surname || email || password)) res.send(400)
+    if (!(name && surname && email && password)) res.send(400)
     else {
         const user = new User(name, surname, email, password, store)
-        if (user.isClupper()) accountManagement.registerClupper(user)
-        else accountManagement.registerStoreManager(user)
-        res.redirect('/login')
+        let success = false
+        if (user.isClupper()) success = await accountServices.accountManagement.registerClupper(user)
+        else success = await accountServices.accountManagement.registerStoreManager(user)
+        
+        if (success) res.redirect('/login')
+        else res.sendStatus(400)
     }
 })
 
 // Login user
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body
-    if (!(email || password)) res.send(400)
+    if (!(email && password)) res.send(400)
     else {
-        const user = accountManagement.login(email, password)
+        const user = await accountServices.accountManagement.getUser(email, password)
         if (user) {
             req.session.user = user.email
+            res.sendStatus(200)
         }
-        res.redirect('/')
     }
 })
 
 // Logout user
 router.post('/logout', (req, res) => {
-    req.session.user = null
+    //console.log(req.session)
+    req.session.destroy()
+    res.redirect('/login')
 })
 
 module.exports = router

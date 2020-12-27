@@ -14,25 +14,23 @@ app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
 app.use(session({
     secret: 'password super segreta',
-    saveUninitialized: false,
-    rolling: true,
-    resave: false,
+    saveUninitialized: true,
+    resave: true,
     cookie: {
         secure: false,
+        httpOnly: false,
         maxAge: 60 * 60
     }
 
 }))
-app.use(loginMiddleware)
+//app.use(loginMiddleware)
 //-----LOAD ROUTES------
-app.use(accountRoutes)
-app.use(clupperRoutes)
-app.use(storeManagerRoutes)
+app.use('/', accountRoutes)
+app.use('/', clupperRoutes)
+app.use('/', storeManagerRoutes)
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
 
-http.listen(3000, () => {
-    console.log('listening on *:3000')
-})
+module.exports = http
