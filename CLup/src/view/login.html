@@ -20,12 +20,12 @@
     </head>
     <body>
         <img class="banner" alt="" src="img/banner-small.png"/>
-        <a href="index.html"><img class="logo" alt="Customers Line-up" src="img/logo.png"/></a>
+        <a href="/"><img class="logo" alt="Customers Line-up" src="img/logo.png"/></a>
         <h2>Your safety is our concern</h2>
 
         <h1>Nice to see you!</h1>
         
-        <form id="form" class="input-form" action="#" data-src="/login" data-target="explore.html">
+        <form id="form" class="input-form" action="#" data-src="/login">
             <div class="input-field">
                 <input name="email" type="email" class="validate" required>
                 <label for="email">Email</label>
@@ -37,33 +37,11 @@
         </form>
 
         <button id="form-btn" type="button" class="waves-effect waves-light btn primary">Login</button>
-        <h3>Don't have an account? <a href="register.html">Sign Up Now</a></h3>
+        <h3>Don't have an account? <a href="/register">Sign Up Now</a></h3>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript">
             document.getElementById("form-btn").addEventListener("click", () => submitForm());
-
-            //Override to have contextual target
-            function submitForm(id = "form") {
-                var form = document.getElementById(id);
-
-                if(!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
-
-                var src = form.getAttribute("data-src");
-
-                makeCall("POST", form.getAttribute("data-src"), form, req => {
-                    if(req.readyState == XMLHttpRequest.DONE) {
-                        if(req.status == 200) {
-                            window.location.href = req.responseText;
-                        } else {
-                            M.toast({html: req.responseText, displayLength: (60 * 60 * 1000)});
-                        }
-                    }
-                });
-            }
         </script>
     </body>
 </html>

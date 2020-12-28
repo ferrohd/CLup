@@ -2,7 +2,7 @@
  * AJAX call management
  */
 
-function submitForm(id = "form") {
+function submitForm(id = "form") {	
 	var form = document.getElementById(id);
 
 	if(!form.checkValidity()) {
@@ -11,12 +11,11 @@ function submitForm(id = "form") {
 	}
 
 	var src = form.getAttribute("data-src");
-	var target = form.getAttribute("data-target");
 
-	makeCall("POST", form.getAttribute("data-src"), form, req => {
+	makeCall("POST", src, form, req => {
 		if(req.readyState == XMLHttpRequest.DONE) {
 			if(req.status == 200) {
-				window.location.href = target;
+				window.location.href = req.responseText;
 			} else {
 				M.toast({html: req.responseText, displayLength: (60 * 60 * 1000)});
 			}

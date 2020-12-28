@@ -42,19 +42,22 @@ app.get('/login', (req, res) => {
 app.get('/register', (req, res) => {
     res.sendFile('/register.html', {root: '../Clup/src/view/'})
 })
+app.get('/register-store', (req, res) => {
+    res.sendFile('/register-store.html', {root: '../Clup/src/view/'})
+})
 app.get('/explore', (req, res) => {
-    res.sendFile('/epxlore.html', {root: '../Clup/src/view/'})
+    res.sendFile('/explore.html', {root: '../Clup/src/view/'})
 })
 app.get('/queue', (req, res) => {
     res.sendFile('/queue.html', {root: '../Clup/src/view/'})
 })
-app.get('/camera', (req, res) => {
-    res.sendFile('/camera.html', {root: '../Clup/src/view/'})
-})
 app.get('/store', (req, res) => {
     res.sendFile('/store.html', {root: '../Clup/src/view/'})
 })
-app.get('/store-overview', (req, res) => {
-    res.sendFile('/store-overview.html', {root: '../Clup/src/view/'})
+app.get('/overview', (req, res) => {
+    res.sendFile('/overview.html', {root: '../Clup/src/view/'})
+})
+app.get('/print-ticket', (req, res) => {
+    res.sendFile('/print-ticket.html', {root: '../Clup/src/view/'})
 })
 module.exports = http

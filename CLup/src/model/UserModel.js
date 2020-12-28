@@ -2,7 +2,7 @@ module.exports = class User {
     constructor(name, surname, email, password, store) {
         this.name = name
         this.surname = surname
-        this. email = email
+        this.email = email
         this.password = password
         this.store = store || null
     }

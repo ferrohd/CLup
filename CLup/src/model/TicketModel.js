@@ -1,7 +1,7 @@
 module.exports = class Ticket {
     constructor(id, date, user, store, inside) {
         this.id = id
-        this. date = date
+        this.date = date
         this.user = user
         this.store = store
         this.inside = inside

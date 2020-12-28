@@ -1,12 +1,10 @@
 module.exports = class Store {
-    constructor(name, vat, lat, lng, capacity, openFrom, openTo) {
+    constructor(name, vat, lat, lng, capacity) {
         this.name = name
         this.vat = vat
         this.lat = lat
         this.lng = lng
-        this.capacity = capacity,
-        this.openFrom = openFrom,
-        this.openTo = openTo
+        this.capacity = capacity
     }
     toJSON() { return {
         name: this.name,
@@ -15,10 +13,6 @@ module.exports = class Store {
             lat: this.lat,
             lng: this.lng
         },
-        capacity: this.capacity,
-        open: {
-            from: this.openFrom,
-            to: this.openTo
-        }
+        capacity: this.capacity
     }}
 }

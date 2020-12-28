@@ -27,11 +27,14 @@ class AccountManagement {
             })
         }
     }
-    async registerStoreManager(storeManager) {
+    async registerStoreManager(storeManager, storeObject) {
         const { name, surname, email, password, store } = storeManager.toJSON()
+        const { storeName, vat, position, capacity} = storeObject.toJSON()
+        const { lat, lng } = position
         const user = await this.getUser(email, password)
         if (user) return false
         else {
+            //TODO insert storeObject into DB
             const stmt = `INSERT INTO user (email ,name, surname, password, store) VALUES(?,?,?,?,?)`
             const values = [email, name, surname, password, store]
             return new Promise( (resolve, _reject) => {
@@ -57,5 +60,9 @@ class AccountManagement {
                 else resolve(null)
             })
         })
+    }
+    async getPositionFromAddress(address) {
+        //TODO query Google Maps API to find lat and lng of the address
+        return {lat: 0, lng: 0}
     }
 }

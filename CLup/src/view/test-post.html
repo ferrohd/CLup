@@ -24,8 +24,8 @@
 
         <form id="form" class="input-form" action="#">
             <div class="input-field">
-                <input name="id" type="text" class="validate">
-                <label for="id">Ticket ID</label>
+                <input name="ticket" type="text" class="validate">
+                <label for="ticket">Ticket ID</label>
             </div>     
             <div class="input-field">
                 <input name="date" type="text" class="validate">
@@ -47,13 +47,10 @@
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script>
             var src = String(window.sessionStorage.getItem("data-src")) || "/queue/join";
-            var target = String(window.sessionStorage.getItem("data-target")) || "explore.html";
+            var target = String(window.sessionStorage.getItem("data-target")) || "/explore";
 
             document.getElementById("data-src").innerHTML += src;
-            document.getElementById("data-target").innerHTML += target;
-
             document.getElementById("form").setAttribute("data-src", src);
-            document.getElementById("form").setAttribute("data-target", target);
 
             document.getElementById("form-btn").addEventListener("click", () => submitForm());
             document.getElementById("skip-btn").addEventListener("click", () => {

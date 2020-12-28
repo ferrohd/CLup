@@ -20,16 +20,16 @@ router.get('/store/queue', async (req, res) => {
 
 //-------SCAN TICKET ROUTES-----------
 
-// Scan ticket at entrance
-router.post('/ticket/scan/entrance', async (req, res) => {
-    const { ticket } = req.body
-    const valid = await storeManagerServices.scanTicket.scanEntrance(ticket)
-})
-
-// Scan ticket at exit
-router.post('/ticket/scan/exit', async (req, res) => {
-    const { ticket } = req.body
-    const valid = await storeManagerServices.scanTicket.scanExit(ticket)
+// Scan ticket at entrance or exit
+router.post('/ticket/scan/', async (req, res) => {
+    const { ticket, inside } = req.body
+    const valid = false
+    if(inside)
+        valid = await storeManagerServices.scanTicket.scanExit(ticket)
+    else
+        valid = await storeManagerServices.scanTicket.scanEntrance(ticket)
+    //Should redirect to a page that displays "valid" value
+    res.status(200).send('/overview')
 })
 
 //------STORE MANAGEMENT ROUTES---------
@@ -39,6 +39,7 @@ router.post('/store/capacity', (req, res) => {
     const { newCapacity } = req.body
     const storeManager = req.session.user
     storeManagerServices.editStoreCapacity(storeManager, newCapacity)
+    res.status(200).send('/overview')
 })
 
 // Get store capacity

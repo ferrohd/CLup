@@ -20,7 +20,9 @@ router.post('/queue/join', multer.none(), async (req, res) => {
     console.log(req.body)
     if (store && user) {
         const ticket = await clupperServices.queueManagement.joinQueue(user, store)
-        res.json(ticket)
+        // res.json(ticket) queue page will be rendered from user's ticket
+        if(ticket != null) res.status(200).send('/queue')
+        else res.sendStatus(400)
     }
     else res.sendStatus(400)
 })
@@ -30,7 +32,7 @@ router.post('/queue/leave', multer.none(), async (req, res) => {
     const ticket = req.body.id
     if (ticket) {
         await clupperServices.queueManagement.leaveQueue(ticket)
-        res.sendStatus(200)
+        res.status(200).send('/explore')
     }
     else res.sendStatus(400)
 })
