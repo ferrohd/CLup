@@ -25,7 +25,7 @@
 
         <h1>Nice to see you!</h1>
         
-        <form id="form" class="input-form" action="#" data-src="/login">
+        <form id="form" method="POST" class="input-form" action="/login" >
             <div class="input-field">
                 <input name="email" type="email" class="validate" required>
                 <label for="email">Email</label>
@@ -34,14 +34,12 @@
                 <input name="password" type="password" class="validate" required>
                 <label for="password">Password</label>
             </div>         
+            <input type="submit">
         </form>
 
         <button id="form-btn" type="button" class="waves-effect waves-light btn primary">Login</button>
         <h3>Don't have an account? <a href="/register">Sign Up Now</a></h3>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script type="text/javascript">
-            document.getElementById("form-btn").addEventListener("click", () => submitForm());
-        </script>
     </body>
 </html>

@@ -25,7 +25,7 @@
 
         <h1>Welcome on board!</h1>
         
-        <form id="form" class="input-form" action="#" data-src="/register-store">
+        <form id="form" class="input-form" method="POST" action="/register-store">
             <h3>Personal details</h3>
             <div class="input-field">
                 <input name="name" type="text" class="validate" required>
@@ -45,7 +45,7 @@
             </div>   
             <h3>Store details</h3>  
             <div class="input-field">
-                <input name="store-name" type="text" class="validate" required>
+                <input name="storeName" type="text" class="validate" required>
                 <label for="store-name">Name</label>
             </div>     
             <div class="input-field">
@@ -60,6 +60,7 @@
                 <input name="capacity" type="number" class="validate" required>
                 <label for="capacity">Capacity</label>
             </div>       
+            <input type="submit">
         </form>
 
         <button id="form-btn" type="button" class="waves-effect waves-light btn primary">Register</button>

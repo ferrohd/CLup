@@ -6,18 +6,7 @@ const multer = require('multer')()
 
 //---------STORE OVERVIEW ROUTES------------------
 
-// Get number of people inside the store
-router.get('/store/inside', async (req, res) => {
-    const storeManager = req.session.user
-    const insideStatus = await storeManagerServices.storeOverview.getInsideStatus(storeManager)
-})
-
-// Get number of people in queue
-router.get('/store/queue', async (req, res) => {
-    const storeManager = req.session.user
-    const queueStatus = await storeManagerServices.storeOverview.getQueueStatus(storeManager)
-})
-
+// SOLO OVERVIEW
 //-------SCAN TICKET ROUTES-----------
 
 // Scan ticket at entrance or exit
@@ -33,14 +22,6 @@ router.post('/ticket/scan/', async (req, res) => {
 })
 
 //------STORE MANAGEMENT ROUTES---------
-
-// Edit store capacity
-router.post('/store/capacity', (req, res) => {
-    const { newCapacity } = req.body
-    const storeManager = req.session.user
-    storeManagerServices.editStoreCapacity(storeManager, newCapacity)
-    res.status(200).send('/overview')
-})
 
 // Get store capacity
 router.get('/store/capacity', (req, res) => {

@@ -25,7 +25,7 @@
 
         <h1>Stay safe!</h1>
         
-        <form id="form" class="input-form" action="#" data-src="/register">
+        <form id="form" method="POST" class="input-form" action="/register" >
             <div class="input-field">
                 <input name="name" type="text" class="validate" required>
                 <label for="name">Name</label>
@@ -41,15 +41,13 @@
             <div class="input-field">
                 <input name="password" type="password" class="validate" required>
                 <label for="password">Password</label>
-            </div>         
+            </div> 
+            <input type="submit">        
         </form>
 
         <button id="form-btn" type="button" class="waves-effect waves-light btn primary">Register</button>
         <h3>Are you a shop owner? <a href="/register-store">Join Us Now</a></h3>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script type="text/javascript">
-            document.getElementById("form-btn").addEventListener("click", () => submitForm());
-        </script>
     </body>
 </html>
