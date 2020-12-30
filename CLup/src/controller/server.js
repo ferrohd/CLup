@@ -68,9 +68,9 @@ app.get('/overview', (req, res) => {
     //se non sono loggato vado su login
     res.sendFile('/overview.html', {root: '../Clup/src/view/'})
 })
-app.get('/print-ticket', (req, res) => {
+app.get('/issue-ticket', (req, res) => {
     //se non sono loggato vado su login
     //msotro le info del biglietto appena generato
-    res.sendFile('/print-ticket.html', {root: '../Clup/src/view/'})
+    res.sendFile('/issue-ticket.html', {root: '../Clup/src/view/'})
 })
 module.exports = http

@@ -106,9 +106,39 @@ body.alt {
 body.no-overflow {
     overflow: hidden;
 }
+body.no-margin {
+    margin: 0;
+}
+body.overlayed{
+    overflow: hidden;
+}
+body.overlayed:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: var(--secondary-color);
+    opacity: 0.5;
+    z-index: 3;
+    pointer-events: none;
+}
+
+body > h1 {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .spaced {
     margin-bottom: 3em;
+}
+
+.hidden-form {
+    visibility: hidden;
+    display: none;
+    pointer-events: none;
 }
 
 /***********
@@ -192,6 +222,13 @@ body.no-overflow {
 * EXPLORE - STORE - QUEUE *
 ***************************/
 
+.btn-floating-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    justify-content: space-evenly;
+}
+
 .btn-floating,
 .btn-floating:hover {
     background-color: var(--background-color-1);
@@ -211,27 +248,16 @@ body.no-overflow {
     color: var(--secondary-color);
 }
 
-.map {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-}
-.map.no-click {
-    pointer-events: none;
-}
-
 .bottom-container {
-    background-color: var(--background-color-1);
     position: fixed;
+    background-color: var(--background-color-1);
+    width: 100vw;
     top: 50%;
     bottom: 0;
-    width: 100vw;
     border-radius: 2em 2em 0 0;
     transition: top .35s ease-in-out;
     z-index: 2;
+    overflow-y: auto;
 }
 .bottom-container.closed {
     top: 95%;
@@ -241,6 +267,25 @@ body.no-overflow {
 }
 .bottom-container.full {
     top: 5.5em;
+}
+.bottom-container.auto {
+    top: auto;
+}
+.bottom-container.relative-container {
+    position: relative;
+    min-height: 50%;
+    margin: 2em 0 0;
+    padding: 1px 1px 5em;   /*1px to allow child margin to expand*/
+}
+.bottom-container.modal-container {
+    transform: translateY(100%);
+    transition: .35s transform ease-in-out;
+    z-index: 4;
+    pointer-events: none;
+}
+.overlayed .bottom-container.modal-container {
+    transform: translateY(0%);
+    pointer-events: all;
 }
 .bottom-toggler {
     width: 100%;
@@ -260,8 +305,7 @@ body.no-overflow {
 
 .store-list {
     height: 100%;
-    overflow-y: auto;
-    padding: 0 0 2em;
+    padding: 2em 0 0;
 }
 
 .store {
@@ -272,6 +316,7 @@ body.no-overflow {
     align-items: center;
     border-radius: 1.5em;
     cursor: pointer;
+    background-color: var(--background-color-1);
 }
 .store-icon {
     width: 1.8em;

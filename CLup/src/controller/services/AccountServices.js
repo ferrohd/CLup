@@ -99,12 +99,12 @@ class AccountManagement {
     async getPositionFromAddress(address) {
         return new Promise( (resolve, reject) => {
             const url = 'http://api.positionstack.com/v1/forward?access_key=d2ae97b4da3aa8f88d5f1c58c38d97bd&country=IT&region=Lombardia&query=' + address
-            console.log('richiesta')
+            // console.log('richiesta')
             request(url, (err, res, body) => {
                 if (err) resolve({lat: 0, lng: 0})
                 else if (res.statusCode == 200) {
                     const result = JSON.parse(body).data[0]
-                    console.log(result)
+                    // console.log(result)
                     if (result) resolve({ lat: result.latitude, lng: result.longitude })
                     else resolve({lat: 0, lng: 0})
                 }

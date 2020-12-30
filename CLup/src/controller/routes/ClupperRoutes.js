@@ -17,7 +17,7 @@ router.get('/queue/status', multer.none(), async (req, res) => {
 // Join queue route
 router.post('/queue/join', multer.none(), async (req, res) => {
     const { store, user } = req.body
-    console.log(req.body)
+    // console.log(req.body)
     if (store && user) {
         const ticket = await clupperServices.queueManagement.joinQueue(user, store)
         // res.json(ticket) queue page will be rendered from user's ticket

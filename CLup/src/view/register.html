@@ -25,7 +25,7 @@
 
         <h1>Stay safe!</h1>
         
-        <form id="form" method="POST" class="input-form" action="/register" >
+        <form id="form" method="POST" class="input-form" action="/register">
             <div class="input-field">
                 <input name="name" type="text" class="validate" required>
                 <label for="name">Name</label>
@@ -41,11 +41,10 @@
             <div class="input-field">
                 <input name="password" type="password" class="validate" required>
                 <label for="password">Password</label>
-            </div> 
-            <input type="submit">        
+            </div>        
         </form>
 
-        <button id="form-btn" type="button" class="waves-effect waves-light btn primary">Register</button>
+        <button id="form-btn" type="submit" form="form" class="waves-effect waves-light btn primary">Register</button>
         <h3>Are you a shop owner? <a href="/register-store">Join Us Now</a></h3>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>

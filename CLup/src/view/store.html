@@ -16,14 +16,13 @@
         <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
         <link href="css/style.css" type="text/css" rel="stylesheet">
     </head>
-    <body class="alt no-overflow">
-        <a class="btn-floating btn-large waves-effect waves-dark top right" href="/explore"><i class="material-icons">close</i></a>
+    <body class="alt no-margin">
+        <h1>Here, the store you requested</h1>
+        <div class="btn-floating-container">
+            <a class="btn-floating btn-large waves-effect waves-dark" href="/explore"><i class="material-icons">close</i></a>
+        </div>
 
-        <section id="map no-click" class="map">
-
-        </section>
-
-        <section id="bottom-container" class="bottom-container mid z-depth-3">
+        <section id="bottom-container" class="bottom-container relative-container mid z-depth-3">
             <div class="store-details">
                 <h1>Supermercato Carrefour Market</h1>
                 <h2>Via Benedetto Spinoza, 4, 20131 Milano MI</h2>
@@ -39,18 +38,13 @@
                 </div>
             </div>
 
-            <a id="form-btn" class="waves-effect waves-light btn primary">Join the Queue</a>
+            <form id="form" method="POST" class="hidden-form" action="/queue/join">
+                <input name="store" type="hidden" value="1"/>
+            </form>
+
+            <button id="form-btn" type="submit" form="form" class="waves-effect waves-light btn primary">Join the Queue</button>
         </section>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script type="text/javascript">
-            document.getElementById("form-btn").addEventListener("click", openTest)
-
-            function openTest() {
-                window.sessionStorage.setItem("data-src", "/queue/join");
-                window.sessionStorage.setItem("data-target", "/queue");
-                window.location.href = "test-post.html";
-            }
-        </script>
     </body>
 </html>

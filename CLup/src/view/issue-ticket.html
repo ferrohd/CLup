@@ -18,6 +18,9 @@
     </head>
     <body class="alt">
         <h1>Here, the ticket for your customer!</h1>
+        <div class="btn-floating-container">
+            <a class="btn-floating btn-large waves-effect waves-dark" id="close-btn"><i class="material-icons">close</i></a>
+        </div>
 
         <img alt="" class="qr-code" src="img/qr-code.png"/>
         <h3 class="qr-code-description">Show this QR code to the store manager at the entrance</h3>
@@ -37,10 +40,36 @@
                 <h2><b>23/12/2020 - 10:21</b></h2>
             </div>
         </div>
+
+        <form id="form" method="#" class="hidden-form" action="#">
+            <input name="ticket" type="hidden" value="1"/>
+        </form>
         
-        <a class="waves-effect waves-light btn primary">Print the Ticket</a>
-        <a class="waves-effect waves-light btn secondary" href="/overview">Back to Overview</a>
+        
+        <a class="waves-effect waves-light btn primary" id="print-btn">Print the Ticket</a>
+        <button id="form-btn" type="submit" form="form" class="waves-effect waves-light btn secondary">Delete the Ticket</button>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript">
+            document.getElementById("close-btn").addEventListener("click", avoidClose);
+
+            document.getElementById("print-btn").addEventListener("click", printTicket);
+
+            function avoidClose() {
+                M.Toast.dismissAll();
+                M.toast({html: "You must first print the ticket.", displayLength: (30 * 1000)});
+            }
+
+            function printTicket() {
+                //TODO print the ticket
+                var closeBtn = document.getElementById("close-btn");
+                closeBtn.removeEventListener("click", closePage);
+                closeBtn.addEventListener("click", closePage);
+            }
+
+            function closePage() {
+                window.location.href="/overview";
+            }
+        </script>
     </body>
 </html>

@@ -29,4 +29,30 @@ router.get('/store/capacity', (req, res) => {
     return storeManagerServices.getStoreCapacity(storeManager)
 })
 
+// Update store capacity
+router.post('/store/capacity', (req, res) => {
+    const storeManager = req.session.user
+    return storeManagerServices.getStoreCapacity(storeManager)
+})
+
+//------GUEST MANAGEMENT ROUTES----------
+
+// Issue a new ticket
+router.get('/ticket/issue', (req, res) => {
+    const storeManager = req.session.user
+    // const store = ?
+
+    //msotro le info del biglietto appena generato
+    res.redirect("/issue-ticket");
+})
+
+// Delete an issued ticket
+router.post('/ticket/delete', (req, res) => {
+    const ticket = req.body;
+    //se non sono loggato vado su login
+    
+
+    res.redirect("/overview");
+})
+
 module.exports = router

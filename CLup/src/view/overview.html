@@ -18,7 +18,7 @@
         
         <script src="js/utils.js" charset="utf-8" defer></script>
     </head>
-    <body class="alt">
+    <body class="alt no-margin">
         <h1>Store overview</h1>
         <div class="report-wrapper">
             <div class="report-container">
@@ -31,25 +31,55 @@
             </div>
         </div>
 
-        <section id="bottom-container" class="bottom-container mid z-depth-3">
+        <section id="bottom-container" class="bottom-container relative-container mid z-depth-3">
             <div class="store-details">
                 <h1>Supermercato Carrefour Market</h1>
                 <h2>Via Benedetto Spinoza, 4, 20131 Milano MI</h2>
             </div>
 
-            <a id="form-btn" class="waves-effect waves-light btn primary">Scan Ticket</a>
-            <a href="/print-ticket" class="waves-effect waves-light btn secondary">Issue Ticket</a>
-            <h3>New regulations? <a href="">Update Capacity</a></h3>
+            <a class="waves-effect waves-light btn primary" id="scan-btn">Scan Ticket</a>
+            <a href="/ticket/issue" class="waves-effect waves-light btn secondary">Issue Ticket</a>
+            <h3>New regulations? <a id="update-btn">Update Capacity</a></h3>
         </section>
+
+        <section class="bottom-container modal-container auto z-depth-5">
+            <h2>Insert the new store capacity</h2>
+            <form id="update-form" method="POST" class="input-form" action="/store/capacity">
+                <div class="input-field">
+                    <input name="capacity" type="number" class="validate" placeholder="New capacity" required>
+                </div>     
+            </form>
+            <div class="spaced">
+                <button type="submit" form="update-form" class="waves-effect waves-light btn primary">Update</button>
+                <a id="close-update-btn" class="waves-effect waves-light btn secondary">Cancel</a>
+            </div>
+        </section>
+
+        <form id="form" method="POST" class="hidden-form" action="/ticket/scan">
+            <input id="ticket" name="ticket" type="hidden" value=""/>
+        </form>
 
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript">
-            document.getElementById("form-btn").addEventListener("click", openTest)
+            document.getElementById("scan-btn").addEventListener("click", scanTicket);
 
-            function openTest() {                
-                window.sessionStorage.setItem("data-src", "/ticket/scan");
-                window.sessionStorage.setItem("data-target", "/overview");
-                window.location.href = "test-post.html";
+            function scanTicket() {
+                //TODO scan ticket
+                var ticket = 1;
+                document.getElementById("ticket").setAttribute("value", ticket);
+                document.getElementById("form").submit();
+            }
+
+            document.getElementById("update-btn").addEventListener("click", showUpdate);
+
+            function showUpdate() {
+                document.body.classList.add("overlayed");
+            }
+
+            document.getElementById("close-update-btn").addEventListener("click", hideUpdate);
+
+            function hideUpdate() {
+                document.body.classList.remove("overlayed");
             }
         </script>
         

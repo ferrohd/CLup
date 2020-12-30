@@ -18,21 +18,23 @@ router.get('/login', (req, res) => {
 // Login user
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
+    console.log(req.body)
     if (!(email && password)) res.send(400)
     else {
         const user = await accountServices.accountManagement.getUser(email, password)
-        console.log(user)
+        // console.log(user)
         if (user) {
             // Set the session
             req.session.user = user.toJSON()
             if(user.isClupper()) res.redirect('/explore')
             else res.redirect('/overview')
-        } else res.redirect('/login')
+        // } else res.redirect('/login')
+        } else res.sendStatus(404);
     }
 })
 
 // Logout user
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     //console.log(req.session)
     req.session.destroy( _ => {
         res.clearCookie('sid')

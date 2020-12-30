@@ -19,6 +19,9 @@
     </head>
     <body class="alt">
         <h1>Be patient, your turn is coming!</h1>
+        <div class="btn-floating-container">
+            <a class="btn-floating btn-large waves-effect waves-dark" href="/explore"><i class="material-icons">close</i></a>
+        </div>
 
         <img alt="" class="qr-code" src="img/qr-code.png"/>
         <h3 class="qr-code-description">Show this QR code to the store manager at the entrance</h3>
@@ -32,9 +35,12 @@
             <i class="material-icons">watch_later</i>
             <h2 class="ellipsis"><b>25</b> minutes estimated</h2>
         </div>
+
+        <form id="form" method="POST" class="hidden-form" action="/queue/leave">
+            <input name="ticket" type="hidden" value="1"/>
+        </form>
         
-        <a class="waves-effect waves-light btn primary" href="/explore">Back to the Map</a>
-        <button id="form-btn" type="button" class="waves-effect waves-light btn secondary">Leave the Queue</button>
+        <button id="form-btn" type="submit" form="form" class="waves-effect waves-light btn secondary">Leave the Queue</button>
 
         <section id="bottom-container" class="bottom-container closed z-depth-3">
             <div id="bottom-toggler" class="bottom-toggler"></div>
@@ -61,16 +67,8 @@
 
             document.getElementById("bottom-toggler").addEventListener("click", () => {
                 bottomContainer.classList.toggle("closed");
-                bottomContainer.classList.toggle("full");
+                bottomContainer.classList.toggle("mid");
             });
-
-            document.getElementById("form-btn").addEventListener("click", openTest)
-
-            function openTest() {
-                window.sessionStorage.setItem("data-src", "/queue/leave");
-                window.sessionStorage.setItem("data-target", "/explore");
-                window.location.href = "test-post.html";
-            }
         </script>
     </body>
 </html>
