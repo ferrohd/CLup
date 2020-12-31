@@ -40,37 +40,4 @@ app.get('/', (req, res) => {
     res.sendFile('/index.html', {root: '../Clup/src/view/'})
 })
 
-app.get('/explore', (req, res) => {
-    //se non sono loggato vado su login
-
-    // mi arriva la posizione
-    // trovo tutti gli store ordinati per distanza
-
-    res.sendFile('/explore.html', {root: '../Clup/src/view/'})
-})
-app.get('/queue', (req, res) => {
-    //se non sono loggato vado su login
-
-    // ticket id e nome store
-    res.sendFile('/queue.html', {root: '../Clup/src/view/'})
-})
-app.get('/store', (req, res) => {
-    //se non sono loggato vado su login
-
-    // HO L'ID UTENTE NELLA SESSION
-    // mi arriva la partita IVA dello store
-
-    // mostro la pagina bellina con store / entra nello store
-
-    res.sendFile('/store.html', {root: '../Clup/src/view/'})
-})
-app.get('/overview', (req, res) => {
-    //se non sono loggato vado su login
-    res.sendFile('/overview.html', {root: '../Clup/src/view/'})
-})
-app.get('/issue-ticket', (req, res) => {
-    //se non sono loggato vado su login
-    //msotro le info del biglietto appena generato
-    res.sendFile('/issue-ticket.html', {root: '../Clup/src/view/'})
-})
 module.exports = http

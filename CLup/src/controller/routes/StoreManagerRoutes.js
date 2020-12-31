@@ -2,37 +2,49 @@ const { Store } = require('express-session')
 const router = require('express').Router()
 const StoreManagerServices = require('../services/StoreManagerServices')
 const storeManagerServices = new StoreManagerServices()
-const multer = require('multer')()
+const loginMiddleware = require('../middlewares/checkLoginMiddleware')
+
+router.use(loginMiddleware)
 
 //---------STORE OVERVIEW ROUTES------------------
 
-// SOLO OVERVIEW
+
+router.get('/overview', (req, res) => {
+    const storeManager = req.session.user
+    const store = storeManager.store
+
+    // Info da mostrare ;)
+    const storeInfo = storeManagerServices.storeOverview.getStoreInfo(store)
+    const insideStatus = storeManagerServices.storeOverview.getInsideStatus(store)
+    const queueStatus = storeManagerServices.storeOverview.getQueueStatus(store)
+    const capacity = storeManagerServices.storeManagement.getStoreCapacity(store)
+    res.sendFile('/overview.html', {root: '../Clup/src/view/'})
+})
+
+// Update store capacity
+router.post('/store/capacity', (req, res) => {
+    const storeManager = req.session.user
+    return storeManagerServices.storeManagement.editStoreCapacity(storeManager)
+})
+
+
+router.get('/issue-ticket', (req, res) => {
+    //se non sono loggato vado su login
+    //msotro le info del biglietto appena generato
+    res.sendFile('/issue-ticket.html', {root: '../Clup/src/view/'})
+})
 //-------SCAN TICKET ROUTES-----------
 
 // Scan ticket at entrance or exit
 router.post('/ticket/scan/', async (req, res) => {
     const { ticket, inside } = req.body
-    const valid = false
+    let valid = false
     if(inside)
         valid = await storeManagerServices.scanTicket.scanExit(ticket)
     else
         valid = await storeManagerServices.scanTicket.scanEntrance(ticket)
     //Should redirect to a page that displays "valid" value
     res.status(200).send('/overview')
-})
-
-//------STORE MANAGEMENT ROUTES---------
-
-// Get store capacity
-router.get('/store/capacity', (req, res) => {
-    const storeManager = req.session.user
-    return storeManagerServices.getStoreCapacity(storeManager)
-})
-
-// Update store capacity
-router.post('/store/capacity', (req, res) => {
-    const storeManager = req.session.user
-    return storeManagerServices.getStoreCapacity(storeManager)
 })
 
 //------GUEST MANAGEMENT ROUTES----------

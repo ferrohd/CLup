@@ -104,7 +104,6 @@ class AccountManagement {
                 if (err) resolve({lat: 0, lng: 0})
                 else if (res.statusCode == 200) {
                     const result = JSON.parse(body).data[0]
-                    // console.log(result)
                     if (result) resolve({ lat: result.latitude, lng: result.longitude })
                     else resolve({lat: 0, lng: 0})
                 }

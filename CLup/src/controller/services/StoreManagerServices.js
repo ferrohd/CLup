@@ -1,4 +1,5 @@
 const DatabaseConnection = require('../database/DatabaseConnection')
+const Store = require('../../model/StoreModel')
 
 module.exports = class StoreManagerServices {
     constructor() {
@@ -13,7 +14,20 @@ class StoreOverview {
     constructor(dbConn) {
         this.dbConn = dbConn
     }
-    getInsideStatus(store) {
+    async getStoreInfo(store) {
+        return new Promise( (resolve, reject) => {
+            const stmnt = 'SELECT * FROM store WHERE vat = ?'
+            const values = [store]
+            this.dbConn.query(stmnt, values, (err, results, _fields) => {
+                if (err) resolve(null)
+                else {
+                    const {name, vat, lat, lng, capacity} = results[0]
+                    resolve(new Store(name, vat, lat, lng, capacity))
+                }
+            })
+        })
+    }
+    async getInsideStatus(store) {
         return new Promise( (resolve, _reject) => {
             const stmnt = 'SELECT * FROM ticket WHERE store = ? AND inside = true'
             const values = [store]
@@ -23,7 +37,7 @@ class StoreOverview {
             })
         })
     }
-    getQueueStatus(store) {
+    async getQueueStatus(store) {
         return new Promise( (resolve, _reject) => {
             const stmnt = 'SELECT * FROM ticket WHERE store = ? AND inside = false'
             const values = [store]
@@ -39,7 +53,7 @@ class StoreManagement {
     constructor(dbConn) {
         this.dbConn = dbConn
     }
-    editStoreCapacity(store, new_capacity) {
+    async editStoreCapacity(store, new_capacity) {
         return new Promise( (resolve, reject) => {
             const stmnt = 'UPDATE store SET capacity = ? WHERE vat = ?'
             const values = [new_capacity, store]
@@ -48,7 +62,7 @@ class StoreManagement {
             })
         })
     }
-    getStoreCapacity(store) {
+    async getStoreCapacity(store) {
         return new Promise( (resolve, reject) => {
             const stmnt = 'SELECT capacity FROM store WHERE vat = ?'
             const values = [store]
@@ -64,7 +78,7 @@ class ScanTicket {
     constructor(dbConn) {
         this.dbConn = dbConn
     }
-    scanEntrance(ticket) {
+    async scanEntrance(ticket) {
         return new Promise( (resolve, reject) => {
             const stmnt = 'UPDATE ticket SET inside = true WHERE ticket = ?'
             const values = [ticket]
@@ -73,7 +87,7 @@ class ScanTicket {
             })
         })
     }
-    scanExit(ticket) {
+    async scanExit(ticket) {
         return new Promise( (resolve, reject) => {
             const stmnt = 'DELETE FROM ticket WHERE ticket = ?'
             const values = [ticket]

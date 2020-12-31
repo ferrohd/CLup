@@ -1,48 +1,67 @@
 const router = require('express').Router()
 const ClupperServices = require('../services/ClupperServices')
 const clupperServices = new ClupperServices()
-const multer = require('multer')()
+const loginMiddleware = require('../middlewares/checkLoginMiddleware')
+
+// Check if the user is logged in
+router.use(loginMiddleware)
+
+// Find Stores
+router.get('/explore', async (req, res) => {
+    const position = req.query
+    if (position.lng && position.lat) {
+        // Array degli store sortato da mostrare ;)
+        const stores = await clupperServices.storeLocator.findNearStores(position)
+    }
+    res.sendFile('/explore.html', {root: '../Clup/src/view/'})
+})
+
+// Show selected store
+router.get('/store', async (req, res) => {
+    const user = req.session.user
+    const storeID = req.query.id
+
+    // Store da mostrare ;)
+    const store = await clupperServices.storeLocator.getStoreInfo(storeID)
+
+    res.sendFile('/store.html', {root: '../Clup/src/view/'})
+})
+
 //-------------QUEUE ROUTES---------------------
 
-// Get queue position
-router.get('/queue/status', multer.none(), async (req, res) => {
-    const { store, email } = req.body
-    if (store && email) {
-        const queueStatus = await clupperServices.queueManagement.getQueueStatus(email, store)
-        res.json(queueStatus)
-    }
-    else res.sendStatus(400)
+// Queue page
+router.get('/queue', async (req, res) => {
+    const user = req.session.user
+    
+    //{ticketID, storeID, position, peopleInQueue}
+    // Info da mostrare ;)
+    const queueStatus = await clupperServices.queueManagement.getQueueStatus(email, store)
+    const store = await clupperServices.storeLocator.getStoreInfo(queueStatus.storeID)
+
+    res.sendFile('/queue.html', {root: '../Clup/src/view/'})
 })
 
 // Join queue route
-router.post('/queue/join', multer.none(), async (req, res) => {
-    const { store, user } = req.body
-    // console.log(req.body)
-    if (store && user) {
-        const ticket = await clupperServices.queueManagement.joinQueue(user, store)
-        // res.json(ticket) queue page will be rendered from user's ticket
-        if(ticket != null) res.status(200).send('/queue')
-        else res.sendStatus(400)
-    }
+router.post('/queue/join', async (req, res) => {
+    const { store } = req.body
+    const user = req.session.user
+
+    // Biglietto da mostrare ;) [qui c'è da capire come gestirla, perchè deve fare un redirect alla queue status ma allo stesso tempo passare il biglietto al client, probabilmente ha senso passare i dati del biglietto via url nella redirect]
+    const ticket = await clupperServices.queueManagement.joinQueue(user.email, store)
+    
+    if(ticket != null) res.send(ticket)
     else res.sendStatus(400)
+
 })
 
 // Leave queue route
-router.post('/queue/leave', multer.none(), async (req, res) => {
+router.post('/queue/leave', async (req, res) => {
     const ticket = req.body.id
     if (ticket) {
         await clupperServices.queueManagement.leaveQueue(ticket)
         res.status(200).send('/explore')
     }
     else res.sendStatus(400)
-})
-
-//-------------STORE LOCATOR ROUTES---------------------
-// Find store
-router.get('/map/find', multer.none(), (req, res) => {
-    const bookingStatus = clupperServices.storeLocator.findPositionByAddress()
-    const bookingStatus1 = clupperServices.storeLocator.findStoreByPosition()
-    const bookingStatus2 = clupperServices.storeLocator.findNearStores()
 })
 
 module.exports = router

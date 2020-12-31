@@ -1,6 +1,8 @@
 const DatabaseConnection = require('../database/DatabaseConnection')
 const Ticket = require('./../../model/TicketModel')
+const Store = require('../../model/StoreModel')
 const crypto = require('crypto')
+const haversine = require('haversine-distance')
 
 module.exports = class ClupperServices {
     constructor() {
@@ -40,7 +42,7 @@ class QueueManagement {
         })
     }
     async getQueueStatus(email, store) {
-        const stmt = `SELECT ticket.id, user.email FROM user JOIN ticket JOIN store WHERE user.store = null AND store.vat = ? AND  ORDER BY ticket.timestamp`
+        const stmt = `SELECT ticket.id, user.email, store.vat FROM user JOIN ticket JOIN store WHERE user.store = null AND store.vat = ? AND  ORDER BY ticket.timestamp`
         const values = [store]
         return new Promise( (resolve, _reject) => {
             this.dbConn.query(stmt, values, (err, results, _fields) => {
@@ -58,6 +60,7 @@ class QueueManagement {
                     }
                     if (exists) resolve({
                         ticketID: res.id,
+                        storeID: res.vat,
                         position: position,
                         peopleInQueue: peopleInQueue
                     })
@@ -72,7 +75,36 @@ class StoreLocator {
     constructor(dbConn) {
         this.dbConn = dbConn
     }
-    findPositionByAddress(address) {}
-    findStoreByPosition(gps_position) {}
-    findNearStores(gps_position, radius) {}
+    async findNearStores(userPos) {
+        const stmnt = `SELECT * FROM store`
+        return new Promise( (resolve, _reject) => {
+            this.dbConn.query(stmnt, (err, results, _fields) => {
+                if (err) resolve(null)
+                else {
+                    for (let res of results) {
+                        res.discance = haversine(userPos, {lat: res.lat, lng: res.lng})
+                    }
+                    resolve(results.sort( (a, b) => {
+                        if (a.distance <= b.distance) return -1
+                        else return 1
+                    }))
+                }
+            })
+        })
+
+    }
+    async getStoreInfo(storeID) {
+        const stmnt = `SELECT * FROM store WHERE vat = ?`
+        const values = [storeID]
+        return new Promise( (resolve, reject) => {
+            this.dbConn.query(stmnt, values, (err, results, _fields) => {
+                if (err) resolve(null)
+                else {
+                    const { name, vat, lat, lng, capacity } = results[0]
+                    const store = new Store(name, vat, lat, lng, capacity)
+                    resolve(store)
+                }
+            })
+        })
+    }
 }
