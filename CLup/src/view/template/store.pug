@@ -1,0 +1,38 @@
+doctype html
+html(lang="en")
+    head
+        - function Store(name, vat, lat, lng, capacity, distance, inline, address) { this.name = name; this.vat = vat; this.lat = lat; this.lng = lng; this.capacity = capacity; this.distance = distance; this.inline = inline; this.address = address }
+        - var store = new Store("Store name 1", "1", "lat", "lng", 20, 0.5, 15, "Via Benedetto Spinoza, 4, 20131 Milano MI");
+
+        include include/head.pug
+        title #{store.name} - Customers LineUp
+    body.alt.no-margin
+        h1 Here, the store you requested
+        div.btn-floating-container
+            a.btn-floating.btn-large.waves-effect.waves-dark(href="/explore")
+                i.material-icons close
+
+        section.bottom-container.relative-container.mid.z-depth-3
+            div.store-details
+                h1 #{store.name}
+                h2 #{store.address}
+
+                if store.distance
+                    div.info-container
+                        i.material-icons directions_walk
+                        h2.ellipsis 
+                            b #{store.distance} 
+                            | km away
+                
+                div.info-container
+                    i.material-icons group
+                    h2.ellipsis 
+                        b #{store.inline} 
+                        | users in line
+            
+            form#form.hidden-form(method="POST" action="queue/join")
+                input(name="store" type="hidden" value=store.vat)
+
+            button#form-btn.waves-effect.waves-light.btn.primary(type="submit" form="form") Join the Queue
+
+        include include/script.pug
