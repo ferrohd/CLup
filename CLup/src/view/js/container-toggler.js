@@ -3,5 +3,5 @@ var bottomToggler = document.getElementById("bottom-toggler");
 
 if(bottomContainer && bottomToggler)
     bottomToggler.addEventListener("click", () => {
-        bottomContainer.classList.toggle("full");
+        bottomContainer.classList.toggle("closed");
     });

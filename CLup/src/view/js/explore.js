@@ -1,27 +1,39 @@
-document.querySelectorAll(".store").forEach(store => {
-    store.addEventListener("click", (e) => {
-        window.location.href = "/store?id=" + store.getAttribute("data-id");
-    });
-});    
-
-document.getElementById("fix-pos-btn").addEventListener("click", getCoordinates);
+document.getElementById("pos-btn").addEventListener("click", getCoordinates);
 
 function getCoordinates() {
     if(navigator.geolocation) {
+        setPreloader();
         navigator.geolocation.getCurrentPosition(sendPosition, catchError);
     } else {
         displayError("Geolocation is not supported by this browser.");
     }
 }
 
+function setPreloader() {
+    var preloader = `<div class="preloader-wrapper small active">
+                        <div class="spinner-layer">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                        </div>
+                    </div>`
+    document.getElementById("pos-btn").innerHTML = preloader;
+}
+
 function sendPosition(position) {
-    window.location.href = "/explore?lat=" + position.coords.latitude + "&lng=" + position.coords.longitude;
+    document.getElementById("lat").setAttribute("value", position.coords.latitude);
+    document.getElementById("lng").setAttribute("value", position.coords.longitude);
+    document.getElementById("form").submit();
 }
 
 function catchError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            displayError("User denied the request for Geolocation");
+            displayError("User denied the request for Geolocation.");
             break;
         case error.POSITION_UNAVAILABLE:
             displayError("Location information is unavailable.");
@@ -36,7 +48,7 @@ function catchError(error) {
 }
 
 function displayError(errorString) {
-    var button = document.getElementById("position-btn");
+    var button = document.getElementById("pos-btn");
     button.removeEventListener("click", getCoordinates);
     button.firstChild.innerHTML = "gps_off";
     M.Toast.dismissAll();

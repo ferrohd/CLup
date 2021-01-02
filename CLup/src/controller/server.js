@@ -5,10 +5,16 @@ const app = express()
 const http = require('http').createServer(app)
 const session = require('express-session')
 const sessionLogger = require('./middlewares/sessionLogger')
-//const loginMiddleware = require('./middlewares/loginMiddleware')
 const accountRoutes = require('./routes/AccoutRoutes')
 const clupperRoutes = require('./routes/ClupperRoutes')
 const storeManagerRoutes = require('./routes/StoreManagerRoutes')
+
+//-----SET TEMPLATE ENGINE-----
+app.set('view engine', 'pug')
+//Template Files
+app.set('views', path.join(__dirname, '../view/template/'))
+//Static Files
+app.use(express.static(path.join(__dirname, '../view/')))
 
 //-----LOAD MIDDLEWARES----
 app.use(express.json())
@@ -24,20 +30,24 @@ app.use(session({
         httpOnly: false,
         maxAge: null
     }
-
 }))
-//app.use(loginMiddleware)
+app.use((req, res, next) => {
+    res.redirectMessage = (url, message) => {
+        if(!req.session.messages) req.session.messages = []
+        req.session.messages.push(message)
+        res.redirect(url)
+    }
+    next()
+})
 //-----LOAD ROUTES------
 app.use(sessionLogger)
 app.use('/', accountRoutes)
 app.use('/', clupperRoutes)
 app.use('/', storeManagerRoutes)
 
-//Static Files
-app.use(express.static('../Clup/src/view'));
 // WebApp Routes
 app.get('/', (req, res) => {
-    res.sendFile('/index.html', {root: '../Clup/src/view/'})
+    res.render('index')
 })
 
 module.exports = http

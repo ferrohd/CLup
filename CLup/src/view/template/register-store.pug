@@ -11,7 +11,7 @@ html(lang="en")
 
         h1 Welcome on board!
 
-        form#form.input-form(method="POST" action="/register")
+        form#form.input-form(method="POST" action="/register-store")
             h3 Personal details
             div.input-field
                 input.validate(name="name" type="text" required)
@@ -33,7 +33,7 @@ html(lang="en")
                 input.validate(name="address" type="text" required)
                 label(for="address") Address
             div.input-field
-                input.validate(name="vat" type="test" required)
+                input.validate(name="vat" type="number" required)
                 label(for="vat") VAT number
             div.input-field
                 input.validate(name="capacity" type="number" required)

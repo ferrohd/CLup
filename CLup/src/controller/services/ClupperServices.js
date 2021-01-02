@@ -1,7 +1,7 @@
 const DatabaseConnection = require('../database/DatabaseConnection')
-const Ticket = require('./../../model/TicketModel')
-const Store = require('../../model/StoreModel')
-const crypto = require('crypto')
+const Ticket = require('../../model/TicketModel')
+const SharedServices = require('./SharedServices')
+const sharedServices = new SharedServices()
 const haversine = require('haversine-distance')
 
 module.exports = class ClupperServices {
@@ -16,56 +16,42 @@ class QueueManagement {
     constructor(dbConn) {
         this.dbConn = dbConn
     }
-    async joinQueue(email, store) {
-        const alreadyInQueue = await this.getQueueStatus(email, store)
-        return new Promise( (resolve, _reject) => {
-            if (alreadyInQueue) resolve(null)
-            else {
-                const stmnt = 'INSERT INTO ticket (id, date, inside, user, store) VALUES(?,?,?,?,?)'
-                const ticketID = crypto.randomBytes(40).toString('hex')
-                const date = Date.now()
-                const values = [ticketID, date, false, email, store]
-                this.dbConn.query(stmnt, values, (err, _results, _fields) => {
-                    if (err) resolve(null)
-                    else resolve(new Ticket(ticketID, date, email, store, false))
-                })
-            }
-        })
+    async joinQueue(email, vat) {
+        const userTicket = await this.getQueueTicket(email)
+        if(!userTicket.error) return {error: "You can be in one queue at a time.", sqlError: false}
+        if(userTicket.sqlError) return userTicket
+
+        return sharedServices.ticketManager.createTicket(email, vat)
     }
-    async leaveQueue(email, store) {
+    async leaveQueue(email, vat) {
+        const stmt = `DELETE FROM ticket WHERE user = ? AND store = ?`
+        const values = [email, vat]
         return new Promise( (resolve, _reject) => {
-            const stmt = 'DELETE FROM ticket WHERE user = ? AND store = ?'
-            const values = [email, store]
             this.dbConn.query(stmt, values, (err, _results, _fields) => {
-                err ? resolve(false) : resolve(true)
+                err ? resolve({error: err.sqlMessage, sqlError: true}) : resolve(true)
             })
         })
     }
-    async getQueueStatus(email, store) {
-        const stmt = `SELECT ticket.id, user.email, store.vat FROM user JOIN ticket JOIN store WHERE user.store = null AND store.vat = ? AND  ORDER BY ticket.timestamp`
-        const values = [store]
+    async getQueueTicket(email) {
+        const stmt = `SELECT * FROM ticket WHERE user = ?`
+        const values = [email]
         return new Promise( (resolve, _reject) => {
             this.dbConn.query(stmt, values, (err, results, _fields) => {
-                if (err || results.length == 0) resolve(null)
-                else {
-                    const peopleInQueue = results.length
-                    let position = 0
-                    let exists = false
-                    for (res in results) {
-                        if (res.email = email ) {
-                            exists = true
-                            break
-                        }
-                        position++
-                    }
-                    if (exists) resolve({
-                        ticketID: res.id,
-                        storeID: res.vat,
-                        position: position,
-                        peopleInQueue: peopleInQueue
-                    })
-                    else resolve(null)
-                }
+                if(err) return resolve({error: err.sqlMessage, sqlError: true})
+                if(results.length == 0) return resolve({error: 'No ticket found.', sqlError: false})
+                const { id, date, user, store, inside } = results[0]
+                const ticket = new Ticket(id, date, user, store, inside)
+                // ticket.qrcode = 
+                resolve(ticket)
+            })
+        })
+    }
+    async getQueueBefore(vat, date) {
+        const stmt = `SELECT id FROM ticket WHERE store = ? AND inside = false AND date < ?`
+        const values = [vat, date]
+        return new Promise( (resolve, _reject) => {
+            this.dbConn.query(stmt, values, (err, results, _fields) => {
+                err ? resolve({error: err.sqlMessage, sqlError: true}) : resolve(results.length)
             })
         })
     }
@@ -75,36 +61,36 @@ class StoreLocator {
     constructor(dbConn) {
         this.dbConn = dbConn
     }
-    async findNearStores(userPos) {
-        const stmnt = `SELECT * FROM store`
+    // Default position is set to the Duomo of Milan
+    async findNearStores(userPos = {lat: 45.464211, lng: 9.191383}) {
+        const stmt = `SELECT * FROM store`
         return new Promise( (resolve, _reject) => {
-            this.dbConn.query(stmnt, (err, results, _fields) => {
-                if (err) resolve(null)
-                else {
-                    for (let res of results) {
-                        res.discance = haversine(userPos, {lat: res.lat, lng: res.lng})
-                    }
-                    resolve(results.sort( (a, b) => {
-                        if (a.distance <= b.distance) return -1
-                        else return 1
-                    }))
+            this.dbConn.query(stmt, (err, results, _fields) => {
+                if (err) return resolve({error: err.sqlMessage, sqlError: true})
+                for (let res of results) {
+                    res.distance = haversine(userPos, {lat: res.lat, lng: res.lng})
                 }
+                resolve(results.sort( (a, b) => {
+                    if (a.distance <= b.distance) return -1
+                    else return 1
+                }))
             })
         })
 
     }
-    async getStoreInfo(storeID) {
-        const stmnt = `SELECT * FROM store WHERE vat = ?`
-        const values = [storeID]
-        return new Promise( (resolve, reject) => {
-            this.dbConn.query(stmnt, values, (err, results, _fields) => {
-                if (err) resolve(null)
-                else {
-                    const { name, vat, lat, lng, capacity } = results[0]
-                    const store = new Store(name, vat, lat, lng, capacity)
-                    resolve(store)
-                }
-            })
-        })
+    async getStoreInfo(vat, userPos, additional = true) {
+        const store = await sharedServices.storeDetails.getStore(vat, userPos)
+    
+        if(!store.error && additional) {    
+            const address = await sharedServices.positionStack.getAddressFromPosition(store.lat, store.lng)
+            if(address.error) return address
+            store.address = address
+
+            const inline = await sharedServices.storeDetails.getStoreInLine(store.vat)
+            if(inline.error) return inline
+            store.inline = inline
+        }
+
+        return store
     }
 }

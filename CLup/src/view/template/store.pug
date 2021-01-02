@@ -1,9 +1,16 @@
+//- -----REQUIRED VARIABLES------
+//- position: bool, indicates if the user provided his position
+//- store: object {
+        //- vat: string, id of the store
+        //- name: string
+        //- distance: between user's position and store position in meters (if position = true)
+        //- address: string
+        //- inline: number of tickets in the store queue (inside = false)
+//- }
+
 doctype html
 html(lang="en")
     head
-        - function Store(name, vat, lat, lng, capacity, distance, inline, address) { this.name = name; this.vat = vat; this.lat = lat; this.lng = lng; this.capacity = capacity; this.distance = distance; this.inline = inline; this.address = address }
-        - var store = new Store("Store name 1", "1", "lat", "lng", 20, 0.5, 15, "Via Benedetto Spinoza, 4, 20131 Milano MI");
-
         include include/head.pug
         title #{store.name} - Customers LineUp
     body.alt.no-margin
@@ -21,8 +28,12 @@ html(lang="en")
                     div.info-container
                         i.material-icons directions_walk
                         h2.ellipsis 
-                            b #{store.distance} 
-                            | km away
+                            if store.distance >= 1000
+                                b #{(store.distance / 1000).toFixed(1)} 
+                                | km away
+                            else
+                                b #{store.distance.toFixed(0)} 
+                                | m away
                 
                 div.info-container
                     i.material-icons group

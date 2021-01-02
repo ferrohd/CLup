@@ -1,12 +1,14 @@
+//- -----REQUIRED VARIABLES-----
+//- store: object {
+        //- name: string
+        //- address: string
+        //- capacity: maximum store capacity
+        //- inline: number of tickets in the store queue (inside = false)
+//- }
+//- inside: number of tickets inside the store (inside = true)
+
 html(lang="en")
     head
-        - function Store(name, vat, lat, lng, capacity, distance, inline, address) { this.name = name; this.vat = vat; this.lat = lat; this.lng = lng; this.capacity = capacity; this.distance = distance; this.inline = inline; this.address = address }
-        - var store = new Store("Store name 1", "1", "lat", "lng", 20, 0.5, 15, "Via Benedetto Spinoza, 4, 20131 Milano MI");
-        - var inside = 37;
-        - var capacity = 38;
-        - var inline = 15;
-
-
         include include/head.pug
         title Store Overview - Customers LineUp
     body.alt.no-margin
@@ -16,25 +18,25 @@ html(lang="en")
             div.report-container
                 h2 Inside
                 span.report #{inside}
-                span.report.minor= "/" + capacity
+                span.report.minor= "/" + store.capacity
             div.report-container
                 h2 In line
-                span.report #{inline}
+                span.report #{store.inline}
 
         section.bottom-container.relative-container.auto.z-depth-3
             div.store-details
                 h1 #{store.name}
                 h2 #{store.address}
             a#scan-btn.waves-effect.waves-light.btn.primary Scan Ticket
-            a.waves-effect.waves-light.btn.secondary(href="/ticket/issue") Issue Ticket
+            a.waves-effect.waves-light.btn.secondary(href="/ticket") Issue Ticket
             h3 New regulations? 
-                a#update-btn Update Capacity
+                a#update-btn(href="") Update Capacity
         
         section.bottom-container.modal-container.auto.z-depth-5
             h2 Insert the new store capacity
             form#update-form.input-form(method="POST" action="/store/capacity")
                 div.input-field
-                    input.validate(name="capacity" type="number" placeholder="New capacity" required)
+                    input#capacity.validate(name="capacity" type="number" placeholder="New capacity" required)
             dic.spaced
                 button#update-form.waves-effect.waves-light.btn.primary(type="submit" form="update-form") Update Capacity
                 a#close-update-btn.waves-effect.waves-light.btn.secondary Cancel

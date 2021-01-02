@@ -1,10 +1,15 @@
+//- -----REQUIRED VARIABLES-----
+//- position: bool, indicates if the user provided his position
+//- stores: array of objects {
+        //- vat: string, id of the store
+        //- name: string
+        //- distance: between user's position and store position in meters (if position = true)
+        //- inline: number of tickets in the store queue (inside = false)
+//- }
+
 doctype html
 html(lang="en")
     head
-        - function Store(name, vat, lat, lng, capacity, distance, inline) { this.name = name; this.vat = vat; this.lat = lat; this.lng = lng; this.capacity = capacity; this.distance = distance; this.inline = inline; }
-        - var ordered = true;
-        - var stores = [new Store("Store name 1", "1", "lat", "lng", 20, 0.1, 12), new Store("Store name 2", "2", "lat", "lng", 20, 0.15, 20), new Store("Store name 3", "3", "lat", "lng", 20, 0.4, 4), new Store("Store name 4", "4", "lat", "lng", 20, 1.2, 9)];
-
         include include/head.pug
         title Explore - Customers LineUp
     body.alt
@@ -14,21 +19,25 @@ html(lang="en")
                 i.material-icons exit_to_app
             a.btn-floating.btn-large.waves-effect.waves-dark(href="/queue")
                 i.material-icons shopping_cart
-            a.btn-floating.btn-large.waves-effect.waves-dark(id= ordered ? "pos-btn" : "fix-pos-btn")
-                i.material-icons #{ordered ? "gps_fixed" : "gps_not_fixed"}
+            a#pos-btn.btn-floating.btn-large.waves-effect.waves-dark
+                i.material-icons #{position ? "gps_fixed" : "gps_not_fixed"}
         
         section.store-list
             -var index = 0;
             each store in stores
-                div.store.waves-effect.waves-dark.z-depth-1(data-id=store.vat)
+                a.store.waves-effect.waves-dark.z-depth-1(href="/store?id=" + store.vat)
                     div(class="store-icon style-" + (index % 2 + 1))
                         i.material-icons #{index % 2 == 0 ? "storefront" : "store"}
                     div.store-info
                         h2.ellipsis #{store.name}
-                        if ordered
-                            h3.ellipsis #{store.distance + " km away"}
+                        if position
+                            h3.ellipsis #{store.distance >= 1000 ? (store.distance / 1000).toFixed(1) + " km away" : store.distance.toFixed(0) + " m away"}
                         h3.ellipsis #{store.inline + " users in line"}
                 - index++;
+
+        form#form.hidden-form(method="POST" action="/explore")
+            input#lat(name="lat" type="hidden")
+            input#lng(name="lng" type="hidden")
 
         include include/script.pug
         script(type="text/javascript" src="js/explore.js")

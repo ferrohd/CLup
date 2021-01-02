@@ -1,5 +1,7 @@
 script(type="text/javascript" src="js/materialize.min.js")
-if error
-    script(type="text/javascript") M.toast({html: "#{error}", displayLength: (60 * 60 * 1000)});
+if messages
+    script(type="text/javascript") 
+        each message in messages
+            | M.toast({html: "#{message}", displayLength: (60 * 60 * 1000)});
 
 script(type="text/javascript" src="js/container-toggler.js")
