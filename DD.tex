@@ -7,8 +7,8 @@
 \author{\href{https://github.com/ferrohd}{Alessandro Ferrara} -
 \href{https://github.com/lorenzofratus}{Lorenzo Fratus}}
 \professor{Elisabetta di Nitto}
-\date{December 24, 2020}
-\version{0.2}
+\date{January 03, 2021}
+\version{1.0}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 
 \section{A. Purpose}
 
-The purpose of this document is to provide an overall guidance to the architecture of the software product and therefore it is primarily addressed to the software development team.
+The purpose of this document is to provide an overall guidance to the architecture of this software product and therefore it is primarily addressed to the development team.
 
 More precisely, the document presents an overview of the high level architecture (defining the main components and their interaction) and additional details on the runtime behaviour and the user interface of the application.
 
@@ -43,7 +43,6 @@ To do so, the system offers to the users the possibility to:
 The system should be very simple to use (to adapt to all demographics) and provide fallback options for those who do not have access to the application.
 
 \section{C. Definitions, acronyms and abbreviations}
-FIXME \emph{[Update]}
 
 \subsection{C.1. Definitions}
 
@@ -123,7 +122,7 @@ FIXME \emph{[Update]}
 Version & Date & Description \\ \addlinespace
 \midrule
 \endhead
-1.0 & XX Jan 2021 & First version \\ \addlinespace
+1.0 & 03 Jan 2021 & First version \\ \addlinespace
 \bottomrule
 \end{longtable}
 
@@ -133,14 +132,15 @@ Version & Date & Description \\ \addlinespace
 \item
   Assignment document A.Y. 2020/2021 (``Requirement Engineering and Design Project: goal, schedule, and rules'')
 \item
-  Requirement Analysis and Specification Document - Customers Line-up, version 1.0
+  Requirement Analysis and Specification Document - Customers Line-up, version 1.0 (referred to as ``RASD'' in the document)
 \end{itemize}
 
+\clearpage
 \section{F. Document structure}
 
 \begin{itemize}
 \item 
-    \textbf{Section 1: Introduction}: The first section provides an introduction to the purpose of the document and the scope of the CLup system. Included here is a glossary including definitions, acronyms and abbreviations used in this document.
+    \textbf{Section 1: Introduction}: The first section provides an introduction to the purpose of the document and the scope of the CLup system. Included here is a glossary with the definitions, acronyms and abbreviations used in this document.
 \item 
     \textbf{Section 2: Architectural design}: This is the core section of the DD, it gives an overview of the main components of the system and the relationship between them providing the most relevant views. This section also focus on the main architectural styles and patterns adopted in the design of the system.
 \item 
@@ -177,6 +177,7 @@ Finally, the business logic of the system resides on the application server (\em
 \caption{High level layers diagram}
 \end{figure}
 
+\clearpage
 \section{B. Component view}
 
 The following diagrams show the main components of the CLup system and the interfaces through which they interact.\\
@@ -234,8 +235,7 @@ In order to fulfill their goals, these components need to communicate with the D
 The Store Manager Services subsystem contains three components:
 \begin{itemize}
 \item
-    \textbf{Store Module}: offers the \emph{StoreOverview} and the
-    \emph{StoreManagement} interfaces used to receive store status updates and to edit the store maximum capacity respectively.
+    \textbf{Store Module}: offers the \emph{StoreOverview} and the \emph{StoreManagement} interfaces used to receive store status updates and to edit the store maximum capacity respectively.
 \item
     \textbf{Ticket Module}: offers the \emph{ScanTicket} interface to receive feedback on scanned tickets.
 \item
@@ -244,8 +244,7 @@ The Store Manager Services subsystem contains three components:
 
 In order to fulfill their goals, these components need to communicate with the DBMS.
 
-FIXME \emph{[Camera, Printer external interfaces?]}
-
+\clearpage
 \subsection{B.4. Account Services projection}
 
 \includegraphics{components_view/account_services_projection}
@@ -366,7 +365,6 @@ These diagrams show the main methods provided by each component:
 \end{figure}
 
 \section{F. Selected architectural styles and patterns}
-FIXME \emph{[Update]}
 
 \subsection{F.1. MVC pattern}
 
@@ -498,8 +496,7 @@ The direct path from the \emph{Home} page to the \emph{UserLogin} page is consid
 \end{figure}
 
 The \emph{NavBar} component is included in every page accessible by the clupper except the ``UserLogin'' page, the arrow is omitted to improve readability.\\
-The \emph{StoreTile} and \emph{BookingTile} can be included multiple times on the same page (with different data), they are classified as
-\emph{clickable} since they behave like a button.
+The \emph{StoreTile} and \emph{BookingTile} can be included multiple times on the same page (with different data), they are classified as \emph{clickable} since they behave like a button.
 
 \subsection{B.3. Store manager}
 
@@ -567,7 +564,64 @@ Here is provided a mapping between the goals defined in the RASD and the system 
 
 \chapter{5. Implementation, integration and test plan}
 
-TODO \emph{[Order in which we plan to implement the subcomponents and the order in which we plan to integrate them and test their integration]}
+\section{5.A. Implementation plan}
+
+This section defines the implementation order for the different components of Customers Line-up that must be followed by the development team.
+
+For the implementation of this application a \emph{bottom-up} approach will be used. This approach has the purpose of developing components that can be used in different situations and facilitates bug tracking by allowing incremental testing.
+
+The first element that must be implemented is \emph{Database Connection}, the internal component that manages the interaction between the system and the \emph{DBMS} and provides a set of functionalities used by other components.
+
+Then, it is possible to develop the components that provide the services offered to users by the system.\\
+These elements are fundamentally independent of each other, so a deviation from the order in which they are presented in this document is permitted.
+
+Starting from \emph{Clupper Services}, its subcomponents are implemented following the order in which each user will interact with them, thus defining an indirect information dependency:
+\begin{enumerate}
+    \item Store Search Module
+    \item Queue Module
+    \item Booking Module
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{implementation_diagrams/clupper_services_diagram}
+\caption{Clupper services diagram}
+\end{figure}
+
+Like before, inside \emph{Store Manager Services}, the subcomponents implementation is done following the dependency induced by the user interaction with the system:
+\begin{enumerate}
+    \item Store Module
+    \item Ticket Module
+    \item Guest Module
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{implementation_diagrams/store_manager_services_diagram}
+\caption{Store manager services diagram}
+\end{figure}
+
+Finally, the \emph{Account Services} component, can be implemented as a single block as it provides standard functionalities used for authentication and authorization purposes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{implementation_diagrams/account_services_diagram}
+\caption{Account services diagram}
+\end{figure}
+
+The implementation of the user interface can be performed in parallel with the implementation of the previous components after defining a set of offered APIs.
+
+\section{5.B. Integration and test plan}
+
+The implementation of the application must be accompanied by a meticulous testing phase.
+
+In addition to unit tests, the development of a component requires a series of integration tests with the part of the system already implemented.\\
+For this reason the order of integration and testing strictly depends on the order of implementation.
+
+As said before, the style adopted for this system allows the development of the view components in parallel.\\
+This advantage can be exploited to perform tests of each functionality without having to wait for the whole system to be completed.
+
+After the complete integration, the application must be tested as a whole to verify that the requirements are actually satisfied. This is done by means of system testing.
 
 \chapter{6. Effort spent}
 
@@ -596,6 +650,7 @@ Topic & Hours \\ \addlinespace
 Component Interface Diagrams & 1.0h \\ \addlinespace
 Sequence Diagrams & 1.0h \\ \addlinespace
 Section 2 & 2.0h \\ \addlinespace
+Section 5 & 2.5h \\ \addlinespace
 \bottomrule
 \end{longtable}
 
