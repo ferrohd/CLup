@@ -5,6 +5,10 @@ module.exports = class Store {
         this.lat = lat
         this.lng = lng
         this.capacity = capacity
+        //Additional fields
+        this.distance = null
+        this.address = null
+        this.inline = null
     }
     toJSON() { return {
         name: this.name,

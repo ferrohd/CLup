@@ -1,0 +1,53 @@
+//- -----REQUIRED VARIABLES-----
+//- store: object {
+        //- name: string
+        //- address: string
+//- }
+//- ticket: object {
+        //- id: string
+        //- date: timestamp
+        //- qrcode: base64 png image, background transparent, foreground: #272d2d
+//- }
+
+//- -----TIMESTAMP TO HUMAN READABLE CONVERSION-----
+- var dateTime = new Date(ticket.date * 1000);
+- var dateTimeString = [dateTime.getDate().toString().padStart(2, "0"), (dateTime.getMonth() + 1).toString().padStart(2, "0"), dateTime.getFullYear()].join("/");
+- dateTimeString += " - " + [dateTime.getHours().toString().padStart(2, "0"), dateTime.getMinutes().toString().padStart(2, "0")].join(":");
+
+doctype html
+html(lang="en")
+    head
+
+        include include/head.pug
+        title Print Ticket - Customers LineUp
+    body.alt
+        h1 Here, the ticket for your customer!
+        div.btn-floating-container
+            a#close-btn.btn-floating.btn-large.waves-effect.waves-dark
+                i.material-icons close
+        
+        img.qr-code(src="data:image/png;base64," + ticket.qrcode)
+        h3.qr-code-description Show this QR code to the store manager at the entrance
+
+        div.info-container
+            i.material-icons store
+            div
+                h2
+                    b #{store.name}
+                h2 #{store.address}
+
+        div.info-container
+            i.material-icons watch_later
+            div
+                h2 Issued on 
+                h2
+                    b #{dateTimeString}
+        
+        form#form.hidden-form(method="POST" action="/ticket/delete")
+            input(name="ticket" type="hidden" value=ticket.id)
+        
+        a#print-btn.waves-effect.waves-light.btn.primary Print the Ticket
+        button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Delete the Ticket
+
+        include include/script.pug
+        script(type="text/javascript" src="js/issue-ticket.js")

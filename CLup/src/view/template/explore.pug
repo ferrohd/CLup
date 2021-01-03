@@ -1,0 +1,43 @@
+//- -----REQUIRED VARIABLES-----
+//- position: bool, indicates if the user provided his position
+//- stores: array of objects {
+        //- vat: string, id of the store
+        //- name: string
+        //- distance: between user's position and store position in meters (if position = true)
+        //- inline: number of tickets in the store queue (inside = false)
+//- }
+
+doctype html
+html(lang="en")
+    head
+        include include/head.pug
+        title Explore - Customers LineUp
+    body.alt
+        h1 Browse through our partners
+        div.btn-floating-container
+            a.btn-floating.btn-large.waves-effect.waves-dark(href="/logout")
+                i.material-icons exit_to_app
+            a.btn-floating.btn-large.waves-effect.waves-dark(href="/queue")
+                i.material-icons shopping_cart
+            a#pos-btn.btn-floating.btn-large.waves-effect.waves-dark
+                i.material-icons #{position ? "gps_fixed" : "gps_not_fixed"}
+        
+        section.store-list
+            -var index = 0;
+            each store in stores
+                a.store.waves-effect.waves-dark.z-depth-1(href="/store?id=" + store.vat)
+                    div(class="store-icon style-" + (index % 2 + 1))
+                        i.material-icons #{index % 2 == 0 ? "storefront" : "store"}
+                    div.store-info
+                        h2.ellipsis #{store.name}
+                        if position
+                            h3.ellipsis #{store.distance >= 1000 ? (store.distance / 1000).toFixed(1) + " km away" : store.distance.toFixed(0) + " m away"}
+                        h3.ellipsis #{store.inline + " users in line"}
+                - index++;
+
+        form#form.hidden-form(method="POST" action="/explore")
+            input#lat(name="lat" type="hidden")
+            input#lng(name="lng" type="hidden")
+
+        include include/script.pug
+        script(type="text/javascript" src="js/explore.js")

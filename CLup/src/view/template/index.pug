@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+    head
+        include include/head.pug
+        title Customers LineUp
+    body
+        img.banner(src="img/banner-big.png")
+        a(href="/")
+            img.logo(alt="Customers Line-up" src="img/logo.png")
+        h2 Your safety is our concern
+
+        h1.spaced Welcome!
+
+        a.waves-effect.waves-light.btn.primary(href="/login") Sign In
+        h3 Don't have an account? 
+            a(href="/register") Sign Up Now
+        
+        include include/script.pug

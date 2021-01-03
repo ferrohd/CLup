@@ -1,41 +1,39 @@
 const router = require('express').Router()
 const AccountServices = require('../services/AccountServices')
 const accountServices = new AccountServices()
+const SharedServices = require('../services/SharedServices')
+const sharedServices = new SharedServices()
 const User = require('./../../model/UserModel')
 const Store = require('./../../model/StoreModel')
-const multer = require('multer')()
 
 
 //-------ACCOUNT MANAGEMENT ROUTES-------------
 
 // Renders logjn page
 router.get('/login', (req, res) => {
-    //se sono loggato vado a /explore o /overview
-    //renderizza la pagina di login
-    res.sendFile('/login.html', {root: '../Clup/src/view/'})
+    res.render('login', {messages: req.session.messages})
+    req.session.messages = null
+    req.session.save()
 })
 
 // Login user
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
-    console.log(req.body)
-    if (!(email && password)) res.send(400)
-    else {
-        const user = await accountServices.accountManagement.getUser(email, password)
-        // console.log(user)
-        if (user) {
-            // Set the session
-            req.session.user = user.toJSON()
-            if(user.isClupper()) res.redirect('/explore')
-            else res.redirect('/overview')
-        // } else res.redirect('/login')
-        } else res.sendStatus(404);
-    }
+    if (!(email && password))
+        return res.redirectMessage('/login', 'Invalid username or password.')
+
+    const user = await accountServices.accountManagement.getUser(email, password)
+    if (user.error)
+        return res.redirectMessage('/login', user.error)
+
+    // Set the session
+    req.session.user = user.toJSON()
+    if(user.isClupper()) res.redirect('/explore')
+    else res.redirect('/overview')
 })
 
 // Logout user
 router.get('/logout', (req, res) => {
-    //console.log(req.session)
     req.session.destroy( _ => {
         res.clearCookie('sid')
         res.redirect('/login')
@@ -44,45 +42,51 @@ router.get('/logout', (req, res) => {
 
 // Renders register page
 router.get('/register', (req, res) => {
-    //se sono loggato vado a /explore
-    //altrimenti rimango qui
-    res.sendFile('/register.html', {root: '../Clup/src/view/'})
+    res.render('register', {messages: req.session.messages})
+    req.session.messages = null
+    req.session.save()
 })
 
 // Register clupper
 router.post('/register', async (req, res) => {
     const { name, surname, email, password } = req.body
-    if (!(name && surname && email && password)) res.redirect('/register')
-    else {
-        const user = new User(name, surname, email, password)
-        let success =  await accountServices.accountManagement.registerClupper(user)
-        
-        if (success) res.redirect('/login')
-        else res.redirect('/register')
-    }
+    if (!(name && surname && email && password))
+        return res.redirectMessage('/register', 'Invalid values for the required fields.')
+
+    const user = new User(name, surname, email, password)
+    const result = await accountServices.accountManagement.registerClupper(user)
+    if (result.error)
+        return res.redirectMessage('/register', result.error)
+    
+    res.redirect('/login')
 })
 
 // Renders register store manager page
 router.get('/register-store', (req, res) => {
-    //se sono loggato vado a /explore
-    //altrimenti rimango qui
-    res.sendFile('/register-store.html', {root: '../Clup/src/view/'})
+    res.render('register-store', {messages: req.session.messages})
+    req.session.messages = null
+    req.session.save()
 })
 
 // Register store manager
 router.post('/register-store', async (req, res) => {
     const { name, surname, email, password, storeName, address, vat, capacity } = req.body
-    if (!(name && surname && email && password)) res.sendStatus(400)
-    else if (!(storeName && address && vat && capacity)) res.sendStatus(400)
-    else {
-        const user = new User(name, surname, email, password, vat)
-        const {lat, lng} = await accountServices.accountManagement.getPositionFromAddress(address)
-        const store = new Store(storeName, vat, lat, lng, capacity)
-        let success = await accountServices.accountManagement.registerStoreManager(user, store)
-        
-        if (success) res.redirect('/login')
-        else res.redirect('/register-store')
-    }
+    if (!(name && surname && email && password))
+        return res.redirectMessage('/register-store', 'Invalid values for the required personal fields.')
+    if (!(storeName && address && vat && capacity))
+        return res.redirectMessage('/register-store', 'Invalid values for the required store fields.')
+
+    const user = new User(name, surname, email, password, vat)
+    const position = await sharedServices.positionStack.getPositionFromAddress(address)
+    if(position.error)
+        return res.redirectMessage('/register-store', position.error)
+
+    const store = new Store(storeName, vat, position.lat, position.lng, capacity)
+    const result = await accountServices.accountManagement.registerStoreManager(user, store)
+    if(result.error)
+        return res.redirectMessage('/register-store', result.error)
+    
+    res.redirect('/login')
 })
 
 module.exports = router

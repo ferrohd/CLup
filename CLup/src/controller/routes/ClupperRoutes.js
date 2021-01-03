@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const ClupperServices = require('../services/ClupperServices')
 const clupperServices = new ClupperServices()
+const SharedServices = require('../services/SharedServices')
+const sharedServices = new SharedServices()
 const loginMiddleware = require('../middlewares/checkLoginMiddleware')
 
 // Check if the user is logged in
@@ -8,23 +10,46 @@ router.use(loginMiddleware)
 
 // Find Stores
 router.get('/explore', async (req, res) => {
-    const position = req.query
-    if (position.lng && position.lat) {
-        // Array degli store sortato da mostrare ;)
-        const stores = await clupperServices.storeLocator.findNearStores(position)
+    const messages = req.session.messages
+    const position = req.session.position
+
+    const stores = await clupperServices.storeLocator.findNearStores(position)
+    if(stores.error) messages.push(stores.error)
+    else {
+        for(store of stores) {
+            const inline = await sharedServices.storeDetails.getStoreInLine(store.vat)
+            if(inline.error) messages.push(inline.error)
+            else store.inline = inline
+        }
     }
-    res.sendFile('/explore.html', {root: '../Clup/src/view/'})
+    
+    res.render('explore', {position: position != undefined, stores: stores, messages: messages})
+    req.session.messages = null
+    req.session.save()
+})
+
+// Add user's position to session
+router.post('/explore', async (req, res) => {
+    const position = req.body
+
+    if(position.lat && position.lng)
+        req.session.position = position
+    
+    res.redirect('/explore')
 })
 
 // Show selected store
 router.get('/store', async (req, res) => {
-    const user = req.session.user
-    const storeID = req.query.id
+    const position = req.session.position
+    const vat = req.query.id
+    if(!vat) return res.redirectMessage('/explore', 'Invalid store id.')
 
-    // Store da mostrare ;)
-    const store = await clupperServices.storeLocator.getStoreInfo(storeID)
+    const store = await clupperServices.storeLocator.getStoreInfo(vat, position)
+    if(store.error) return res.redirectMessage('/explore', store.error)
 
-    res.sendFile('/store.html', {root: '../Clup/src/view/'})
+    res.render('store', {position: position != undefined, store: store, messages: req.session.messages})
+    req.session.messages = null
+    req.session.save()
 })
 
 //-------------QUEUE ROUTES---------------------
@@ -32,36 +57,48 @@ router.get('/store', async (req, res) => {
 // Queue page
 router.get('/queue', async (req, res) => {
     const user = req.session.user
-    
-    //{ticketID, storeID, position, peopleInQueue}
-    // Info da mostrare ;)
-    const queueStatus = await clupperServices.queueManagement.getQueueStatus(email, store)
-    const store = await clupperServices.storeLocator.getStoreInfo(queueStatus.storeID)
+    const position = req.session.position
 
-    res.sendFile('/queue.html', {root: '../Clup/src/view/'})
+    //- qrcode: base64 png image, background transparent, foreground: #272d2d
+    const ticket = await clupperServices.queueManagement.getQueueTicket(user.email)
+    if(ticket.error) return res.redirectMessage('/explore', ticket.error)
+
+    const before = await clupperServices.queueManagement.getQueueBefore(ticket.store, ticket.date)
+    if(before.error) return res.redirectMessage('/explore', before.error)
+
+    const store = await clupperServices.storeLocator.getStoreInfo(ticket.store, position, false)
+    if(store.error) return res.redirectMessage('/explore', store.error)
+
+    //15 minutes per customer
+    const time = before * 15
+
+    res.render('queue', {position: position != undefined, store: store, ticket: ticket, before: before, time: time, messages: req.session.messages})
+    req.session.messages = null
+    req.session.save()
 })
 
 // Join queue route
 router.post('/queue/join', async (req, res) => {
-    const { store } = req.body
     const user = req.session.user
+    const vat = req.body.store
+    if(!vat) return res.redirectMessage('/explore', 'Invalid store id.')
 
-    // Biglietto da mostrare ;) [qui c'è da capire come gestirla, perchè deve fare un redirect alla queue status ma allo stesso tempo passare il biglietto al client, probabilmente ha senso passare i dati del biglietto via url nella redirect]
-    const ticket = await clupperServices.queueManagement.joinQueue(user.email, store)
+    const ticket = await clupperServices.queueManagement.joinQueue(user.email, vat)
+    if(ticket.error) return res.redirectMessage('/explore', ticket.error)
     
-    if(ticket != null) res.send(ticket)
-    else res.sendStatus(400)
-
+    res.redirect('/queue')
 })
 
 // Leave queue route
 router.post('/queue/leave', async (req, res) => {
-    const ticket = req.body.id
-    if (ticket) {
-        await clupperServices.queueManagement.leaveQueue(ticket)
-        res.status(200).send('/explore')
-    }
-    else res.sendStatus(400)
+    const user = req.session.user
+    const vat = req.body.store
+    if(!vat) return res.redirectMessage('/explore', 'Invalid store id.')
+
+    const result = await clupperServices.queueManagement.leaveQueue(user.email, vat)
+    if(result.error) return res.redirectMessage('/explore', result.error)
+
+    res.redirect('/explore')
 })
 
 module.exports = router

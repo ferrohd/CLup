@@ -108,6 +108,9 @@ body.no-overflow {
 }
 body.no-margin {
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 body.overlayed{
     overflow: hidden;
@@ -228,6 +231,9 @@ body > h1 {
     justify-content: space-around;
     justify-content: space-evenly;
 }
+.no-margin .btn-floating-container {
+    flex-grow: 1;
+}
 
 .btn-floating,
 .btn-floating:hover {
@@ -248,6 +254,15 @@ body > h1 {
     color: var(--secondary-color);
 }
 
+.preloader-wrapper.small {
+    width: 30px;
+    height: 30px;
+    margin: 13px;
+} 
+.preloader-wrapper .spinner-layer {
+    border-color: var(--secondary-color);
+}
+
 .bottom-container {
     position: fixed;
     background-color: var(--background-color-1);
@@ -259,17 +274,17 @@ body > h1 {
     z-index: 2;
     overflow-y: auto;
 }
-.bottom-container.closed {
-    top: 95%;
-}
 .bottom-container.mid {
     top: 30%;
+}
+.bottom-container.auto {
+    top: auto;
 }
 .bottom-container.full {
     top: 5.5em;
 }
-.bottom-container.auto {
-    top: auto;
+.bottom-container.closed {
+    top: 95%;
 }
 .bottom-container.relative-container {
     position: relative;
@@ -310,6 +325,7 @@ body > h1 {
 
 .store {
     width: 75%;
+    min-height: 8em;
     padding: 1em;
     margin: .5em auto 1.5em;
     display: flex;
@@ -389,6 +405,7 @@ body > h1 {
 ************/
 
 .report-wrapper {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     margin: 3em auto 0;

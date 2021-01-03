@@ -1,0 +1,66 @@
+//- -----REQUIRED VARIABLES-----
+//- position: bool, indicates if the user provided his position
+//- store: object {
+        //- name: string
+        //- address: string
+        //- distance: between user's position and store position in meters (if position = true)
+//- }
+//- ticket: object {
+        //- store: string, store vat
+        //- qrcode: base64 png image, background transparent, foreground: #272d2d
+//- }
+//- before: number of tickets in the store queue with a smaller timestamp (inside = false)
+//- time: integer, expected waiting time in minutes
+
+doctype html
+html(lang="en")
+    head
+        include include/head.pug
+        title Queue - Customers LineUp
+    body.alt
+        h1 Be patient, your turn is coming!
+        div.btn-floating-container
+            a.btn-floating.btn-large.waves-effect.waves-dark(href="/explore")
+                i.material-icons close
+        
+        img.qr-code(src="data:image/png;base64," + ticket.qrcode)
+        h3.qr-code-description Show this QR code to the store manager at the entrance
+
+        div.info-container
+            i.material-icons group
+            div
+                h2.ellipsis
+                    b #{before} 
+                    | users before you
+
+        div.info-container
+            i.material-icons watch_later
+            div
+                h2
+                    b #{time} 
+                    | minutes estimated
+        
+        form#form.hidden-form(method="POST" action="/queue/leave")
+            input(name="store" type="hidden" value=ticket.store)
+        
+        button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Leave the Queue
+
+        section#bottom-container.bottom-container.auto.closed.z-depth-3
+            div#bottom-toggler.bottom-toggler
+
+            div.store-details
+                h1 #{store.name}
+                h2 #{store.address}
+
+                if store.distance
+                    div.info-container
+                        i.material-icons directions_walk
+                        h2.ellipsis 
+                            if store.distance >= 1000
+                                b #{(store.distance / 1000).toFixed(1)} 
+                                | km away
+                            else
+                                b #{store.distance.toFixed(0)} 
+                                | m away
+
+        include include/script.pug

@@ -5,6 +5,8 @@ module.exports = class Ticket {
         this.user = user
         this.store = store
         this.inside = inside
+        //Additional fields
+        this.qrcode = null
     }
     toJSON() { return {
         id: this.id,

@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        include include/head.pug
+        title Login | Customers LineUp
+    body
+        img.banner(src="img/banner-small.png")
+        a(href="/")
+            img.logo(alt="Customers LineUp" src="img/logo.png")
+        h2 Your safety is our concern
+
+        h1 Nice to see you!
+
+        form#form.input-form(method="POST" action="/login")
+            div.input-field
+                input.validate(name="email" type="email" required)
+                label(for="email") Email
+            div.input-field
+                input.validate(name="password" type="password" required)
+                label(for="password") Password
+
+        button#form-btn.waves-effect.waves-light.btn.primary(type="submit" form="form") Login
+        h3 Don't have an account? 
+            a(href="/register") Sign Up Now
+
+        include include/script.pug

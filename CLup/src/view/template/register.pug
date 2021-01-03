@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+    head
+        include include/head.pug
+        title Register | Customers LineUp
+    body
+        img.banner(src="img/banner-small.png")
+        a(href="/")
+            img.logo(alt="Customers LineUp" src="img/logo.png")
+        h2 Your safety is our concern
+
+        h1 Stay safe!
+
+        form#form.input-form(method="POST" action="/register")
+            div.input-field
+                input.validate(name="name" type="text" required)
+                label(for="name") Name
+            div.input-field
+                input.validate(name="surname" type="text" required)
+                label(for="surname") Surname
+            div.input-field
+                input.validate(name="email" type="email" required)
+                label(for="email") Email
+            div.input-field
+                input.validate(name="password" type="password" required)
+                label(for="password") Password
+
+        button#form-btn.waves-effect.waves-light.btn.primary(type="submit" form="form") Register
+        h3 Are you a shop owner? 
+            a(href="/register-store") Join Us Now
+
+        include include/script.pug
