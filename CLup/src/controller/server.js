@@ -39,15 +39,16 @@ app.use((req, res, next) => {
     }
     next()
 })
-//-----LOAD ROUTES------
-app.use(sessionLogger)
-app.use('/', accountRoutes)
-app.use('/', clupperRoutes)
-app.use('/', storeManagerRoutes)
 
 // WebApp Routes
 app.get('/', (req, res) => {
     res.render('index')
 })
+
+//-----LOAD ROUTES------
+app.use(sessionLogger)
+app.use('/', accountRoutes)
+app.use('/', clupperRoutes)
+app.use('/', storeManagerRoutes)
 
 module.exports = http
