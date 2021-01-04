@@ -50,7 +50,7 @@ function catchError(error) {
 function displayError(errorString) {
     var button = document.getElementById("pos-btn");
     button.removeEventListener("click", getCoordinates);
-    button.firstChild.innerHTML = "gps_off";
+    button.innerHTML = "<i class='material-icons'>gps_off</i>";
     M.Toast.dismissAll();
     M.toast({html: errorString, displayLength: (30 * 1000)});
 }

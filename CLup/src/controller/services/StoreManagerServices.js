@@ -100,6 +100,7 @@ class TicketManagement {
     async deleteTicket(ticketID, vat) {
         const stmt = `DELETE FROM ticket WHERE id = ? AND store = ?`
         const values = [ticketID, vat]
+
         return new Promise( (resolve, _reject) => {
             this.dbConn.query(stmt, values, (err, _results, _fields) => {
                 err ? resolve({error: err.sqlMessage, sqlError: true}) : resolve(true)

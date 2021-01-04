@@ -19,7 +19,7 @@ module.exports = class Ticket {
     }}
     toPNGBase64() {
         return new Promise( (resolve, _reject) => {
-            qrcode.toBuffer(this.id, (err, buf) => {
+            qrcode.toBuffer(this.id, {margin: 0, color: {light: "#ffffff00", dark: "#272d2dff"}}, (err, buf) => {
                 if (err) resolve({error: err})
                 else resolve(buf.toString('base64'))
             })

@@ -86,12 +86,11 @@ router.get('/ticket', async (req, res) => {
 
 // Delete the last ticket issued
 router.post('/ticket/delete', async (req, res) => {
-    //DON'T WORK, MAYBE PROBLEM WITH DB CONFIGURATION
     const user = req.session.user
     const ticketID = req.body.ticket
     if(!ticketID) return res.redirectMessage('/overview', 'Invalid ticket ID.')
 
-    const result = await storeManagerServices.ticketManagement.deleteTicket(ticketID, user.email, user.store)
+    const result = await storeManagerServices.ticketManagement.deleteTicket(ticketID, user.store)
     if(result.error) return res.redirectMessage('/overview', result.error)
 
     res.redirect("/overview");

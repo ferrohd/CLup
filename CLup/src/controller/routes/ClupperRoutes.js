@@ -70,10 +70,9 @@ router.get('/queue', async (req, res) => {
     if(store.error) return res.redirectMessage('/explore', store.error)
 
     ticket.qrcode = await ticket.toPNGBase64()
-    console.log(ticket.qrcode)
 
-    //15 minutes per customer
-    const time = before * 15
+    //5 minutes per customer
+    const time = before * 5
 
     res.render('queue', {position: position != undefined, store: store, ticket: ticket, before: before, time: time, messages: req.session.messages})
     req.session.messages = null

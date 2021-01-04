@@ -50,7 +50,7 @@ class TicketManager {
     }
     async createTicket(email, vat) {
         const stmt = `INSERT INTO ticket (id, inside, user, store) VALUES(?,?,?,?)`
-        const ticketID = crypto.randomBytes(40).toString('hex')
+        const ticketID = crypto.randomBytes(32).toString('hex')
         const date = Math.floor(Date.now() / 1000)
         const values = [ticketID, false, email, vat]
         return new Promise( (resolve, _reject) => {
