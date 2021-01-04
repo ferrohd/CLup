@@ -77,6 +77,8 @@ router.get('/ticket', async (req, res) => {
     const ticket = await storeManagerServices.guestManagement.issueTicket(user.email, user.store)
     if(ticket.error) return res.redirectMessage('/overview', ticket.error)
 
+    ticket.qrcode = await ticket.toPNGBase64()
+
     res.render('issue-ticket', {store: store, ticket: ticket, messages: req.session.messages})
     req.session.messages = null
     req.session.save()

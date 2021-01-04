@@ -69,6 +69,9 @@ router.get('/queue', async (req, res) => {
     const store = await clupperServices.storeLocator.getStoreInfo(ticket.store, position, false)
     if(store.error) return res.redirectMessage('/explore', store.error)
 
+    ticket.qrcode = await ticket.toPNGBase64()
+    console.log(ticket.qrcode)
+
     //15 minutes per customer
     const time = before * 15
 

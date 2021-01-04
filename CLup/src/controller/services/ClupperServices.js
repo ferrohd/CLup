@@ -41,7 +41,6 @@ class QueueManagement {
                 if(results.length == 0) return resolve({error: 'No ticket found.', sqlError: false})
                 const { id, date, user, store, inside } = results[0]
                 const ticket = new Ticket(id, date, user, store, inside)
-                // ticket.qrcode = 
                 resolve(ticket)
             })
         })

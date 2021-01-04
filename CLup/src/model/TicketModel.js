@@ -1,3 +1,5 @@
+const qrcode = require('qrcode')
+
 module.exports = class Ticket {
     constructor(id, date, user, store, inside) {
         this.id = id
@@ -15,4 +17,12 @@ module.exports = class Ticket {
         store: this.store,
         inside: this.inside
     }}
+    toPNGBase64() {
+        return new Promise( (resolve, _reject) => {
+            qrcode.toBuffer(this.id, (err, buf) => {
+                if (err) resolve({error: err})
+                else resolve(buf.toString('base64'))
+            })
+        })
+    }
 }
