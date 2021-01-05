@@ -1,10 +1,26 @@
-document.getElementById("scan-btn").addEventListener("click", scanTicket);
+import QrScanner from './qr-scanner.min.js';
+QrScanner.WROKER_PATH = './qr-scanner-worker.min.js';
+const qrScanner = new QrScanner(document.getElementById("camera-feed"), stopScanner);
 
-function scanTicket() {
-    //TODO scan ticket
-    var ticket = "e582875f22878cd567ad2d069ffa10e3dd9c8b35f5aef";
-    document.getElementById("ticket").setAttribute("value", ticket);
-    document.getElementById("form").submit();
+document.getElementById("scan-btn").addEventListener("click", startScanner);
+document.getElementById("close-camera-btn").addEventListener("click", stopScanner);
+
+function startScanner() {
+    if(!QrScanner.hasCamera()) {
+        M.toast({html: "No camera found. Please login from another device.", displayLength: (30 * 1000)});
+        return;
+    }
+    qrScanner.start();
+    document.body.classList.add("scanning");
+}
+
+function stopScanner(result) {
+    document.body.classList.remove("scanning");
+    qrScanner.stop()
+    if(!result.target) {
+        document.getElementById("ticket").setAttribute("value", result);
+        document.getElementById("form").submit();
+    }
 }
 
 document.getElementById("update-btn").addEventListener("click", showUpdate);

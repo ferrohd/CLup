@@ -7,6 +7,7 @@
 //- }
 //- ticket: object {
         //- store: string, store vat
+        //- inside: bool
         //- qrcode: base64 png image, background transparent, foreground: #272d2d
 //- }
 //- before: number of tickets in the store queue with a smaller timestamp (inside = false)
@@ -42,8 +43,9 @@ html(lang="en")
         
         form#form.hidden-form(method="POST" action="/queue/leave")
             input(name="store" type="hidden" value=ticket.store)
-        
-        button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Leave the Queue
+
+        if !ticket.inside
+            button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Leave the Queue
 
         section#bottom-container.bottom-container.auto.closed.z-depth-3
             div#bottom-toggler.bottom-toggler

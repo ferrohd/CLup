@@ -24,7 +24,7 @@ class QueueManagement {
         return sharedServices.ticketManager.createTicket(email, vat)
     }
     async leaveQueue(email, vat) {
-        const stmt = `DELETE FROM ticket WHERE user = ? AND store = ?`
+        const stmt = `DELETE FROM ticket WHERE user = ? AND store = ? AND inside = false`
         const values = [email, vat]
         return new Promise( (resolve, _reject) => {
             this.dbConn.query(stmt, values, (err, _results, _fields) => {

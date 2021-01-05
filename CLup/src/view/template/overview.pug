@@ -13,6 +13,10 @@ html(lang="en")
         title Store Overview - Customers LineUp
     body.alt.no-margin
         h1 Store overview
+        
+        div.btn-floating-container
+            a.btn-floating.btn-large.waves-effect.waves-dark(href="/logout")
+                i.material-icons exit_to_app
 
         div.report-wrapper
             div.report-container
@@ -40,9 +44,14 @@ html(lang="en")
             dic.spaced
                 button#update-form.waves-effect.waves-light.btn.primary(type="submit" form="update-form") Update Capacity
                 a#close-update-btn.waves-effect.waves-light.btn.secondary Cancel
+
+        section#camera-container.camera-container.z-depth-4
+            a#close-camera-btn.btn-floating.btn-large.waves-effect.waves-dark.top.right
+                i.material-icons close
+            video#camera-feed.camera-feed
         
         form#form.hidden-form(method="POST" action="/ticket/scan")
             input#ticket(name="ticket" type="hidden")
         
         include include/script.pug
-        script(type="text/javascript" src="js/overview.js")
+        script(type="module" src="js/overview.js")
