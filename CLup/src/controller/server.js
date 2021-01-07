@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 })
 
 //-----LOAD ROUTES------
-app.use(sessionLogger)
+//app.use(sessionLogger)
 app.use('/', accountRoutes)
 app.use('/', clupperRoutes)
 app.use('/', storeManagerRoutes)
