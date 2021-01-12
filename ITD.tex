@@ -1,0 +1,232 @@
+\input{preamble}
+\graphicspath{ {assets/itd/} }
+\usepackage{dirtree}
+
+\titlepicture[width=0.75\textwidth]{../polimi_logo}
+\title{Implementation and Test Deliverable}
+\subtitle{Customers Line-up}
+\linklist{
+    % TODO: set links to the right installer folder
+    \href{https://github.com/ferrohd}{Installer} - 
+    \href{https://github.com/ferrohd/FerraraFratus/tree/main/CLup}{Source code}
+}
+\author{\href{https://github.com/ferrohd}{Alessandro Ferrara} -
+\href{https://github.com/lorenzofratus}{Lorenzo Fratus}}
+\professor{Elisabetta di Nitto}
+\date{January 12, 2021}
+\version{0.1}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapter{1. Introduction}
+% TODO
+% Introduction and scope of the document.
+
+\chapter{2. Product functions}
+
+\section{A. Implemented functions}
+
+\subsection{A.1. Join a queue (digital)}
+
+This function allows a clupper to line up for the desired store without having to immediately reach the store.
+After selecting a supermarket from the list the clupper will be able to see its details (name, address, number of customers already in line) and to join the queue.
+The system will provide the clupper with a digital ticket, which he will be able to see directly from the application.
+Finally, the clupper is able to leave the queue at any time before entering the store, this results in the deletion of his ticket.
+
+\subsection{A.2. Join a queue (physical)}
+
+This function is a fallback of the first one, indeed, it allows the store manager to insert into the queue any guest requesting it.
+The system will provide the store manager with a digital ticket, which he will have to convert into physical (by printing it) and hand out to the guest.
+
+\subsection{A.3. Store overview}
+
+This function allows a store manager to have a live overview of the store.
+The system will provide the store manager with the number of customers inside the store (compared to the capacity) and those in the store queue.
+This data should allow him to regulate the flow of customers.
+
+\subsection{A.4. Ticket scan}
+
+This function allows a store manager to scan (and validate) a customer’s ticket (both at the entrance and the exit of the store).
+This has the double purpose of updating the data contained into the store overview, and make sure that the flow of customers corresponds to that expected by the system (no one is able to enter before his turn).
+
+\section{B. Discarded functions and details}
+
+This is a list of functions or functional details that are described in the previous documents but have been excluded from the implementation of the system, mostly due to its prototypical nature.
+
+\begin{itemize}
+  \item \textbf{Book a visit function}: this advanced functionality was not required by the assignment document.
+  \item \textbf{Opening time of stores}: this detail was directly connected with the implementation of the \emph{Book a visit} function, it should have been used to calculate the available time slots for each store.
+  \item \textbf{User notifications}: the option to notify the clupper to approach the store requires to monitor his position, this was not possible with the adopted API.
+  \item \textbf{Map exploration and search by address}: this minor functionalities have been discarded because not available with the adopted API (more on that in the next chapter).
+\end{itemize}
+
+\section{C. Other changes}
+
+Differently from what shown in the DD:
+\begin{itemize}
+  \item \textbf{On the web tier}: there is no \emph{load balancer} to distribute the load between multiple instances of the application tier.
+  \item \textbf{On the application tier}: there is no \emph{PM2 process manager}, a docker-like process manager to spawn multiple instances.
+\end{itemize}
+These modules are not mission-critical and have been avoided in order to focus on other (more important) aspects of the system.
+
+\chapter{3. System development frameworks}
+
+\section{A. Adopted frameworks}
+
+To facilitate the development process, the application has been built starting from already existing frameworks.
+
+\begin{itemize}
+  \item \textbf{\href{https://www.npmjs.com/package/express}{Express}}: as already shown in the DD, the system business logic resides on a server running on NodeJS.
+  ExpressJS is considered the \emph{de facto} framework for this type of execution environment.
+  \item \textbf{\href{https://www.npmjs.com/package/mocha}{Mocha}}: %TODO: describe mocha
+\end{itemize}
+
+\section{B. Adopted programming languages}
+
+\subsection{B.1. JavaScript}
+
+The whole logic of the system has been written using JavaScript ES6, an high-level just-in-time compiled programing language that, together with HTML and CSS, is one of the core technologies of the WWW.\\
+In this application, the logic is almost completely on the web and application servers, with the workload on the client side only responsible for making the page interactive.
+
+\subsubsection{B.1.1. JavaScript Pros}
+
+\begin{itemize}
+  \item \textbf{Weakly Typed}: being weakly typed allows a lot of fexibility that let us develope faster and change things quickly.
+  \item \textbf{I/O driven}: NodeJS operates on a event loop wich means, thanks to the asyncronous behavior that it can hanlde thousands of concurrent connections.
+  \item \textbf{Widely used}: it's the most used programming language, which means it is heavily documented and makes the system highly maintainable.
+\end{itemize}
+
+\subsubsection{B.1.2. JavaScript Cons}
+
+\begin{itemize}
+  \item \textbf{Weakly Typed}: a weakly typed programming languages is prone to errors.
+  \item \textbf{Callback Hell}: due to its asyncronous nature, situations where callbacks are nested within other in callbacks in several levels depp, could affect the code very easily.
+\end{itemize}
+
+\subsection{B.2. Other languages}
+
+In addition to JS, HTML and CSS has been used to build the structure and appearance of each web page.
+
+\section{C. Adopted middlewares}
+
+Here a list of the middlewares that have been used to add functionalities to the application server.
+
+\begin{itemize}
+  \item \textbf{\href{https://www.npmjs.com/package/cookie-parser}{Cookie Parser}}: used to parse cookies contained in the incoming requests.
+  \item \textbf{\href{https://www.npmjs.com/package/express-session}{Express Session}}: used to manage user sessions on the application tier.
+  \item \textbf{\href{https://www.npmjs.com/package/pug}{Pug}}: template engine, used to perform server-side rendering of HTML pages.
+\end{itemize}
+
+Generally speaking, using a middleware has several advantages including:
+\begin{itemize}
+  \item \textbf{Already developed}: there is no need to reinvent the wheel, using an already developed module to provide a standard function saves time and resources.
+  \item \textbf{Field-tested}: external modules are commonly used in development, this typically ensures that it is well functioning and that any new feature is tested by a lot of developers.
+\end{itemize}
+The only drawback compared to a custom-made middleware is that the developer has to adapt to the interfaces offered by an external module.\\
+However, with JavaScript being a widely used language, there is plenty of alternatives available.
+
+\subsection{C.3. Other libraries}
+
+This is a list of external libraries that are not middlewares but have played a key role in the implementation of this system.
+
+\begin{itemize}
+  \item \textbf{\href{https://www.npmjs.com/package/request}{Request}}: used to allow HTTP request to the APIs.
+  \item \textbf{\href{https://www.npmjs.com/package/mysql}{MySQL}}: used to perform queries on the DB.
+  \item \textbf{\href{https://www.npmjs.com/package/qrcode}{QrCode}}: used to encode ticket ID's into png images.
+  \item \textbf{\href{https://www.npmjs.com/package/haversine-distance}{Haversine Distance}}: used to calculate the distance between two GPS locations.
+  \item \textbf{\href{https://www.npmjs.com/package/superagent}{Superagent}}: testing, simulates an HTTP client.
+  \item \textbf{\href{https://www.npmjs.com/package/chai}{Chai}}: testing, provides an assertion library.
+\end{itemize}
+
+\section{E. Adopted APIs}
+
+\subsection{E.1. Discarded API}
+
+Unlike what is suggested in the Design Document, the implemented system does not relies on \emph{Google Maps Javascript API} to provide GPS-related functions.\\
+Even if it is clearly the best solution to build the definitive version of this application, this API requires a lot of time to be mastered to have access to all its functionalities.\\
+Being this the implementation of a prototype, the main concern has been to build a version of the application that is able to provide the most important features.
+
+\subsection{E.2. Replacement API}
+
+To replace the discarded Maps API, a simpler but equally reliable service has been used: \href{https://positionstack.com/documentation}{PositionStack API}.\\
+This API enables our application to perform a conversion from a GPS position (expressed by means of latitude and longitude) to an address and back.\\
+This conversion involves minimal error (that can lead to a wrong civic number) that was deemed acceptable in favor of a faster implementation.\\
+Moreover, due to the way in which this API is implemented, the conversion is possible only by region (in this case only \emph{Lombardia}). This limit could be canceled in the future for example by asking the user to select his region in the registration process.
+
+\chapter{4. Source code structure}
+
+This is a simple directory tree that shows the structure of our source code.
+
+\dirtree{%
+  .1 /.
+    .2 src.
+      .3 model\\\DTcomment{Model of the system, to enable the usage of the proxy pattern}.
+      .3 view.
+        .4 css\\\DTcomment{Css files to define the aspect of the pages}.
+        .4 js\\\DTcomment{Client-side JS code used in some pages}.
+        .4 img\\\DTcomment{Static images used in some pages}.
+        .4 include\\\DTcomment{Static imports shared through all the pages}.
+        .4 template\\\DTcomment{Pug templates for HTML pages}.
+      .3 controller.
+        .4 database\\\DTcomment{Controller that handles DB connections with a connection pool}.
+        .4 middlewares\\\DTcomment{Custom middlewares that handle authentication and authorization}.
+        .4 routes\\\DTcomment{Routes (APIs) provided by the application}.
+        .4 services\\\DTcomment{Exposed services accessed by the routes to carry out business logic}.
+        .4 server.js\\\DTcomment{Initializes the routes and the middlewares}.
+      .3 index.js\\\DTcomment{Main method that runs the server}.
+    .2 test\\\DTcomment{Tests performed on the system}.
+}
+
+\chapter{5. Testing activity}
+% TODO
+% Information on how you performed your testing: you can refer to what you have in the DD and extend it as needed. Describe the procedure that you have used if not described in the DD. At least for system test, describe the main test cases that you have considered and their outcome.
+
+\chapter{6. Installation guide}
+
+A detailed installation guide, complete with images, can be found in the \emph{README} file contained both in the installation folder and in the GitHub repository at this \underline{\href{https://github.com/ferrohd/FerraraFratus/tree/main/CLup}{link}}.
+
+\chapter{7. Effort spent}
+
+\section{Pair programming}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2}}@{}}
+\toprule
+Topic & Hours \\ \addlinespace
+\midrule
+\endhead
+Chapters 2, 3 and 4 & 3.0h \\ \addlinespace
+\bottomrule
+\end{longtable}
+
+\section{Ferrara Alessandro}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2}}@{}}
+\toprule
+Topic & Hours \\ \addlinespace
+\midrule
+\endhead
+Installation guide & 0.5h \\ \addlinespace
+\bottomrule
+\end{longtable}
+
+\section{Fratus Lorenzo}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2}}@{}}
+\toprule
+Topic & Hours \\ \addlinespace
+\midrule
+\endhead
+\bottomrule
+\end{longtable}
+
+\end{document}
