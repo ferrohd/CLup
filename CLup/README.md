@@ -34,7 +34,7 @@ If any error occurs make sure to have Administration/root Privileges on the Shel
 >The only solution is avaiable on Chrome and consists of adding the webserver's IP to the trusted lists.
 
 1. Open Chrome on the smartphone
-2. Go to: [chrome://flags](chrome://flags) ![Installer screenshot](assets/chrome_screen_1.png)
+2. Go to: `chrome://flags` ![Installer screenshot](assets/chrome_screen_1.png)
 3. Search for: `Insecure origins treated as secure`
 4. Insert in the text box `http://IP OF THE MACHINE YOURE RUNNING NODE:3000` ![Installer screenshot](assets/chrome_disable.jpg)
 5. Click on the button `Disabled` and Enable it ![Installer screenshot](assets/chrome_enable.jpg)
