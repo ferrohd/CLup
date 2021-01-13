@@ -78,7 +78,7 @@
 
 % set up \maketitle to accept a new item
 \pretitle{\begin{center}\placetitlepicture\Huge}
-\posttitle{\par\lineskip 1em\placesubtitle\end{center}\vskip 3em}
+\posttitle{\par\lineskip 1em\placesubtitle\placelinklist\end{center}\vskip 3em}
 \preauthor{\begin{center}
         \large \lineskip 3em%
         \begin{tabular}[t]{c}}
@@ -117,3 +117,11 @@
   }%
 }
 \newcommand{\placeversion}{} % initialization
+
+% commands for including the version
+\newcommand{\linklist}[2][]{%
+  \renewcommand\placelinklist{%
+    \large #2\par\medskip
+  }%
+}
+\newcommand{\placelinklist}{} % initialization
