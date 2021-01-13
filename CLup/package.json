@@ -4,7 +4,7 @@
   "description": "Viartual queue",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 0 --exit",
     "nodemon": "nodemon src/index.js",
     "start": "node src/index.js"
   },

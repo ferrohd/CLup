@@ -81,8 +81,8 @@ To facilitate the development process, the application has been built starting f
 
 \begin{itemize}
   \item \textbf{\href{https://www.npmjs.com/package/express}{Express}}: as already shown in the DD, the system business logic resides on a server running on NodeJS.
-  ExpressJS is considered the \emph{de facto} framework for this type of execution environment.
-  \item \textbf{\href{https://www.npmjs.com/package/mocha}{Mocha}}: %TODO: describe mocha
+  ExpressJS is considered the \emph{de facto} web framework for this type of execution environment.
+  \item \textbf{\href{https://www.npmjs.com/package/mocha}{Mocha}}: is the testing framework that provides all the functions and interfaces used to test and benchmark the software.
 \end{itemize}
 
 \section{B. Adopted programming languages}
@@ -182,8 +182,11 @@ This is a simple directory tree that shows the structure of our source code.
 }
 
 \chapter{5. Testing activity}
-% TODO
 % Information on how you performed your testing: you can refer to what you have in the DD and extend it as needed. Describe the procedure that you have used if not described in the DD. At least for system test, describe the main test cases that you have considered and their outcome.
+To ensure all the test were as close as a real scenario as possible, we decided to bypass the use of a mock database and instead test on the production one.
+Due to the small size of the public interfaces classes, to avoid trivial testing, the tests are focused on the Routes of the webserver. Those components interact directly with the public interfaces, rendering the test more complete.
+The test aim to cover all the requirements in the RASD document. The tests are divided by the public service interaces (Acount services, Clupper services, Store Manager seervices). The testing consists of a mock HTTP client executing multiple actions on the various services and vefifying whenether the result is successful by inspecting the status code of the repsonse.
+Among with every test case is run a benchmark to measure the time taken to complete the test.
 
 \chapter{6. Installation guide}
 
