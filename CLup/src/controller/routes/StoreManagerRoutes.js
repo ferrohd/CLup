@@ -1,9 +1,6 @@
 const router = require('express').Router()
 const StoreManagerServices = require('../services/StoreManagerServices')
 const storeManagerServices = new StoreManagerServices()
-const loginMiddleware = require('../middlewares/checkLoginMiddleware')
-
-router.use(loginMiddleware)
 
 //---------STORE OVERVIEW ROUTES------------------
 

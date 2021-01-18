@@ -1,5 +1,6 @@
 //- -----REQUIRED VARIABLES------
 //- position: bool, indicates if the user provided his position
+//- inQueue: bool, indicates if the user has already a queue ticket
 //- store: object {
         //- vat: string, id of the store
         //- name: string
@@ -13,7 +14,7 @@ html(lang="en")
     head
         include include/head.pug
         title #{store.name} - Customers LineUp
-    body.alt.no-margin
+    body.z-depth-4.alt.no-margin
         h1 Here, the store you requested
         div.btn-floating-container
             a.btn-floating.btn-large.waves-effect.waves-dark(href="/explore")
@@ -43,7 +44,9 @@ html(lang="en")
             
             form#form.hidden-form(method="POST" action="queue/join")
                 input(name="store" type="hidden" value=store.vat)
-
-            button#form-btn.waves-effect.waves-light.btn.primary(type="submit" form="form") Join the Queue
+            if !inQueue
+                button#form-btn.waves-effect.waves-light.btn.primary(type="submit" form="form") Join the Queue
+            else
+                button.waves-effect.waves-dark.btn.disable(data-msg="You can be in one queue at a time.") Join the Queue
 
         include include/script.pug

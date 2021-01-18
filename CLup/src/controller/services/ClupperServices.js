@@ -79,15 +79,18 @@ class StoreLocator {
     }
     async getStoreInfo(vat, userPos, additional = true) {
         const store = await sharedServices.storeDetails.getStore(vat, userPos)
-    
-        if(!store.error && additional) {    
+
+        if(!store.error) {
+
             const address = await sharedServices.positionStack.getAddressFromPosition(store.lat, store.lng)
             if(address.error) return address
             store.address = address
-
-            const inline = await sharedServices.storeDetails.getStoreInLine(store.vat)
-            if(inline.error) return inline
-            store.inline = inline
+        
+            if(additional) {    
+                const inline = await sharedServices.storeDetails.getStoreInLine(store.vat)
+                if(inline.error) return inline
+                store.inline = inline
+            }
         }
 
         return store

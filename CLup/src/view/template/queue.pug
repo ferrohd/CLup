@@ -18,7 +18,7 @@ html(lang="en")
     head
         include include/head.pug
         title Queue - Customers LineUp
-    body.alt
+    body.z-depth-4.alt
         h1 Be patient, your turn is coming!
         div.btn-floating-container
             a.btn-floating.btn-large.waves-effect.waves-dark(href="/explore")
@@ -46,8 +46,10 @@ html(lang="en")
 
         if !ticket.inside
             button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Leave the Queue
+        else
+            button.waves-effect.waves-dark.btn.disable(data-msg="You cannot delete this ticket until you leave the store.") Leave the Queue
 
-        section#bottom-container.bottom-container.auto.closed.z-depth-3
+        section#bottom-container.bottom-container.mid.closed.z-depth-3
             div#bottom-toggler.bottom-toggler
 
             div.store-details

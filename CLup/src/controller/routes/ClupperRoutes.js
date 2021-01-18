@@ -3,10 +3,6 @@ const ClupperServices = require('../services/ClupperServices')
 const clupperServices = new ClupperServices()
 const SharedServices = require('../services/SharedServices')
 const sharedServices = new SharedServices()
-const loginMiddleware = require('../middlewares/checkLoginMiddleware')
-
-// Check if the user is logged in
-router.use(loginMiddleware)
 
 // Find Stores
 router.get('/explore', async (req, res) => {
@@ -40,6 +36,7 @@ router.post('/explore', async (req, res) => {
 
 // Show selected store
 router.get('/store', async (req, res) => {
+    const user = req.session.user
     const position = req.session.position
     const vat = req.query.id
     if(!vat) return res.redirectMessage('/explore', 'Invalid store id.')
@@ -47,7 +44,9 @@ router.get('/store', async (req, res) => {
     const store = await clupperServices.storeLocator.getStoreInfo(vat, position)
     if(store.error) return res.redirectMessage('/explore', store.error)
 
-    res.render('store', {position: position != undefined, store: store, messages: req.session.messages})
+    const ticket = await clupperServices.queueManagement.getQueueTicket(user.email)
+
+    res.render('store', {position: position != undefined, inQueue: ticket.error == undefined, store: store, messages: req.session.messages})
     req.session.messages = null
     req.session.save()
 })

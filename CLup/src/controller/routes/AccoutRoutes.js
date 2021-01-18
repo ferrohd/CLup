@@ -28,6 +28,8 @@ router.post('/login', async (req, res) => {
 
     // Set the session
     req.session.user = user.toJSON()
+    console.log("SETTING USER SESSION:")
+    console.log(req.session.user);
     if(user.isClupper()) res.redirect('/explore')
     else res.redirect('/overview')
 })

@@ -8,6 +8,7 @@ const sessionLogger = require('./middlewares/sessionLogger')
 const accountRoutes = require('./routes/AccoutRoutes')
 const clupperRoutes = require('./routes/ClupperRoutes')
 const storeManagerRoutes = require('./routes/StoreManagerRoutes')
+const checkLoginMiddleware = require('./middlewares/checkLoginMiddleware')
 
 //-----SET TEMPLATE ENGINE-----
 app.set('view engine', 'pug')
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 //-----LOAD ROUTES------
 //app.use(sessionLogger)
 app.use('/', accountRoutes)
+app.use('/', checkLoginMiddleware)
 app.use('/', clupperRoutes)
 app.use('/', storeManagerRoutes)
 

@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 :root {
     --base-font-size: 16px;
     --small-font-size: .8em;
@@ -20,6 +27,8 @@
     --text-color: #000000;
     --alt-text-color: #ffffff;
     --error-color: #f44336;
+    --disabled-color: #a0a0a0;
+    --background-gradient: linear-gradient(-45deg, #23CE6B, #24A65C, #257E4C, #26553D, #272D2D);
 }
 
 /**************
@@ -76,7 +85,8 @@ h1 a, h2 a, h3 a {
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
 }
 
 .report {
@@ -93,12 +103,39 @@ h1 a, h2 a, h3 a {
 /***********
  * GENERAL *
  ***********/
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+html {
+    background: var(--background-gradient);
+    background-size: 400% 400%;
+    -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+    margin: 0;
+    padding: 0;
+}
+@-webkit-keyframes gradient {
+    0%  { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100%{ background-position: 0% 50%; }
+}
+@keyframes gradient {
+    0%  { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100%{ background-position: 0% 50%; }
+}
 
 body {
+    position: relative;
     width: 100vw;
+    max-width: 500px;
+    min-height: 100vh;
     overflow-x: hidden;
     background-color: var(--background-color-1);
-    margin: 0 0 5em;
+    margin: 0 auto;
+    padding: 1px 0 5em;
 }
 body.alt {
     background-color: var(--background-color-2);
@@ -107,22 +144,23 @@ body.no-overflow {
     overflow: hidden;
 }
 body.no-margin {
-    margin: 0;
+    padding: 1px 0;
     min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-}
-body.overlayed,
-body.scanning {
-    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
 }
 body.overlayed:before,
 body.scanning:before {
     content: "";
     position: fixed;
-    top: 0;
+    top: -20vh;
     right: 0;
-    bottom: 0;
+    bottom: -20vh;
     left: 0;
     background-color: var(--secondary-color);
     opacity: 0.5;
@@ -152,7 +190,7 @@ body > h1 {
 
 .btn {
     padding: .6em 2em;
-    width: 75vw;
+    width: 75%;
     height: 2.4em;
     border-radius: 1.2em;
     display: block;
@@ -164,13 +202,16 @@ body > h1 {
 .btn.secondary {
     background-color: var(--secondary-color);
 }
+.btn.disable {
+    background-color: var(--disabled-color);
+}
 
 /**************
  * INPUT FORM *
  **************/
  
 .input-form {
-    width: 75vw;
+    width: 75%;
     margin: 4em auto 0;
 }
  
@@ -183,7 +224,8 @@ body > h1 {
     width: 100%;
     height: 2.4em;
     border-radius: 1.2em;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     border-bottom: none;
     border: 2px solid var(--text-color);
     -webkit-box-shadow: none;
@@ -203,7 +245,9 @@ body > h1 {
     pointer-events: none;
 }
 .input-field > label:not(.label-icon).active {
-    transform: translateY(-1em) scale(0.7);
+    -webkit-transform: translateY(-1em) scale(0.7);
+        -ms-transform: translateY(-1em) scale(0.7);
+            transform: translateY(-1em) scale(0.7);
 }
 
 /***************************
@@ -211,13 +255,14 @@ body > h1 {
  ***************************/
 
 .banner {
-    width: 100vw;
+    width: 100%;
     height: auto;
     display: block;
+    margin-top: -2px;
 }
 
 .logo {
-    width: 50vw;
+    width: 50%;
     height: auto;
     display: block;
     margin: 3em auto 0;
@@ -229,12 +274,19 @@ body > h1 {
 
 .btn-floating-container {
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-around;
-    justify-content: space-evenly;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
 }
 .no-margin .btn-floating-container {
-    flex-grow: 1;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
 }
 
 .btn-floating,
@@ -268,13 +320,17 @@ body > h1 {
 .bottom-container {
     position: fixed;
     background-color: var(--background-color-1);
-    width: 100vw;
+    width: 100%;
+    max-width: 500px;
+    min-height: 2em;
     top: 50%;
     bottom: 0;
     border-radius: 2em 2em 0 0;
-    transition: top .35s ease-in-out;
+    -webkit-transition: top .35s ease-in-out, overflow-y .35s .35s;
+    -o-transition: top .35s ease-in-out, overflow-y .35s .35s;
+    transition: top .35s ease-in-out, overflow-y .35s .35s;
     z-index: 2;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 .bottom-container.mid {
     top: 30%;
@@ -288,6 +344,9 @@ body > h1 {
 .bottom-container.closed {
     top: 95%;
 }
+.bottom-container.overflow {
+    overflow-y: auto;
+}
 .bottom-container.relative-container {
     position: relative;
     min-height: 50%;
@@ -295,13 +354,19 @@ body > h1 {
     padding: 1px 1px 5em;   /*1px to allow child margin to expand*/
 }
 .bottom-container.modal-container {
-    transform: translateY(100%);
+    -webkit-transform: translateY(150%);
+        -ms-transform: translateY(150%);
+            transform: translateY(150%);
+    -webkit-transition: .35s transform ease-in-out;
+    -o-transition: .35s transform ease-in-out;
     transition: .35s transform ease-in-out;
     z-index: 4;
     pointer-events: none;
 }
 .overlayed .bottom-container.modal-container {
-    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+        -ms-transform: translateY(0%);
+            transform: translateY(0%);
     pointer-events: all;
 }
 .bottom-toggler {
@@ -317,7 +382,9 @@ body > h1 {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
 }
 
 .store-list {
@@ -330,8 +397,12 @@ body > h1 {
     min-height: 8em;
     padding: 1em;
     margin: .5em auto 1.5em;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     border-radius: 1.5em;
     cursor: pointer;
     background-color: var(--background-color-1);
@@ -345,7 +416,8 @@ body > h1 {
     font-size: var(--large-font-size);
     color: var(--alt-text-color);
     pointer-events: none;
-    flex-shrink: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
 }
 .store-icon.style-1 {
     background-color: var(--primary-color);
@@ -379,8 +451,12 @@ body > h1 {
 .info-container {
     width: 75%;
     margin: 2em auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 .info-container > .material-icons {
     font-size: var(--extreme-font-size);
@@ -408,8 +484,11 @@ body > h1 {
 
 .report-wrapper {
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
     margin: 3em auto 0;
 }
 .report-container {
@@ -427,13 +506,21 @@ body > h1 {
     bottom: 2em;
     left: 2em;
     border-radius: 2em;
-    transform: translateY(150%);
+    -webkit-transform: translateY(150%);
+        -ms-transform: translateY(150%);
+            transform: translateY(150%);
+    -webkit-transition: -webkit-transform .35s ease-in-out;
+    transition: -webkit-transform .35s ease-in-out;
+    -o-transition: transform .35s ease-in-out;
     transition: transform .35s ease-in-out;
+    transition: transform .35s ease-in-out, -webkit-transform .35s ease-in-out;
     z-index: 4;
     overflow: hidden;
 }
 .scanning .camera-container {
-    transform: translateY(0);
+    -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+            transform: translateY(0);
 }
 .camera-container .btn-floating {
     position: absolute;
@@ -441,5 +528,6 @@ body > h1 {
 .camera-container .camera-feed {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
