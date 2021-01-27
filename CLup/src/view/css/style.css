@@ -249,6 +249,11 @@ body > h1 {
         -ms-transform: translateY(-1em) scale(0.7);
             transform: translateY(-1em) scale(0.7);
 }
+.input-field > input[type]:-webkit-autofill + label:not(.label-icon).active {
+    -webkit-transform: translateY(-1em) scale(0.7);
+        -ms-transform: translateY(-1em) scale(0.7);
+            transform: translateY(-1em) scale(0.7);
+}
 
 /***************************
  * HOME - LOGIN - REGISTER *
