@@ -15,7 +15,8 @@ module.exports = class Ticket {
         date: this.date,
         user: this.user,
         store: this.store,
-        inside: this.inside
+        inside: this.inside,
+        qrcode: this.qrcode
     }}
     toPNGBase64() {
         return new Promise( (resolve, _reject) => {

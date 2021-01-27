@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
 
     res.render('overview', {store: store, inside: inside, messages: messages})
     req.session.messages = null
+    req.session.ticket = null
     req.session.save()
 })
 
@@ -73,12 +74,15 @@ router.get('/ticket/issue', async (req, res) => {
     const store = await storeManagerServices.storeOverview.getStoreInfo(user.store, false)
     if(store.error) return res.redirectMessage(basePath, store.error)
 
-    const ticket = await storeManagerServices.guestManagement.issueTicket(user.email, user.store)
-    if(ticket.error) return res.redirectMessage(basePath, ticket.error)
+    if(!req.session.ticket) {
+        const ticket = await storeManagerServices.guestManagement.issueTicket(user.email, user.store)
+        if(ticket.error) return res.redirectMessage(basePath, ticket.error)
+        ticket.qrcode = await ticket.toPNGBase64()
+        req.session.ticket = ticket
+    }
 
-    ticket.qrcode = await ticket.toPNGBase64()
 
-    res.render('issue-ticket', {store: store, ticket: ticket, messages: req.session.messages})
+    res.render('issue-ticket', {store: store, ticket: req.session.ticket, messages: req.session.messages})
     req.session.messages = null
     req.session.save()
 })
@@ -93,6 +97,8 @@ router.post('/ticket/delete', async (req, res) => {
     if(result.error) return res.redirectMessage(basePath, result.error)
 
     res.redirect(basePath);
+    req.session.ticket = null
+    req.session.save()
 })
 
 module.exports = router
