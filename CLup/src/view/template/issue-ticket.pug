@@ -20,34 +20,36 @@ html(lang="en")
 
         include include/head.pug
         title Print Ticket - Customers LineUp
-    body.z-depth-4.alt
+    body.alt
         h1 Here, the ticket for your customer!
         div.btn-floating-container
             a#close-btn.btn-floating.btn-large.waves-effect.waves-dark
                 i.material-icons close
         
-        img.qr-code(src="data:image/png;base64," + ticket.qrcode)
-        h3.qr-code-description Show this QR code to the store manager at the entrance
+        div.qr-code-container
+            img.qr-code(src="data:image/png;base64," + ticket.qrcode)
+            h3.qr-code-description Show this QR code to the store manager at the entrance
 
-        div.info-container
-            i.material-icons store
-            div
-                h2
-                    b #{store.name}
-                h2 #{store.address}
+        div.main-container
+            div.info-container
+                i.material-icons store
+                div
+                    h2
+                        b #{store.name}
+                    h2 #{store.address}
 
-        div.info-container
-            i.material-icons watch_later
-            div
-                h2 Issued on 
-                h2
-                    b #{dateTimeString}
-        
-        form#form.hidden-form(method="POST" action="/overview/ticket/delete")
-            input(name="ticket" type="hidden" value=ticket.id)
-        
-        a#print-btn.waves-effect.waves-light.btn.primary Print the Ticket
-        button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Delete the Ticket
+            div.info-container
+                i.material-icons watch_later
+                div
+                    h2 Issued on 
+                    h2
+                        b #{dateTimeString}
+            
+            form#form.hidden-form(method="POST" action="/overview/ticket/delete")
+                input(name="ticket" type="hidden" value=ticket.id)
+            
+            a#print-btn.waves-effect.waves-light.btn.primary Print the Ticket
+            button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Delete the Ticket
 
         include include/script.pug
         script(type="text/javascript" src="/js/issue-ticket.js")

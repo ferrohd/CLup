@@ -11,7 +11,7 @@ html(lang="en")
     head
         include include/head.pug
         title Store Overview - Customers LineUp
-    body.z-depth-4.alt.no-margin
+    body.alt
         h1 Store overview
         
         div.btn-floating-container
@@ -27,7 +27,7 @@ html(lang="en")
                 h2 In line
                 span.report #{store.inline}
 
-        section.bottom-container.relative-container.auto.z-depth-3
+        section.main-container.z-depth-3
             div.store-details
                 h1 #{store.name}
                 h2 #{store.address}
@@ -36,12 +36,12 @@ html(lang="en")
             h3 New regulations? 
                 a#update-btn(href="") Update Capacity
         
-        section.bottom-container.modal-container.auto.z-depth-5
-            h2 Insert the new store capacity
-            form#update-form.input-form(method="POST" action="/overview/capacity")
+        section.main-container.modal-container.z-depth-4
+            h1 Insert the new store capacity
+            form#update-form.input-form.large(method="POST" action="/overview/capacity")
                 div.input-field
                     input#capacity.validate(name="capacity" type="number" placeholder="New capacity" required)
-            dic.spaced
+            div
                 button#update-form.waves-effect.waves-light.btn.primary(type="submit" form="update-form") Update Capacity
                 a#close-update-btn.waves-effect.waves-light.btn.secondary Cancel
 
