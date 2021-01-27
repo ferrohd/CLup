@@ -18,39 +18,17 @@ html(lang="en")
     head
         include include/head.pug
         title Queue - Customers LineUp
-    body.z-depth-4.alt
+    body.alt
         h1 Be patient, your turn is coming!
         div.btn-floating-container
             a.btn-floating.btn-large.waves-effect.waves-dark(href="/explore")
                 i.material-icons close
         
-        img.qr-code(src="data:image/png;base64," + ticket.qrcode)
-        h3.qr-code-description Show this QR code to the store manager at the entrance
+        div.qr-code-container
+            img.qr-code(src="data:image/png;base64," + ticket.qrcode)
+            h3.qr-code-description Show this QR code to the store manager at the entrance
 
-        div.info-container
-            i.material-icons group
-            div
-                h2.ellipsis
-                    b #{before} 
-                    | users before you
-
-        div.info-container
-            i.material-icons watch_later
-            div
-                h2
-                    b #{time} 
-                    | minutes estimated
-        
-        form#form.hidden-form(method="POST" action="/explore/queue/leave")
-            input(name="store" type="hidden" value=ticket.store)
-
-        if !ticket.inside
-            button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Leave the Queue
-        else
-            button.waves-effect.waves-dark.btn.disable(data-msg="You cannot delete this ticket until you leave the store.") Leave the Queue
-
-        section#bottom-container.bottom-container.mid.closed.z-depth-3
-            div#bottom-toggler.bottom-toggler
+        section.main-container.z-depth-3
 
             div.store-details
                 h1 #{store.name}
@@ -66,5 +44,27 @@ html(lang="en")
                             else
                                 b #{store.distance.toFixed(0)} 
                                 | m away
+
+            div.info-container
+                i.material-icons group
+                div
+                    h2.ellipsis
+                        b #{before} 
+                        | users before you
+
+            div.info-container
+                i.material-icons watch_later
+                div
+                    h2
+                        b #{time} 
+                        | minutes estimated
+
+            if !ticket.inside
+                button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Leave the Queue
+            else
+                button.waves-effect.waves-dark.btn.disable(data-msg="You cannot delete this ticket until you leave the store.") Leave the Queue
+        
+        form#form.hidden-form(method="POST" action="/explore/queue/leave")
+            input(name="store" type="hidden" value=ticket.store)
 
         include include/script.pug

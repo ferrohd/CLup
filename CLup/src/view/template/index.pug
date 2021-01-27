@@ -3,16 +3,23 @@ html(lang="en")
     head
         include include/head.pug
         title Customers LineUp
-    body.z-depth-4
-        img.banner(src="/img/banner-big.png")
-        a(href="/")
-            img.logo(alt="Customers Line-up" src="/img/logo.png")
-        h2 Your safety is our concern
+    body
+        div.half
+            div.banner
+            div.content
+                a(href="/")
+                    img.logo(alt="Customers Line-up" src="/img/logo.png")
+                h2 Your safety is our concern
 
-        h1.spaced Welcome!
+                h1.spaced Welcome!
 
-        a.waves-effect.waves-light.btn.primary(href="/login") Sign In
-        h3 Don't have an account? 
-            a(href="/register") Sign Up Now
+                a.waves-effect.waves-light.btn.primary.limited(href="/login") Sign In
+                h3 Don't have an account? 
+                    a(href="/register") Sign Up Now
+
+                h3 Website created by 
+                    a(href="https://github.com/ferrohd") Alessandro Ferrara
+                    |  and 
+                    a(href="https://github.com/lorenzofratus") Lorenzo Fratus
         
         include include/script.pug

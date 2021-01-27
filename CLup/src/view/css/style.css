@@ -9,7 +9,7 @@
     --base-font-size: 16px;
     --small-font-size: .8em;
     --medium-font-size: 1.2em;
-    --large-font-size: 2em;
+    --large-font-size: 1.8em;
     --extreme-font-size: 3em;
 
     --light-font-weight: 300;
@@ -68,6 +68,10 @@ h1 a, h2 a, h3 a {
     color: var(--alt-text-color);
     text-transform: none;
     letter-spacing: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
 }
 
 .input-field input[type]:not(.browser-default),
@@ -103,57 +107,25 @@ h1 a, h2 a, h3 a {
 /***********
  * GENERAL *
  ***********/
+ 
 *, *:after, *:before {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
 }
 
-html {
-    background: var(--background-gradient);
-    background-size: 400% 400%;
-    -webkit-animation: gradient 15s ease infinite;
-            animation: gradient 15s ease infinite;
-    margin: 0;
-    padding: 0;
-}
-@-webkit-keyframes gradient {
-    0%  { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100%{ background-position: 0% 50%; }
-}
-@keyframes gradient {
-    0%  { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100%{ background-position: 0% 50%; }
-}
-
 body {
     position: relative;
     width: 100vw;
-    max-width: 500px;
+    height: 100%;
     min-height: 100vh;
     overflow-x: hidden;
     background-color: var(--background-color-1);
     margin: 0 auto;
-    padding: 1px 0 5em;
 }
 body.alt {
     background-color: var(--background-color-2);
 }
-body.no-overflow {
-    overflow: hidden;
-}
-body.no-margin {
-    padding: 1px 0;
-    min-height: 100vh;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-}
+
 body.overlayed:before,
 body.scanning:before {
     content: "";
@@ -190,7 +162,8 @@ body > h1 {
 
 .btn {
     padding: .6em 2em;
-    width: 75%;
+    width: 100%;
+    max-width: 300px;
     height: 2.4em;
     border-radius: 1.2em;
     display: block;
@@ -205,17 +178,24 @@ body > h1 {
 .btn.disable {
     background-color: var(--disabled-color);
 }
+.btn.limited {
+    width: 80%;
+}
 
 /**************
  * INPUT FORM *
  **************/
  
 .input-form {
-    width: 75%;
+    width: 80%;
     margin: 4em auto 0;
+}
+.input-form.large {
+    width: 100%;
 }
  
 .input-field {
+    max-width: 300px;
     margin: 1em auto 1.5em;
 }
  
@@ -259,26 +239,84 @@ body > h1 {
  * HOME - LOGIN - REGISTER *
  ***************************/
 
-.banner {
+.half {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.half > * {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+}
+
+.half .banner {
+    background-image: url("../img/banner-mobile.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 300px;
     width: 100%;
-    height: auto;
-    display: block;
-    margin-top: -2px;
+}
+.half .content {
+    margin: 0 0 5em;
+}
+.half .column {
+    margin: 0 1em;
 }
 
 .logo {
     width: 50%;
+    max-width: 250px;
     height: auto;
     display: block;
     margin: 3em auto 0;
+}
+
+@media screen and (min-width: 768px) {
+    .half {
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    }
+    .half .banner {
+        -ms-flex-preferred-size: 45%;
+            flex-basis: 45%;
+        background-image: url('../img/banner-desktop.png');
+        background-position: right 1em top;
+        min-height: 100vh;
+    }
+    .half .content {
+        -ms-flex-preferred-size: 55%;
+            flex-basis: 55%;
+        margin: auto 0;
+        padding: 2em 0;
+    }
+    .half .column {
+        -ms-flex-preferred-size: 50%;
+            flex-basis: 50%;
+        min-width: 200px;
+    }
 }
 
 /**************************
 * EXPLORE - STORE - QUEUE *
 ***************************/
 
+/*** TOOLBAR ***/
+
 .btn-floating-container {
     width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -287,11 +325,6 @@ body > h1 {
     -webkit-box-pack: space-evenly;
         -ms-flex-pack: space-evenly;
             justify-content: space-evenly;
-}
-.no-margin .btn-floating-container {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
 }
 
 .btn-floating,
@@ -322,86 +355,96 @@ body > h1 {
     border-color: var(--secondary-color);
 }
 
-.bottom-container {
-    position: fixed;
+/*** CONTENT ***/
+
+.main-container {
     background-color: var(--background-color-1);
-    width: 100%;
+    width: 80%;
     max-width: 500px;
-    min-height: 2em;
-    top: 50%;
-    bottom: 0;
-    border-radius: 2em 2em 0 0;
-    -webkit-transition: top .35s ease-in-out, overflow-y .35s .35s;
-    -o-transition: top .35s ease-in-out, overflow-y .35s .35s;
-    transition: top .35s ease-in-out, overflow-y .35s .35s;
-    z-index: 2;
-    overflow-y: hidden;
+    margin: 2.5em auto;
+    padding: 2em;
+    border-radius: 2em;
 }
-.bottom-container.mid {
-    top: 30%;
-}
-.bottom-container.auto {
-    top: auto;
-}
-.bottom-container.full {
-    top: 5.5em;
-}
-.bottom-container.closed {
-    top: 95%;
-}
-.bottom-container.overflow {
-    overflow-y: auto;
-}
-.bottom-container.relative-container {
-    position: relative;
-    min-height: 50%;
-    margin: 2em 0 0;
-    padding: 1px 1px 5em;   /*1px to allow child margin to expand*/
-}
-.bottom-container.modal-container {
-    -webkit-transform: translateY(150%);
-        -ms-transform: translateY(150%);
-            transform: translateY(150%);
-    -webkit-transition: .35s transform ease-in-out;
-    -o-transition: .35s transform ease-in-out;
-    transition: .35s transform ease-in-out;
-    z-index: 4;
-    pointer-events: none;
-}
-.overlayed .bottom-container.modal-container {
-    -webkit-transform: translateY(0%);
-        -ms-transform: translateY(0%);
-            transform: translateY(0%);
-    pointer-events: all;
-}
-.bottom-toggler {
-    width: 100%;
-    height: 2em;
-    position: relative;
-}
-.bottom-toggler:before {
-    content: "";
-    width: 1.2em;
-    height: 3px;
-    background-color: var(--background-color-2);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+.main-container h1 {
+    margin-top: 1em;
 }
 
+.store-details {
+    width: 100%;
+}
+.store-details > h1 {
+    font-weight: var(--regular-font-weight);
+}
+.store-details > h2 {
+    margin-bottom: 2em;
+}
+
+.info-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 2.5em auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+.info-container > .material-icons {
+    font-size: var(--extreme-font-size);
+    color: var(--secondary-color);
+}
+.info-container h2 {
+    text-align: left;
+    margin: 0 0 0 1em;
+}
+
+/*** QR CODE ***/
+
+.qr-code-container {
+    width: 50%;
+    max-width: 250px;
+    margin: 2.5em auto;
+}
+.qr-code {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    display: block;
+}
+.qr-code-description {
+    margin: 1em 0 0;
+}
+
+/*** STORE LIST ***/
+
 .store-list {
-    height: 100%;
+    width: 80%;
+    max-width: 850px;
+    margin: 0 auto;
     padding: 2em 0 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .store {
-    width: 75%;
+    width: 100%;
+    max-width: 350px;
     min-height: 8em;
     padding: 1em;
-    margin: .5em auto 1.5em;
+    margin: .5em 1em 1.5em;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -430,6 +473,7 @@ body > h1 {
 .store-icon.style-2 {
     background-color: var(--secondary-color);
 }
+
 .store-info {
     margin: 0 0 0 1em;
     min-width: 0;
@@ -442,53 +486,13 @@ body > h1 {
     font-weight: var(--regular-font-weight);
 }
 
-.store-details {
-    width: 75%;
-    margin: 2em auto 4em;
-}
-.store-details > h1 {
-    font-weight: var(--regular-font-weight);
-}
-.store-details > h2 {
-    margin-bottom: 2em;
-}
-
-.info-container {
-    width: 75%;
-    margin: 2em auto;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-}
-.info-container > .material-icons {
-    font-size: var(--extreme-font-size);
-    color: var(--secondary-color);
-}
-.info-container h2 {
-    text-align: left;
-    margin: 0 0 0 1em;
-}
-
-.qr-code {
-    width: 50%;
-    height: auto;
-    margin: 2em auto 0;
-    display: block;
-}
-.qr-code-description {
-    width: 50%;
-    margin: 1em auto 2em;
-}
-
 /***********
 * OVERVIEW *
 ************/
 
 .report-wrapper {
     width: 100%;
+    max-width: 400px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -501,6 +505,26 @@ body > h1 {
 }
 .report-container > h2 {
     margin: 0 auto;
+}
+
+.main-container.modal-container {
+    position: fixed;
+    top: 50%;
+    left: calc(50% + 8px);
+    -webkit-transform: translate(-50%, 150%);
+        -ms-transform: translate(-50%, 150%);
+            transform: translate(-50%, 150%);
+    -webkit-transition: .35s transform ease-in-out;
+    -o-transition: .35s transform ease-in-out;
+    transition: .35s transform ease-in-out;
+    pointer-events: none;
+    z-index: 4;
+}
+.overlayed .main-container.modal-container {
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    pointer-events: all;
 }
 
 .camera-container {
