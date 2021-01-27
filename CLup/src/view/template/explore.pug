@@ -17,7 +17,7 @@ html(lang="en")
         div.btn-floating-container
             a.btn-floating.btn-large.waves-effect.waves-dark(href="/logout")
                 i.material-icons exit_to_app
-            a.btn-floating.btn-large.waves-effect.waves-dark(href="/queue")
+            a.btn-floating.btn-large.waves-effect.waves-dark(href="/explore/queue")
                 i.material-icons shopping_cart
             a#pos-btn.btn-floating.btn-large.waves-effect.waves-dark
                 i.material-icons #{position ? "gps_fixed" : "gps_not_fixed"}
@@ -25,7 +25,7 @@ html(lang="en")
         section.store-list
             -var index = 0;
             each store in stores
-                a.store.waves-effect.waves-dark.z-depth-1(href="/store?id=" + store.vat)
+                a.store.waves-effect.waves-dark.z-depth-1(href="/explore/store?id=" + store.vat)
                     div(class="store-icon style-" + (index % 2 + 1))
                         i.material-icons #{index % 2 == 0 ? "storefront" : "store"}
                     div.store-info
@@ -40,4 +40,4 @@ html(lang="en")
             input#lng(name="lng" type="hidden")
 
         include include/script.pug
-        script(type="text/javascript" src="js/explore.js")
+        script(type="text/javascript" src="/js/explore.js")

@@ -39,7 +39,7 @@ describe("Clupper Route Testing", () => {
               expect(res.status).to.be.equal(200)
               // Go to queue page
         const res_1 = await agent      
-              .get(`http://localhost:${port}/ticket`)
+              .get(`http://localhost:${port}/overview/ticket/issue`)
               expect(res_1.status).to.be.equal(200)
     })
   })

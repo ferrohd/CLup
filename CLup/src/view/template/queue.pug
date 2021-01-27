@@ -41,7 +41,7 @@ html(lang="en")
                     b #{time} 
                     | minutes estimated
         
-        form#form.hidden-form(method="POST" action="/queue/leave")
+        form#form.hidden-form(method="POST" action="/explore/queue/leave")
             input(name="store" type="hidden" value=ticket.store)
 
         if !ticket.inside

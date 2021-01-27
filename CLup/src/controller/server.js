@@ -9,6 +9,8 @@ const accountRoutes = require('./routes/AccoutRoutes')
 const clupperRoutes = require('./routes/ClupperRoutes')
 const storeManagerRoutes = require('./routes/StoreManagerRoutes')
 const checkLoginMiddleware = require('./middlewares/checkLoginMiddleware')
+const redirectStoreManager = require('./middlewares/redirectStoreManager')
+const redirectClupper = require('./middlewares/redirectClupper')
 
 //-----SET TEMPLATE ENGINE-----
 app.set('view engine', 'pug')
@@ -47,10 +49,17 @@ app.get('/', (req, res) => {
 })
 
 //-----LOAD ROUTES------
-//app.use(sessionLogger)
+
+// Open routes
 app.use('/', accountRoutes)
+
+// Login-protected routes
 app.use('/', checkLoginMiddleware)
-app.use('/', clupperRoutes)
-app.use('/', storeManagerRoutes)
+
+app.use('/explore', redirectStoreManager)
+app.use('/explore', clupperRoutes)
+
+app.use('/overview', redirectClupper)
+app.use('/overview', storeManagerRoutes)
 
 module.exports = http

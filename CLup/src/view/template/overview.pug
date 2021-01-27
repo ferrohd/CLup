@@ -32,13 +32,13 @@ html(lang="en")
                 h1 #{store.name}
                 h2 #{store.address}
             a#scan-btn.waves-effect.waves-light.btn.primary Scan Ticket
-            a.waves-effect.waves-light.btn.secondary(href="/ticket") Issue Ticket
+            a.waves-effect.waves-light.btn.secondary(href="/overview/ticket/issue") Issue Ticket
             h3 New regulations? 
                 a#update-btn(href="") Update Capacity
         
         section.bottom-container.modal-container.auto.z-depth-5
             h2 Insert the new store capacity
-            form#update-form.input-form(method="POST" action="/store/capacity")
+            form#update-form.input-form(method="POST" action="/overview/capacity")
                 div.input-field
                     input#capacity.validate(name="capacity" type="number" placeholder="New capacity" required)
             dic.spaced
@@ -50,8 +50,8 @@ html(lang="en")
                 i.material-icons close
             video#camera-feed.camera-feed
         
-        form#form.hidden-form(method="POST" action="/ticket/scan")
+        form#form.hidden-form(method="POST" action="/overview/ticket/scan")
             input#ticket(name="ticket" type="hidden")
         
         include include/script.pug
-        script(type="module" src="js/overview.js")
+        script(type="module" src="/js/overview.js")

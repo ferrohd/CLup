@@ -37,7 +37,7 @@ describe("Clupper Route Testing", () => {
               expect(res.status).to.be.equal(200)
               // Go to queue page
         const res_1 = await agent      
-              .get(`http://localhost:${port}/queue/`)
+              .get(`http://localhost:${port}/explore/queue/`)
               expect(res_1.status).to.be.equal(200)
     })
 
@@ -50,7 +50,7 @@ describe("Clupper Route Testing", () => {
               expect(res.status).to.be.equal(200)
               // Join queue
         const res_1 = await agent      
-              .post(`http://localhost:${port}/queue/join`)
+              .post(`http://localhost:${port}/explore/queue/join`)
               .type('form')
               .send({vat: 51760570179})
               expect(res_1.status).to.be.equal(200)
@@ -65,7 +65,7 @@ describe("Clupper Route Testing", () => {
               expect(res.status).to.be.equal(200)
               // Leave queue
         const res_1 = await agent      
-              .post(`http://localhost:${port}/queue/leave`)
+              .post(`http://localhost:${port}/explore/queue/leave`)
               .type('form')
               .send({vat: 51760570179})
               expect(res_1.status).to.be.equal(200)

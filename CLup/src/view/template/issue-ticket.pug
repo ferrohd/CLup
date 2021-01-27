@@ -43,11 +43,11 @@ html(lang="en")
                 h2
                     b #{dateTimeString}
         
-        form#form.hidden-form(method="POST" action="/ticket/delete")
+        form#form.hidden-form(method="POST" action="/overview/ticket/delete")
             input(name="ticket" type="hidden" value=ticket.id)
         
         a#print-btn.waves-effect.waves-light.btn.primary Print the Ticket
         button#form-btn.waves-effect.waves-light.btn.secondary(type="submit" form="form") Delete the Ticket
 
         include include/script.pug
-        script(type="text/javascript" src="js/issue-ticket.js")
+        script(type="text/javascript" src="/js/issue-ticket.js")
