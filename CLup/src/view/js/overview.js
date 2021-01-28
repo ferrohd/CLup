@@ -1,5 +1,4 @@
 import QrScanner from './qr-scanner.min.js';
-QrScanner.WROKER_PATH = './qr-scanner-worker.min.js';
 const qrScanner = new QrScanner(document.getElementById("camera-feed"), stopScanner);
 
 document.getElementById("scan-btn").addEventListener("click", startScanner);

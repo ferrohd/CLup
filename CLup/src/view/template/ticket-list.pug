@@ -7,7 +7,7 @@
 
 //- -----TIMESTAMP TO HUMAN READABLE CONVERSION-----
 - function convertDate(date) { 
--   var dateTime = new Date(date * 1000);
+-   var dateTime = new Date(date);
 -   var dateTimeString = [dateTime.getDate().toString().padStart(2, "0"), (dateTime.getMonth() + 1).toString().padStart(2, "0"), dateTime.getFullYear()].join("/");
 -   dateTimeString += " - " + [dateTime.getHours().toString().padStart(2, "0"), dateTime.getMinutes().toString().padStart(2, "0")].join(":");
 -   return dateTimeString;
@@ -20,24 +20,37 @@ html(lang="en")
         include include/head.pug
         title Tickets - Customers LineUp
     body.alt
-        h1 Manage the tickets issued by you!
+        h1 Manage your tickets!
         div.btn-floating-container
             a.btn-floating.btn-large.waves-effect.waves-dark(href="/overview")
                 i.material-icons close
         
-        section.ticket-list
-            -var index = 0;
-            each ticket in tickets
-                a.ticket.waves-effect.waves-dark.z-depth-1
-                    div.ticket-icon(data-id=ticket.id)
-                        i.material-icons delete_forever
-                    div.store-info
-                        h2.ellipsis #{convertDate(ticket.date)}
-                        h3.ellipsis #{(ticket.before + 1) + " of the line"}
-                - index++;
+        if(tickets.length == 0)
+            div.main-container
+                h1 No ticket found!
+                h2 If you want to issue a new ticket, simply click here.
+                a.waves-effect.waves-light.btn.primary(href="/overview/ticket/issue") Issue Ticket
+        else
+            section.ticket-list
+                -var index = 0;
+                each ticket in tickets
+                    a.ticket.waves-effect.waves-dark.z-depth-1(data-id=ticket.id)
+                        div.ticket-icon
+                            i.material-icons delete_forever
+                        div.store-info
+                            h2.ellipsis #{convertDate(ticket.date)}
+                            h3.ellipsis #{(ticket.before + 1) + " of the line"}
+                    - index++;
 
-        form#form.hidden-form(method="POST" action="/overview/ticket/delete")
-                input#ticket-id(name="ticket" type="hidden" value="")
+            section.main-container.modal-container.z-depth-4
+                h1 Are you sure you want to delete this ticket?
+                h2 This operation cannot be undone
+                div
+                    a#close-delete-btn.waves-effect.waves-light.btn.primary Go back
+                    button.waves-effect.waves-light.btn.secondary(type="submit" form="form") Delete Ticket
+
+            form#form.hidden-form(method="POST" action="/overview/ticket/delete")
+                    input#ticket-id(name="ticket" type="hidden" value="")
 
         include include/script.pug
         script(type="text/javascript" src="/js/ticket-list.js")

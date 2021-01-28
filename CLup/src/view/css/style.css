@@ -432,9 +432,9 @@ body > h1 {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 
 .store,
@@ -516,10 +516,10 @@ body > h1 {
 .main-container.modal-container {
     position: fixed;
     top: 50%;
-    left: calc(50% + 8px);
-    -webkit-transform: translate(-50%, 150%);
-        -ms-transform: translate(-50%, 150%);
-            transform: translate(-50%, 150%);
+    left: 50%;
+    -webkit-transform: translate(-50%, -150vh);
+        -ms-transform: translate(-50%, -150vh);
+            transform: translate(-50%, -150vh);
     -webkit-transition: .35s transform ease-in-out;
     -o-transition: .35s transform ease-in-out;
     transition: .35s transform ease-in-out;

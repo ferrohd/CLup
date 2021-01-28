@@ -21,19 +21,24 @@ html(lang="en")
                 i.material-icons shopping_cart
             a#pos-btn.btn-floating.btn-large.waves-effect.waves-dark
                 i.material-icons #{position ? "gps_fixed" : "gps_not_fixed"}
-        
-        section.store-list
-            -var index = 0;
-            each store in stores
-                a.store.waves-effect.waves-dark.z-depth-1(href="/explore/store?id=" + store.vat)
-                    div(class="store-icon style-" + (index % 2 + 1))
-                        i.material-icons #{index % 2 == 0 ? "storefront" : "store"}
-                    div.store-info
-                        h2.ellipsis #{store.name}
-                        if position
-                            h3.ellipsis #{store.distance >= 1000 ? (store.distance / 1000).toFixed(1) + " km away" : store.distance.toFixed(0) + " m away"}
-                        h3.ellipsis #{store.inline + " users in line"}
-                - index++;
+
+        if(stores.length == 0)
+            div.main-container
+                h1 No store found!
+                h2 It seems like no store is registered yet. Come back in a few days to check if there is any news.
+        else
+            section.store-list
+                -var index = 0;
+                each store in stores
+                    a.store.waves-effect.waves-dark.z-depth-1(href="/explore/store?id=" + store.vat)
+                        div(class="store-icon style-" + (index % 2 + 1))
+                            i.material-icons #{index % 2 == 0 ? "storefront" : "store"}
+                        div.store-info
+                            h2.ellipsis #{store.name}
+                            if position
+                                h3.ellipsis #{store.distance >= 1000 ? (store.distance / 1000).toFixed(1) + " km away" : store.distance.toFixed(0) + " m away"}
+                            h3.ellipsis #{store.inline + " users in line"}
+                    - index++;
 
         form#form.hidden-form(method="POST" action="/explore")
             input#lat(name="lat" type="hidden")
