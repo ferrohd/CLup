@@ -67,6 +67,21 @@ router.post('/ticket/scan', async (req, res) => {
 
 //------GUEST MANAGEMENT ROUTES----------
 
+// Get all ticket in queue
+router.get('/ticket', async (req, res) => {
+    const user = req.session.user
+
+    const tickets = storeManagerServices.ticketManagement.getTicketInQeueue(user.store)
+    let indexedTickets = []
+    tickets.forEach( (ticket, index) => {
+        ticket.before = index
+        indexedTickets.push(ticket)
+    })
+    const issuedTickets = indexedTickets.filter( (ticket) => ticket.user = user.email)
+    res.render('ticket-list', {tickets: issuedTickets})
+
+})
+
 // Issue a new ticket
 router.get('/ticket/issue', async (req, res) => {
     const user = req.session.user

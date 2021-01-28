@@ -107,6 +107,17 @@ class TicketManagement {
             })
         })
     }
+    async getTicketInQeueue(vat) {
+        const stmt = `SELECT * FROM ticket WHERE inside = ? AND store = ? ORDER BY date`
+        const values = [false, vat]
+        return new Promise( (resolve, _reject) => {
+            this.dbConn.query(stmt, values, (err, results, _fields) => {
+                if(err) return resolve({error: err.sqlMessage, sqlError: true})
+                if(results.length == 0) return resolve([])
+                else resolve(results)
+            })
+        })
+    }
 }
 
 class GuestManagement {
