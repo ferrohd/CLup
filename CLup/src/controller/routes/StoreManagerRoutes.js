@@ -71,15 +71,12 @@ router.post('/ticket/scan', async (req, res) => {
 router.get('/ticket', async (req, res) => {
     const user = req.session.user
 
-    const tickets = storeManagerServices.ticketManagement.getTicketInQeueue(user.store)
-    let indexedTickets = []
-    tickets.forEach( (ticket, index) => {
-        ticket.before = index
-        indexedTickets.push(ticket)
-    })
-    const issuedTickets = indexedTickets.filter( (ticket) => ticket.user = user.email)
-    res.render('ticket-list', {tickets: issuedTickets})
+    const tickets = await storeManagerServices.ticketManagement.getTicketInQeueue(user.store)
+    if(tickets.error) return res.redirectMessage(basePath, tickets.error);
 
+    const issuedTickets = tickets.filter((ticket) => ticket.user == user.email)
+    issuedTickets.forEach((ticket) => ticket.before = tickets.indexOf(ticket))
+    res.render('ticket-list', {tickets: issuedTickets})
 })
 
 // Issue a new ticket
