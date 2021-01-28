@@ -416,9 +416,10 @@ body > h1 {
     margin: 1em 0 0;
 }
 
-/*** STORE LIST ***/
+/*** STORE LIST - TICKET LIST ***/
 
-.store-list {
+.store-list,
+.ticket-list {
     width: 80%;
     max-width: 850px;
     margin: 0 auto;
@@ -436,7 +437,8 @@ body > h1 {
             justify-content: center;
 }
 
-.store {
+.store,
+.ticket {
     width: 100%;
     max-width: 350px;
     min-height: 8em;
@@ -455,7 +457,8 @@ body > h1 {
     cursor: pointer;
     background-color: var(--background-color-1);
 }
-.store-icon {
+.store-icon,
+.ticket-icon {
     width: 1.8em;
     height: 1.8em;
     line-height: 1.8em;
@@ -472,6 +475,9 @@ body > h1 {
 }
 .store-icon.style-2 {
     background-color: var(--secondary-color);
+}
+.ticket-icon {
+    background-color: var(--error-color);
 }
 
 .store-info {
