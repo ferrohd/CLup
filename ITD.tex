@@ -13,8 +13,8 @@
 \author{\href{https://github.com/ferrohd}{Alessandro Ferrara} -
 \href{https://github.com/lorenzofratus}{Lorenzo Fratus}}
 \professor{Elisabetta di Nitto}
-\date{January 13, 2021}
-\version{0.2}
+\date{January 28, 2021}
+\version{0.3}
 
 \begin{document}
 
@@ -116,9 +116,9 @@ Version & Date & Description \\ \addlinespace
 \item
   Assignment document A.Y. 2020/2021 (``I\&T assignment goal, schedule, and rules'')
 \item
-  Requirement Analysis and Specification Document - Customers Line-up, version 1.0 (referred to as ``RASD'' in the document)
+  Requirement Analysis and Specification Document - Customers Line-up, version 1.1 (referred to as ``RASD'' in the document)
 \item
-  Design Document - Customers Line-up, version 1.0 (referred to as ``DD'' in the document)
+  Design Document - Customers Line-up, version 1.1 (referred to as ``DD'' in the document)
 \end{itemize}
 
 \section{F. Document structure}
@@ -153,6 +153,7 @@ Finally, the clupper is able to leave the queue at any time before entering the 
 
 This function is a fallback of the first one, indeed, it allows the store manager to insert into the queue any guest requesting it.
 The system will provide the store manager with a digital ticket, which he will have to convert into physical (by printing it) and hand out to the guest.
+Finally, the guest is able to leave the queue at any time before entering the store, by asking the store manager to delete his ticket.
 
 \subsection{A.3. Store overview}
 
@@ -300,7 +301,7 @@ In order to stimulate the system, a mock HTTP client was introduced thanks to an
 This client has the task of performing multiple actions on the available services and verifying that the response matches the expected result for the single test.
 
 Due to the small size of the public interface classes, to avoid trivial tests, the test cases focus specifically on the routes of the web server.
-These components directly interact with the public interfaces, in this way, a complete test suite is garanteed.
+These components directly interact with the public interfaces, in this way, a complete test suite is guaranteed.
 
 The objective of this activity is to cover the requirements highlighted in the RASD in order to ensure that the system is able to meet them.
 The test cases are grouped according to the public interface they refer to.
@@ -314,16 +315,16 @@ The second and third test analyze the proper working of the system while the use
 All the test are passed. The benchmark results are under 1000ms.
 
 \subsection{B.2. Clupper services}
-As in the Account services testing, the procedure initializes both CLup applicative and a HTTP client.
+As in the account services testing, the procedure initializes both CLup application and a HTTP client.
 All the tests are divided in two operations: the login and the accomplishment of the requirement to be tested.
-Infact all the actions that a Clupper can perform are not accessible if the user is not logged in.
+In fact all the actions that a clupper can perform are not accessible if the user is not logged in.
 The test consist in retrieve the store list, getting the queue status, joining and leaving the queue.
 All the test are passed. The benchmark results are under 600ms.
 
 \subsection{B.3. Store manager services}
-The testing of the Store manager services proceeds in the same way as the tesing of the Clupper'ones.
-As in the Clupper Services before performing any action the user must be logged in.
-The testing is about fetching the overview of the store and the issuing of a new ticket. Both operations succed withing 1000ms.
+The testing of the store manager services proceeds in the same way as the testing of the clupper ones.
+As in the clupper services before, to perform any action the user must be logged in.
+The testing is about fetching the overview of the store and issuing a new ticket. Both operations succeed within 1000ms.
 
 \section{C. Additional features}
 
@@ -359,6 +360,7 @@ Topic & Hours \\ \addlinespace
 \midrule
 \endhead
 Installation guide & 0.5h \\ \addlinespace
+Section 5 & 1.5h \\ \addlinespace
 \bottomrule
 \end{longtable}
 

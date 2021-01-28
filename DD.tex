@@ -7,8 +7,8 @@
 \author{\href{https://github.com/ferrohd}{Alessandro Ferrara} -
 \href{https://github.com/lorenzofratus}{Lorenzo Fratus}}
 \professor{Elisabetta di Nitto}
-\date{January 03, 2021}
-\version{1.0}
+\date{January 28, 2021}
+\version{1.1}
 
 \begin{document}
 
@@ -123,6 +123,7 @@ Version & Date & Description \\ \addlinespace
 \midrule
 \endhead
 1.0 & 03 Jan 2021 & First version \\ \addlinespace
+1.1 & 28 Jan 2021 & Adapted to RASD update \\ \addlinespace
 \bottomrule
 \end{longtable}
 
@@ -132,7 +133,7 @@ Version & Date & Description \\ \addlinespace
 \item
   Assignment document A.Y. 2020/2021 (``Requirement Engineering and Design Project: goal, schedule, and rules'')
 \item
-  Requirement Analysis and Specification Document - Customers Line-up, version 1.0 (referred to as ``RASD'' in the document)
+  Requirement Analysis and Specification Document - Customers Line-up, version 1.1 (referred to as ``RASD'' in the document)
 \end{itemize}
 
 \clearpage
@@ -239,7 +240,7 @@ The Store Manager Services subsystem contains three components:
 \item
     \textbf{Ticket Module}: offers the \emph{ScanTicket} interface to receive feedback on scanned tickets.
 \item
-    \textbf{Guest Module}: offers the \emph{IssueTicket} interface to request a queue ticket for a guest.
+    \textbf{Guest Module}: offers the \emph{IssueTicket} interface to request or delete a queue ticket for a guest.
 \end{itemize}
 
 In order to fulfill their goals, these components need to communicate with the DBMS.
@@ -352,7 +353,7 @@ These diagrams show the main methods provided by each component:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{component_interface_diagrams/store_manager_component_interface_diagram}
+\includegraphics[width=0.89\textwidth]{component_interface_diagrams/store_manager_component_interface_diagram}
 \caption{StoreManagerServices interface diagram}
 \end{figure}
 
@@ -360,7 +361,7 @@ These diagrams show the main methods provided by each component:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{component_interface_diagrams/account_management_component_interface_diagram}
+\includegraphics[width=0.89\textwidth]{component_interface_diagrams/account_management_component_interface_diagram}
 \caption{AccountServices interface diagram}
 \end{figure}
 
@@ -559,6 +560,11 @@ Here is provided a mapping between the goals defined in the RASD and the system 
     \begin{itemize}
         \item Account Services (\emph{Account Module})
         \item Store Manager Services (\emph{Store Module}, \emph{Ticket Module})
+    \end{itemize}
+\item \textbf{G10}: Allow a guest to leave a store queue before entering.
+    \begin{itemize}
+        \item Account Services (\emph{Account Module})
+        \item Store Manager Services (\emph{Guest Module})
     \end{itemize}
 \end{itemize}
 

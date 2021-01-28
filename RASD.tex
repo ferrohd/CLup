@@ -10,8 +10,8 @@
 \author{\href{https://github.com/ferrohd}{Alessandro Ferrara} -
 \href{https://github.com/lorenzofratus}{Lorenzo Fratus}}
 \professor{Elisabetta di Nitto}
-\date{December 20, 2020}
-\version{1.0}
+\date{January 28, 2021}
+\version{1.1}
 
 \begin{document}
 
@@ -80,6 +80,7 @@ GX & Description of the goal \\ \addlinespace
 \Copy{G7}{G7 & Allow a store manager to have an overview of the store \\ \addlinespace}
 \Copy{G8}{G8 & Allow a store manager to regulate the entrances to the store \\ \addlinespace}
 \Copy{G9}{G9 & Allow a store manager to regulate the exits from the store \\ \addlinespace}
+\Copy{G10}{G10 & Allow a guest to leave a store queue before entering \\ \addlinespace}
 \bottomrule
 \end{longtable}
 
@@ -177,6 +178,7 @@ Version & Date & Description \\ \addlinespace
 \midrule
 \endhead
 1.0 & 20 Dec 2020 & First version \\ \addlinespace
+1.1 & 28 Jan 2021 & Added goal G10 \\ \addlinespace
 \bottomrule
 \end{longtable}
 
@@ -302,12 +304,13 @@ This function allows a clupper to book a visit to the desired store, thus avoidi
 
 \subsection{B.3. Join a queue (physical) - Managerial service}
 
-This function is a fallback of the first one, indeed, it allows the store manager to insert into the queue any guest requesting it. The system will provide the store manager with a digital ticket, which he will have to convert into physical (e.g.~by printing it) and hand out to the guest.
+This function is a fallback of the first one, indeed, it allows the store manager to insert into the queue any guest requesting it. The system will provide the store manager with a digital ticket, which he will have to convert into physical (e.g.~by printing it) and hand out to the guest. Finally, the guest is able to leave the queue at any time before entering the store, by asking the store manager to delete his ticket.
 
 \subsection{B.4. Store overview - Managerial service}
 
 This function allows a store manager to have a live overview of the store. The system will provide the store manager with the number of customers inside the store (compared to the capacity), those in the store queue and those with a reservation for the current time slot (that have not entered the store yet). This data should allow him to regulate the flow of customers.
 
+\clearpage
 \subsection{B.5. Ticket scan - Managerial service}
 
 This function allows a store manager to scan (and validate) a customer's ticket (both at the entrance and the exit of the store). This has the double purpose of updating the data contained into the store overview, and make sure that the flow of customers corresponds to that expected by the system (no one should be able to enter before his turn).
@@ -338,7 +341,7 @@ As explained in the previous sections, the system shall be able to provide fallb
 \end{itemize}
 
 The goal of a guest is the same as that of a clupper (the risk of infection is technically lower due to the fact that the majority of customers should be cluppers).\\
-By definition, a guest cannot directly take advantage of the services offered by the system, for this reason he is only able to join a queue by addressing the store manager.
+By definition, a guest cannot directly take advantage of the services offered by the system, for this reason he must relate with the store manager.
 
 \clearpage
 \section{D. Assumptions, dependencies and constraints}
@@ -376,6 +379,7 @@ DX & Description of the domain assumption \\ \addlinespace
 \Copy{D7}{D7 & A clupper with a reservation should leave the store before the end of the acquired time slots \\ \addlinespace}
 \Copy{D8}{D8 & A customer is not able to enter a store before providing a valid ticket to the store manager \\ \addlinespace}
 \Copy{D9}{D9 & A customer is not able to leave a store before providing a valid ticket to the store manager \\ \addlinespace}
+\Copy{D10}{D10 & The store manager will always remove from the store queue any guest requesting it \\ \addlinespace}
 \bottomrule
 \end{longtable}
 
@@ -514,6 +518,7 @@ RX & Description of the functional requirement \\ \addlinespace
 \Copy{R31}{R31 & The system is able to retrieve the number of customers currently in a store queue \\ \addlinespace}
 \Copy{R32}{R32 & The system is able to retrieve the number of customers currently inside a store \\ \addlinespace}
 \Copy{R33}{R33 & The system is able to retrieve the number of reservations for a store during the current time slot \\ \addlinespace}
+\Copy{R34}{R34 & The system is able to retrieve the list of tickets in the queue issued by a store manager \\ \addlinespace}
 \bottomrule
 \end{longtable}
 
@@ -782,6 +787,28 @@ Output conditions & The store manager is able see the details about his store. \
 Exceptions & \emph{None} \\ \addlinespace
 \bottomrule
 \end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.25}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.75}}@{}}
+\toprule
+StoreManagerDeletesTicket & \\ \addlinespace
+\midrule
+\endhead
+Actors & Store manager, Guest \\ \addlinespace
+Goals & G10 \\ \addlinespace
+Input conditions & The store manager is already logged into the system and in the overview page. \\ \addlinespace
+Events flow & \begin{enumerate}\vspace{-1.35\baselineskip}
+    \item The guest approaches the store manager asking to delete his ticket.
+    \item The store manager clicks on the ``Tickets List'' button.
+    \item The system redirects the store managet to the tickets list page.
+    \item The store manager selects the ticket to delete.
+    \item The system deletes the selected ticket and redirects the store manager to the overview page.
+\vspace{-1.0\baselineskip}\end{enumerate} \\ \addlinespace
+Output conditions & The guest is no longer in the queue. \\ \addlinespace
+Exceptions & \emph{None} \\ \addlinespace
+\bottomrule
+\end{longtable}
 \normalsize
 
 \subsection{B.2. Use case diagrams}
@@ -876,6 +903,14 @@ Exceptions & \emph{None} \\ \addlinespace
 \caption{Store manager scan ticket}
 \end{figure}
 
+\subsubsection{B.3.9. Store manager delete ticket}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{sequence_diagrams/sequence_diagram_store_manager_cancel_ticket}
+\caption{Store manager delete ticket}
+\end{figure}
+
 \clearpage
 \subsection{B.4. Mapping on requirements}
 
@@ -904,6 +939,7 @@ Exceptions & \emph{None} \\ \addlinespace
 \bottomrule
 \end{longtable}
 
+\clearpage
 \subsubsection{B.4.2. Goal 2}
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1}}
@@ -935,6 +971,7 @@ Exceptions & \emph{None} \\ \addlinespace
 \bottomrule
 \end{longtable}
 
+\clearpage
 \subsubsection{B.4.4. Goal 4}
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1}}
@@ -962,6 +999,7 @@ Exceptions & \emph{None} \\ \addlinespace
 \bottomrule
 \end{longtable}
 
+\clearpage
 \subsubsection{B.4.5. Goal 5}
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1}}
@@ -997,6 +1035,7 @@ Exceptions & \emph{None} \\ \addlinespace
 \bottomrule
 \end{longtable}
 
+\clearpage
 \subsubsection{B.4.7. Goal 7}
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1}}
@@ -1039,6 +1078,7 @@ Exceptions & \emph{None} \\ \addlinespace
 \bottomrule
 \end{longtable}
 
+\clearpage
 \subsubsection{B.4.9. Goal 9}
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1}}
@@ -1059,6 +1099,24 @@ Exceptions & \emph{None} \\ \addlinespace
 \bottomrule
 \end{longtable}
 
+\subsubsection{B.4.10. Goal 10}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.9}}@{}}
+\toprule
+\Paste{G10}
+\midrule
+\endhead
+\Paste{D1}
+\Paste{D10}
+\Paste{R5}
+\Paste{R9}
+\Paste{R29}
+\Paste{R34}
+\bottomrule
+\end{longtable}
+
+\clearpage
 \section{C. Performance requirements}
 
 The system must be able to handle a great number of concurrent requests especially during peak times (typically lunch and dinner).\\
@@ -1153,6 +1211,7 @@ Scenarios and use cases & 3.0h \\ \addlinespace
 Overall RASD revision & 3.5h \\ \addlinespace
 Scenarios and use cases revision & 1.5h \\ \addlinespace
 Alloy & 2.0h \\ \addlinespace
+RASD 1.1 revision & 1.0h \\ \addlinespace
 \bottomrule
 \end{longtable}
 
