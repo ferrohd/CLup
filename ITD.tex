@@ -6,15 +6,14 @@
 \title{Implementation and Test Deliverable}
 \subtitle{Customers Line-up}
 \linklist{
-    % TODO: set links to the right installer folder
-    \href{https://github.com/ferrohd/FerraraFratus/tree/main/CLup}{Installer} - 
+    \href{https://github.com/ferrohd/FerraraFratus/tree/main/DeliveryFolder}{Installer} - 
     \href{https://github.com/ferrohd/FerraraFratus/tree/main/CLup}{Source code}
 }
 \author{\href{https://github.com/ferrohd}{Alessandro Ferrara} -
 \href{https://github.com/lorenzofratus}{Lorenzo Fratus}}
 \professor{Elisabetta di Nitto}
-\date{January 28, 2021}
-\version{0.3}
+\date{February 05, 2021}
+\version{1.0}
 
 \begin{document}
 
@@ -94,6 +93,7 @@ The system should be very simple to use (to adapt to all demographics) and provi
   \textbf{CLup}: Customers Line-up.
 \end{itemize}
 
+\clearpage
 \section{D. Revision history}
 
 \begin{longtable}[]{@{}
@@ -104,7 +104,7 @@ The system should be very simple to use (to adapt to all demographics) and provi
 Version & Date & Description \\ \addlinespace
 \midrule
 \endhead
-1.0 & XX Jan 2021 & First version \\ \addlinespace
+1.0 & 05 Feb 2021 & First version \\ \addlinespace
 \bottomrule
 \end{longtable}
 
@@ -162,6 +162,7 @@ The system will provide the store manager with the number of customers inside th
 This data should allow him to regulate the flow of customers.
 This function also offers to the store manager the possibility to update the store capacity in order to adapt to the latest regulations.
 
+\clearpage
 \subsection{A.4. Ticket scan}
 
 This function allows a store manager to scan (and validate) a customer’s ticket (both at the entrance and the exit of the store).
@@ -240,6 +241,7 @@ Generally speaking, using a middleware has several advantages including:
 The only drawback compared to a custom-made middleware is that the developer has to adapt to the interfaces offered by an external module.\\
 However, with JavaScript being a widely used language, there is plenty of alternatives available.
 
+\clearpage
 \subsection{C.3. Other libraries}
 
 This is a list of external libraries that are not middlewares but have played a key role in the implementation of this system.
@@ -298,7 +300,7 @@ This is a simple directory tree that shows the structure of our source code.
 To ensure a testing activity as close as possible to a real-world scenario, the test suite was run directly using the production database rather than a custom-made stub.
 
 In order to stimulate the system, a mock HTTP client was introduced thanks to an external module.
-This client has the task of performing multiple actions on the available services and verifying that the response matches the expected result for the single test.
+This client has the task of performing multiple actions on the available services and verifying that the response matches the expected result for each test.
 
 Due to the small size of the public interface classes, to avoid trivial tests, the test cases focus specifically on the routes of the web server.
 These components directly interact with the public interfaces, in this way, a complete test suite is guaranteed.
@@ -306,30 +308,124 @@ These components directly interact with the public interfaces, in this way, a co
 The objective of this activity is to cover the requirements highlighted in the RASD in order to ensure that the system is able to meet them.
 The test cases are grouped according to the public interface they refer to.
 
+\clearpage
 \section{B. Test cases}
 
-\subsection{B.1. Account services}
-The testing of the account services begins with the initialization of the CLup services and the instantiation of a HTTP client to perform the testing.
-The first test is about a tentative of logging in from an unregistered user. The answer should be a 302 error code that redirects the user to the register page.
-The second and third test analyze the proper working of the system while the user is logged in, testing the login and logout functionalities.
+\subsection{B.1. Account routes}
+
+The testing of the account routes begins with the initialization of the CLup application and the instantiation of a HTTP client to perform the testing.
+
+The following tests are done:
+\begin{enumerate}
+    \item Login:
+        \begin{itemize}
+            \item Login of a clupper
+            \item Login of a store manager
+            \item Login with invalid credentials
+        \end{itemize}
+    \item Registration of a clupper:
+        \begin{itemize}
+            \item Registration with valid information
+            \item Registration with missing information
+            \item Registration with email already in use
+        \end{itemize}
+    \item Registration of a store manager:
+        \begin{itemize}
+            \item Registration with valid information
+            \item Registration with missing information
+            \item Registration with email already in use
+            \item Registration with VAT already in use
+        \end{itemize}
+\end{enumerate}
+
 All the test are passed. The benchmark results are under 1000ms.
 
-\subsection{B.2. Clupper services}
-As in the account services testing, the procedure initializes both CLup application and a HTTP client.
-All the tests are divided in two operations: the login and the accomplishment of the requirement to be tested.
-In fact all the actions that a clupper can perform are not accessible if the user is not logged in.
-The test consist in retrieve the store list, getting the queue status, joining and leaving the queue.
+\subsection{B.2. Clupper routes}
+
+As in the account routes testing, the procedure initializes both CLup application and a HTTP client.
+All the tests are carried out sequentially (the first one is always the login).
+
+The following tests are done:
+\begin{enumerate}
+    \item Store retrieval:
+        \begin{itemize}
+            \item See the list of stores
+            \item See the details of a store
+            \item See the details of an invalid store
+        \end{itemize}
+    \clearpage
+    \item Queue management:
+        \begin{itemize}
+            \item See the details of the queue ticket
+            \item See the details of the queue ticket when the clupper is not in a queue
+            \item Join the queue of a store
+            \item Join the queue of an invalid store
+            \item Leave the queue of a store
+            \item Leave the queue of an invalid store
+        \end{itemize}
+\end{enumerate}
+
 All the test are passed. The benchmark results are under 600ms.
 
-\subsection{B.3. Store manager services}
-The testing of the store manager services proceeds in the same way as the testing of the clupper ones.
-As in the clupper services before, to perform any action the user must be logged in.
-The testing is about fetching the overview of the store and issuing a new ticket. Both operations succeed within 1000ms.
+\subsection{B.3. Store manager routes}
+
+The testing of the store manager routes proceeds in the same way as the testing of the clupper ones (always starting from the login).
+
+The following tests are done:
+\begin{enumerate}
+    \item Capacity update:
+        \begin{itemize}
+            \item Update the capacity with a valid value
+            \item Update the capacity with an invalid value
+        \end{itemize}
+    \item Ticket scan:
+        \begin{itemize}
+            \item Scan at the entrance
+            \item Scan at the exit
+            \item Scan of a non-existing ticket
+            \item Scan of a ticket that is not the head of the queue
+            \item Scan of a ticket when maximum capacity is reached
+        \end{itemize}
+    \item Other ticket operations:
+        \begin{itemize}
+            \item See the list of issued tickets
+            \item Issue a new ticket
+            \item Delete an issued ticket
+        \end{itemize}
+\end{enumerate}
+
+All the test are passed. The benchmark results are under 600ms.
+
+\clearpage
+\subsection{B.4. Middlewares}
+
+Some small tests are also performed to ensure that the middlewares are activated at the right time.
+
+The following tests are done:
+\begin{enumerate}
+    \item No login:
+        \begin{itemize}
+            \item Access explore page without login
+            \item Access overview page without login
+        \end{itemize}
+    \item Clupper:
+        \begin{itemize}
+            \item Access explore page with login
+            \item Access overview page with login
+        \end{itemize}
+    \item Store manager:
+        \begin{itemize}
+            \item Access explore page with login
+            \item Access overview page with login
+        \end{itemize}
+\end{enumerate}
+
+All the test are passed. The benchmark results are under 600ms.
 
 \section{C. Additional features}
 
 Together with each test case, a benchmark is automatically run to measure the performance of the system in terms of time required to complete the tasks.
-The result of the benchmark could vary a lot depending on the network speed and hardware is running on.
+The result of the benchmark could vary a lot depending on the network speed and hardware it is running on.
 
 \chapter{6. Installation guide}
 
@@ -374,6 +470,7 @@ Topic & Hours \\ \addlinespace
 \midrule
 \endhead
 Section 1 & 1.0h \\ \addlinespace
+Section 5 revision & 1.0h \\ \addlinespace
 \bottomrule
 \end{longtable}
 
