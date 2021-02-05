@@ -41,10 +41,10 @@ router.get('/store', async (req, res) => {
     const user = req.session.user
     const position = req.session.position
     const vat = req.query.id
-    if(!vat) return res.redirectMessage(basePath, 'Invalid store id.')
+    if(!vat) return res.redirectMessage(basePath, 'Invalid store id.', 303)
 
     const store = await clupperServices.storeLocator.getStoreInfo(vat, position)
-    if(store.error) return res.redirectMessage(basePath, store.error)
+    if(store.error) return res.redirectMessage(basePath, store.error, 303)
 
     const ticket = await clupperServices.queueManagement.getQueueTicket(user.email)
 
@@ -60,19 +60,18 @@ router.get('/queue', async (req, res) => {
     const user = req.session.user
     const position = req.session.position
 
-    //- qrcode: base64 png image, background transparent, foreground: #272d2d
     const ticket = await clupperServices.queueManagement.getQueueTicket(user.email)
-    if(ticket.error) return res.redirectMessage(basePath, ticket.error)
+    if(ticket.error) return res.redirectMessage(basePath, ticket.error, 303)
 
     const before = await clupperServices.queueManagement.getQueueBefore(ticket.store, ticket.date)
-    if(before.error) return res.redirectMessage(basePath, before.error)
+    if(before.error) return res.redirectMessage(basePath, before.error, 303)
 
     const store = await clupperServices.storeLocator.getStoreInfo(ticket.store, position, false)
-    if(store.error) return res.redirectMessage(basePath, store.error)
+    if(store.error) return res.redirectMessage(basePath, store.error, 303)
 
     ticket.qrcode = await ticket.toPNGBase64()
 
-    //5 minutes per customer
+    // 5 minutes per customer
     const time = before * 5
 
     res.render('queue', {position: position != undefined, store: store, ticket: ticket, before: before, time: time, messages: req.session.messages})
@@ -84,10 +83,10 @@ router.get('/queue', async (req, res) => {
 router.post('/queue/join', async (req, res) => {
     const user = req.session.user
     const vat = req.body.store
-    if(!vat) return res.redirectMessage(basePath, 'Invalid store id.')
+    if(!vat) return res.redirectMessage(basePath, 'Invalid store id.', 303)
 
     const ticket = await clupperServices.queueManagement.joinQueue(user.email, vat)
-    if(ticket.error) return res.redirectMessage(basePath, ticket.error)
+    if(ticket.error) return res.redirectMessage(basePath, ticket.error, 303)
     
     res.redirect(basePath + '/queue')
 })
@@ -96,10 +95,10 @@ router.post('/queue/join', async (req, res) => {
 router.post('/queue/leave', async (req, res) => {
     const user = req.session.user
     const vat = req.body.store
-    if(!vat) return res.redirectMessage(basePath, 'Invalid store id.')
+    if(!vat) return res.redirectMessage(basePath + "/queue", 'Invalid store id.', 303)
 
     const result = await clupperServices.queueManagement.leaveQueue(user.email, vat)
-    if(result.error) return res.redirectMessage(basePath, result.error)
+    if(result.error) return res.redirectMessage(basePath, result.error, 303)
 
     res.redirect(basePath)
 })

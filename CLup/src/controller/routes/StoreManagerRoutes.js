@@ -27,10 +27,10 @@ router.get('/', async (req, res) => {
 router.post('/capacity', async (req, res) => {
     const user = req.session.user
     const capacity = req.body.capacity
-    if(!capacity) return res.redirectMessage(basePath, 'Invalid store capacity.')
+    if(!capacity) return res.redirectMessage(basePath, 'Invalid store capacity.', 303)
     
     const result = await storeManagerServices.storeManagement.editStoreCapacity(user.store, capacity)
-    if(result.error) return res.redirectMessage(basePath, result.error)
+    if(result.error) return res.redirectMessage(basePath, result.error, 303)
     
     res.redirect(basePath)
 })
@@ -41,27 +41,27 @@ router.post('/capacity', async (req, res) => {
 router.post('/ticket/scan', async (req, res) => {
     const user = req.session.user
     const ticketID = req.body.ticket
-    if(!ticketID) return res.redirectMessage(basePath, 'Invalid ticket ID, access not allowed.')
+    if(!ticketID) return res.redirectMessage(basePath, 'Invalid ticket ID, access not allowed.', 303)
 
     const ticketInside = await storeManagerServices.ticketManagement.getTicketInside(ticketID, user.store)
-    if(ticketInside.sqlError) return res.redirectMessage(basePath, ticketInside.error + ' No information about the validity of the ticket.')
-    if(ticketInside.error) return res.redirectMessage(basePath, ticketInside.error + ' Ticket is invalid, access not allowed.')
+    if(ticketInside.sqlError) return res.redirectMessage(basePath, ticketInside.error + ' No information about the validity of the ticket.', 303)
+    if(ticketInside.error) return res.redirectMessage(basePath, ticketInside.error + ' Ticket is invalid, access not allowed.', 303)
 
     if(ticketInside) {
         const result = await storeManagerServices.ticketManagement.deleteTicket(ticketID, user.store)
-        if(result.error) return res.redirectMessage(basePath, result.error)
+        if(result.error) return res.redirectMessage(basePath, result.error, 303)
         return res.redirectMessage(basePath, 'Ticket valid, exit allowed.')
     }
     
     const capacity = await storeManagerServices.storeManagement.getStoreCapacity(user.store);
-    if(capacity.error) return res.redirectMessage(basePath, capacity.error)
+    if(capacity.error) return res.redirectMessage(basePath, capacity.error, 303)
     const inside = await storeManagerServices.storeOverview.getStoreInside(user.store);
-    if(inside.error) return res.redirectMessage(basePath, inside.error)
+    if(inside.error) return res.redirectMessage(basePath, inside.error, 303)
 
-    if(inside >= capacity) return res.redirectMessage(basePath, 'The store is full. No information about the validity of the ticket.')
+    if(inside >= capacity) return res.redirectMessage(basePath, 'The store is full. No information about the validity of the ticket.', 303)
 
     const result = await storeManagerServices.ticketManagement.scanEntrance(ticketID, user.store)
-    if(result.error) return res.redirectMessage(basePath, result.error)
+    if(result.error) return res.redirectMessage(basePath, result.error, 303)
     return res.redirectMessage(basePath, 'Ticket valid, entrance allowed.')
 })
 
@@ -72,7 +72,7 @@ router.get('/ticket', async (req, res) => {
     const user = req.session.user
 
     const tickets = await storeManagerServices.ticketManagement.getTicketInQeueue(user.store)
-    if(tickets.error) return res.redirectMessage(basePath, tickets.error);
+    if(tickets.error) return res.redirectMessage(basePath, tickets.error, 303);
 
     const issuedTickets = tickets.filter((ticket) => ticket.user == user.email)
     issuedTickets.forEach((ticket) => ticket.before = tickets.indexOf(ticket))
@@ -84,11 +84,11 @@ router.get('/ticket/issue', async (req, res) => {
     const user = req.session.user
 
     const store = await storeManagerServices.storeOverview.getStoreInfo(user.store, false)
-    if(store.error) return res.redirectMessage(basePath, store.error)
+    if(store.error) return res.redirectMessage(basePath, store.error, 303)
 
     if(!req.session.ticket) {
         const ticket = await storeManagerServices.guestManagement.issueTicket(user.email, user.store)
-        if(ticket.error) return res.redirectMessage(basePath, ticket.error)
+        if(ticket.error) return res.redirectMessage(basePath, ticket.error, 303)
         ticket.qrcode = await ticket.toPNGBase64()
         req.session.ticket = ticket
     }
@@ -103,10 +103,10 @@ router.get('/ticket/issue', async (req, res) => {
 router.post('/ticket/delete', async (req, res) => {
     const user = req.session.user
     const ticketID = req.body.ticket
-    if(!ticketID) return res.redirectMessage(basePath, 'Invalid ticket ID.')
+    if(!ticketID) return res.redirectMessage(basePath, 'Invalid ticket ID.', 303)
 
     const result = await storeManagerServices.ticketManagement.deleteTicket(ticketID, user.store)
-    if(result.error) return res.redirectMessage(basePath, result.error)
+    if(result.error) return res.redirectMessage(basePath, result.error, 303)
 
     res.redirect(basePath);
     req.session.ticket = null

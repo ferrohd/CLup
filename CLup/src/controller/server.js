@@ -35,10 +35,10 @@ app.use(session({
     }
 }))
 app.use((req, res, next) => {
-    res.redirectMessage = (url, message) => {
+    res.redirectMessage = (url, message, code = 302) => {
         if(!req.session.messages) req.session.messages = []
         req.session.messages.push(message)
-        res.redirect(url)
+        res.redirect(code, url)
     }
     next()
 })

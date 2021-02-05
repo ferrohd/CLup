@@ -48,7 +48,6 @@ class AccountManagement {
                     if (err) resolve({error: err.sqlMessage, sqlError: true})
                     conn.query(Sstmt, Svalues, (err, _results, _fields) => {
                         if (err) {
-                            console.log('ERRORE CREAZIONE STORE')
                             conn.rollback()
                             resolve({error: err.sqlMessage, sqlError: true})
                         }
@@ -56,13 +55,11 @@ class AccountManagement {
                     // Try to register the store manager
                     conn.query(SMstmt, SMvalues, (err, _results, _fields) => {
                         if (err) {
-                            console.log('ERRORE CREAZIONE ACCOUNT')
                             conn.rollback()
                             return resolve({error: err.sqlMessage, sqlError: true})
                         }
                         conn.commit( err => { 
                             if (err) {
-                                console.log('ERRORE COMMIT')
                                 conn.rollback()
                                 return resolve({error: err.sqlMessage, sqlError: true})
                             }
