@@ -1,6 +1,10 @@
 const { expect } = require('chai')
+const { response } = require('express')
 const superagent = require('superagent')
 const app = require('../src/controller/server')
+const tester = require('./utils/ResponseTester')
+
+const clupper = {email: 'beatrice.fletcher@example.com', password: 'louis'}
 
 describe("Clupper Route Testing", () => {
     let server
@@ -15,59 +19,72 @@ describe("Clupper Route Testing", () => {
       server.close(done)
     })
 
+    it("Should have logged in", async () => {
+      const user = clupper
+      const res = await agent
+            .post(`http://localhost:${port}/login`)
+            .redirects(0).ok(res => res.status < 400)
+            .type('form')
+            .send(user)
+      expect(tester.compare(res, 302, '/explore')).to.be.true
+    })
+
     it("Should allow a clupper to get stores list", async () => {
-        const res = await agent
-              // Login
-              .post(`http://localhost:${port}/login`)
-              .type('form')
-              .send({email: 'beatrice.fletcher@example.com', password: 'louis'})
-              expect(res.status).to.be.equal(200)
-              // Go to explore page
-        const res_1 = await agent      
-              .get(`http://localhost:${port}/explore`)
-              expect(res_1.status).to.be.equal(200)
+      const res = await agent
+            .get(`http://localhost:${port}/explore`)
+            .redirects(0).ok(res => res.status < 400)
+
+      expect(res.status).to.be.equal(200)
+    })
+
+    it("Should allow a clupper to get a store info", async () => {
+      const storeId = 51760570179
+      const res = await agent
+            .get(`http://localhost:${port}/explore/${storeId}`)
+            .redirects(0).ok(res => res.status < 400)
+
+      console.log(res)
+      expect(res.status).to.be.equal(200)
+    })
+
+    it("Should not allow a clupper to get a store that doesn't exists", async () => {
+      const storeId = 99999999999
+      const res = await agent
+            .get(`http://localhost:${port}/explore/${storeId}`)
+            .redirects(0).ok(res => res.status < 400)
+
+      expect(tester.compare(res, 302, '/explore')).to.be.true
+    })
+
+    it("Should not allow a clupper to get queue status when he's not in queue", async () => {
+
+      const res = await agent      
+            .get(`http://localhost:${port}/explore/queue/`)
+      expect(tester.compare(res, 302, '/explore')).to.be.true
     })
 
     it("Should allow a clupper to join a queue", async () => {
-        const res = await agent
-              // Login
-              .post(`http://localhost:${port}/login`)
-              .type('form')
-              .send({email: 'beatrice.fletcher@example.com', password: 'louis'})
-              expect(res.status).to.be.equal(200)
-              // Join queue
-        const res_1 = await agent      
+
+        const res = await agent      
               .post(`http://localhost:${port}/explore/queue/join`)
               .type('form')
               .send({vat: 51760570179})
-              expect(res_1.status).to.be.equal(200)
+      expect(res.status).to.be.equal(200)
     })
 
     it("Should allow a clupper to get queue status", async () => {
-      const res = await agent
-            // Login
-            .post(`http://localhost:${port}/login`)
-            .type('form')
-            .send({email: 'beatrice.fletcher@example.com', password: 'louis'})
-            expect(res.status).to.be.equal(200)
-            // Go to queue page
-      const res_1 = await agent      
+
+      const res = await agent      
             .get(`http://localhost:${port}/explore/queue/`)
-            expect(res_1.status).to.be.equal(200)
+      expect(res.status).to.be.equal(200)
     })
 
     it("Should allow a clupper to leave a queue", async () => {
-        const res = await agent
-              // Login
-              .post(`http://localhost:${port}/login`)
-              .type('form')
-              .send({email: 'beatrice.fletcher@example.com', password: 'louis'})
-              expect(res.status).to.be.equal(200)
               // Leave queue
-        const res_1 = await agent      
+              const res = await agent      
               .post(`http://localhost:${port}/explore/queue/leave`)
               .type('form')
               .send({vat: 51760570179})
-              expect(res_1.status).to.be.equal(200)
+      expect(res.status).to.be.equal(200)
     })
   })
