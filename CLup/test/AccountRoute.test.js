@@ -3,12 +3,12 @@ const superagent = require('superagent')
 const app = require('../src/controller/server')
 const tester = require('./utils/ResponseTester')
 const rg = require('./utils/RandomGenerator')
-const cleaner = require('./utils/DBHelper')
+const dbHelper = require('./utils/DBHelper')
 
 const clupper = {email: 'beatrice.fletcher@example.com', password: 'louis'}
 const storeManager = {email: 'allan.rose@example.com', password: 'recon'}
 const store = {vat: '51760570179'}
-const newUser = {name: rg.getRandomString(10), surname: rg.getRandomString(10), email: rg.getRandomString(10) + '@example3.com', password: rg.getRandomString(10), storeName: rg.getRandomString(10), address: 'Duomo di Milano', vat: rg.getRandomString(10) + '2', capacity: rg.getRandomInt(5, 100)}
+const newUser = {name: rg.getRandomString(10), surname: rg.getRandomString(10), email: rg.getRandomString(10) + '@example1.com', password: rg.getRandomString(10), storeName: rg.getRandomString(10), address: 'Duomo di Milano', vat: '_' + rg.getRandomString(10), capacity: rg.getRandomInt(5, 100)}
 
 describe("Account Route Testing", () => {
     let server
@@ -79,7 +79,7 @@ describe("Account Route Testing", () => {
 
       expect(tester.compare(res, 302, '/login')).to.be.true
 
-      cleaner.deleteUser(user.email)
+      await dbHelper.deleteUser(user.email)
     })
 
     it("Should not allow a clupper to register with incomplete data", async () => {
@@ -95,7 +95,7 @@ describe("Account Route Testing", () => {
 
       expect(result).to.be.true
       if(!result)
-        cleaner.deleteUser(user.email)
+        await dbHelper.deleteUser(user.email)
     })
 
     it("Should not allow a clupper to register with an already registered email", async () => {
@@ -120,8 +120,8 @@ describe("Account Route Testing", () => {
 
       expect(tester.compare(res, 302, '/login')).to.be.true
 
-      cleaner.deleteUser(user.email)
-      cleaner.deleteStore(user.vat)
+      await dbHelper.deleteUser(user.email)
+      await dbHelper.deleteStore(user.vat)
     })
 
     it("Should not allow a store manager to register with incomplete data", async () => {
@@ -137,8 +137,8 @@ describe("Account Route Testing", () => {
 
       expect(result).to.be.true
       if(!result) {
-        cleaner.deleteUser(user.email)
-        cleaner.deleteStore(user.vat)
+        await dbHelper.deleteUser(user.email)
+        await dbHelper.deleteStore(user.vat)
       }
     })
 

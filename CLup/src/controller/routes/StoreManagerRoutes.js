@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
 router.post('/capacity', async (req, res) => {
     const user = req.session.user
     const capacity = req.body.capacity
-    if(!capacity) return res.redirectMessage(basePath, 'Invalid store capacity.', 303)
+    if(!capacity || isNaN(capacity)) return res.redirectMessage(basePath, 'Invalid store capacity.', 303)
     
     const result = await storeManagerServices.storeManagement.editStoreCapacity(user.store, capacity)
     if(result.error) return res.redirectMessage(basePath, result.error, 303)

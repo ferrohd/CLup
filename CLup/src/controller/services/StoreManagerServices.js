@@ -64,7 +64,7 @@ class StoreManagement {
             this.dbConn.query(stmt, values, (err, results, _fields) => {
                 if(err) return resolve({error: err.sqlMessage, sqlError: true})
                 if(results.length == 0) return resolve({error: "No store found.", sqlError: false})
-                resolve(results[0])
+                resolve(results[0].capacity)
             })
         })
     }
