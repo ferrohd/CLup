@@ -11,7 +11,7 @@ const Store = require('./../../model/StoreModel')
 
 // Renders logjn page
 router.get('/login', (req, res) => {
-    res.render('login', {messages: req.session.messages})
+    res.status(200).render('login', {messages: req.session.messages})
     req.session.messages = null
     req.session.save()
 })
@@ -42,7 +42,7 @@ router.get('/logout', (req, res) => {
 
 // Renders register page
 router.get('/register', (req, res) => {
-    res.render('register', {messages: req.session.messages})
+    res.status(200).render('register', {messages: req.session.messages})
     req.session.messages = null
     req.session.save()
 })
@@ -63,7 +63,7 @@ router.post('/register', async (req, res) => {
 
 // Renders register store manager page
 router.get('/register-store', (req, res) => {
-    res.render('register-store', {messages: req.session.messages})
+    res.status(200).render('register-store', {messages: req.session.messages})
     req.session.messages = null
     req.session.save()
 })

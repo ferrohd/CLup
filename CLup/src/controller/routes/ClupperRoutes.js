@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         }
     }
     
-    res.render('explore', {position: position != undefined, stores: stores, messages: messages})
+    res.status(200).render('explore', {position: position != undefined, stores: stores, messages: messages})
     req.session.messages = null
     req.session.save()
 })
@@ -48,7 +48,7 @@ router.get('/store', async (req, res) => {
 
     const ticket = await clupperServices.queueManagement.getQueueTicket(user.email)
 
-    res.render('store', {position: position != undefined, inQueue: ticket.error == undefined, store: store, messages: req.session.messages})
+    res.status(200).render('store', {position: position != undefined, inQueue: ticket.error == undefined, store: store, messages: req.session.messages})
     req.session.messages = null
     req.session.save()
 })
@@ -74,7 +74,7 @@ router.get('/queue', async (req, res) => {
     // 5 minutes per customer
     const time = before * 5
 
-    res.render('queue', {position: position != undefined, store: store, ticket: ticket, before: before, time: time, messages: req.session.messages})
+    res.status(200).render('queue', {position: position != undefined, store: store, ticket: ticket, before: before, time: time, messages: req.session.messages})
     req.session.messages = null
     req.session.save()
 })

@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
     const inside = await storeManagerServices.storeOverview.getStoreInside(user.store)
     if(inside.error) messages.push(store.error)
 
-    res.render('overview', {store: store, inside: inside, messages: messages})
+    res.status(200).render('overview', {store: store, inside: inside, messages: messages})
     req.session.messages = null
     req.session.ticket = null
     req.session.save()
@@ -76,7 +76,7 @@ router.get('/ticket', async (req, res) => {
 
     const issuedTickets = tickets.filter((ticket) => ticket.user == user.email)
     issuedTickets.forEach((ticket) => ticket.before = tickets.indexOf(ticket))
-    res.render('ticket-list', {tickets: issuedTickets})
+    res.status(200).render('ticket-list', {tickets: issuedTickets})
 })
 
 // Issue a new ticket
@@ -94,7 +94,7 @@ router.get('/ticket/issue', async (req, res) => {
     }
 
 
-    res.render('issue-ticket', {store: store, ticket: req.session.ticket, messages: req.session.messages})
+    res.status(200).render('issue-ticket', {store: store, ticket: req.session.ticket, messages: req.session.messages})
     req.session.messages = null
     req.session.save()
 })

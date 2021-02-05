@@ -3,7 +3,7 @@ const superagent = require('superagent')
 const app = require('../src/controller/server')
 const tester = require('./utils/ResponseTester')
 const rg = require('./utils/RandomGenerator')
-const cleaner = require('./utils/DBCleaner')
+const cleaner = require('./utils/DBHelper')
 
 const clupper = {email: 'beatrice.fletcher@example.com', password: 'louis'}
 const storeManager = {email: 'allan.rose@example.com', password: 'recon'}
@@ -33,6 +33,12 @@ describe("Account Route Testing", () => {
             .send(user)
 
       expect(tester.compare(res, 302, '/explore')).to.be.true
+
+      const res2 = await agent
+            .get(`http://localhost:${port}/logout`)
+            .redirects(0).ok(res => res.status < 400)
+
+      expect(tester.compare(res2, 302, '/login')).to.be.true
     })
 
     it("Should allow a store manager to login", async () => {
@@ -44,6 +50,12 @@ describe("Account Route Testing", () => {
             .send(user)
 
       expect(tester.compare(res, 302, '/overview')).to.be.true
+
+      const res2 = await agent
+            .get(`http://localhost:${port}/logout`)
+            .redirects(0).ok(res => res.status < 400)
+
+      expect(tester.compare(res2, 302, '/login')).to.be.true
     })
   
     it("Should not allow the login with wrong credentials", async () => {
@@ -55,14 +67,6 @@ describe("Account Route Testing", () => {
             .send(user)
 
       expect(tester.compare(res, 303, '/login')).to.be.true
-    })
-
-    it("Should redirect to login on logout", async () => {
-      const res = await agent
-            .get(`http://localhost:${port}/logout`)
-            .redirects(0).ok(res => res.status < 400)
-
-      expect(tester.compare(res, 302, '/login')).to.be.true
     })
 
     it("Should allow a clupper to register", async () => {
