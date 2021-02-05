@@ -10,7 +10,7 @@ const storeManager = {email: 'allan.rose@example.com', password: 'recon'}
 const store = {vat: '51760570179'}
 const newUser = {name: rg.getRandomString(10), surname: rg.getRandomString(10), email: rg.getRandomString(10) + '@example1.com', password: rg.getRandomString(10), storeName: rg.getRandomString(10), address: 'Duomo di Milano', vat: '_' + rg.getRandomString(10), capacity: rg.getRandomInt(5, 100)}
 
-describe("Account Route Testing", () => {
+describe("Account Routes Testing", () => {
     let server
     const port = 4001
     const agent = superagent.agent()

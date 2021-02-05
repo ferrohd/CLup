@@ -1,12 +1,11 @@
 const { expect } = require('chai')
-const { response } = require('express')
 const superagent = require('superagent')
 const app = require('../src/controller/server')
 const tester = require('./utils/ResponseTester')
 
 const clupper = {email: 'beatrice.fletcher@example.com', password: 'louis'}
 
-describe("Clupper Route Testing", () => {
+describe("Clupper Routes Testing", () => {
     let server
     const port = 4001
     const agent = superagent.agent()
