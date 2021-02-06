@@ -56,26 +56,26 @@ class DBHelper {
         })
     }
 
-    // static async deleteTicket(id) {
-    //     const dbConn = DatabaseConnection.getConnection()
-    //     const stmnt = 'DELETE FROM ticket WHERE id = ?'
-    //     const values = [id]
-    //     return new Promise((resolve, _reject) => {
-    //         dbConn.query(stmnt, values, (_err, _results, _fields) => {
-    //             resolve()
-    //         })
-    //     })
-    // }
-
-    static async deleteTickets() {
+    static async deleteTicket(id) {
         const dbConn = DatabaseConnection.getConnection()
-        const stmnt = "DELETE FROM ticket WHERE id LIKE '_%'"
+        const stmnt = 'DELETE FROM ticket WHERE id = ?'
+        const values = [id]
         return new Promise((resolve, _reject) => {
-            dbConn.query(stmnt, (_err, _results, _fields) => {
+            dbConn.query(stmnt, values, (_err, _results, _fields) => {
                 resolve()
             })
         })
     }
+
+    // static async deleteTickets() {
+    //     const dbConn = DatabaseConnection.getConnection()
+    //     const stmnt = "DELETE FROM ticket WHERE id LIKE '_%'"
+    //     return new Promise((resolve, _reject) => {
+    //         dbConn.query(stmnt, (_err, _results, _fields) => {
+    //             resolve()
+    //         })
+    //     })
+    // }
 
     static async setCapacity(vat, capacity) {
         const dbConn = DatabaseConnection.getConnection()
