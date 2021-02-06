@@ -53,6 +53,8 @@ describe("Store Manager Route Testing", () => {
       expect(tester.compare(res, 303, '/overview')).to.be.true
     })
 
+    //----- /overview/ticket/scan -----
+
     it("Should allow a store manager to scan a ticket at the entrance", async() => {
       const ticket = {id: '_' + rg.getRandomString(10), inside: false, user: storeManager.email, store: storeManager.store, date: '2000-01-09 15 −48 −23'}
       await dbHelper.addTicket(ticket);
@@ -64,8 +66,8 @@ describe("Store Manager Route Testing", () => {
             .send({ticket: ticket.id})
 
       expect(tester.compare(res, 302, '/overview')).to.be.true
-
-      await dbHelper.deleteTickets()
+      
+      await dbHelper.deleteTicket(ticket.id)
     })
 
     it("Should allow a store manager to scan a ticket at the exit", async() => {
@@ -80,7 +82,7 @@ describe("Store Manager Route Testing", () => {
 
       expect(tester.compare(res, 302, '/overview')).to.be.true
 
-      await dbHelper.deleteTickets()
+      await dbHelper.deleteTicket(ticket.id)
     })
 
     it("Should not allow a store manager to scan a non existing ticket", async() => {      
@@ -107,7 +109,8 @@ describe("Store Manager Route Testing", () => {
 
       expect(tester.compare(res, 303, '/overview')).to.be.true
 
-      await dbHelper.deleteTickets()
+      await dbHelper.deleteTicket(ticket1.id)
+      await dbHelper.deleteTicket(ticket2.id)
     })
 
     it("Should not allow a store manager to scan a ticket when the capacity is full", async() => {
@@ -125,7 +128,7 @@ describe("Store Manager Route Testing", () => {
       expect(tester.compare(res, 303, '/overview')).to.be.true
 
       await dbHelper.setCapacity(storeManager.store, 30)
-      await dbHelper.deleteTickets()
+      await dbHelper.deleteTicket(ticket.id)
     })
 
     // /overview/ticket
@@ -146,6 +149,10 @@ describe("Store Manager Route Testing", () => {
             .redirects(0).ok(res => res.status < 400)
 
       expect(tester.redirected(res)).to.be.false
+            
+      let regexp = new RegExp('/.*<input name="ticket" type="hidden" value="(.*)"><\/form>.*/')
+      let result = res.text.match(regexp)
+      await dbHelper.deleteTicket(result[1])
     })
 
     // /overview/ticket/delete
@@ -162,6 +169,6 @@ describe("Store Manager Route Testing", () => {
 
       expect(tester.compare(res, 302, '/overview')).to.be.true
 
-      await dbHelper.deleteTickets()
+      await dbHelper.deleteTicket(ticket.id)
     })
   })
