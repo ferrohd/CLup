@@ -1,5 +1,9 @@
 # Installation Guide
 
+## DB Setup
+
+In the `db` folder you can find the database schema to use. Setup the DB credentials in `src/controller/db/DatabaseConnection.js`
+
 ## NodeJS Installation
 
 Download and Install NodeJS runtime from here: [NodeJS Download](https://nodejs.org/en/)
