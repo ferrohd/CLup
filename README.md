@@ -108,9 +108,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <div align="center">
   <h3>Alessandro Ferrara</h3>
 
-  [![Website](https://img.shields.io/badge/-Website-black.svg?style=for-the-badge&logo=html5&colorB=555)]()
-  [![Email](https://img.shields.io/badge/-Email-black.svg?style=for-the-badge&logo=gmail&colorB=555)](mailto:)
-  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)]()
+  [![Website](https://img.shields.io/badge/-Website-black.svg?style=for-the-badge&logo=html5&colorB=555)](https://github.com/ferrohd)
+  [![Email](https://img.shields.io/badge/-Email-black.svg?style=for-the-badge&logo=gmail&colorB=555)](mailto:alessandro2.ferrara@mail.polimi.it)
+  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://www.linkedin.com/in/ferrohd/)
 </div>
 <br/>
 <div align="center">
