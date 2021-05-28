@@ -82,17 +82,17 @@ These are the mockups of the mobile version of the web application that are also
 The real implementation may have some differences.
 
 <div align="center">
-  <img src="../assets/mock-1.png?raw=true" width="30%"/>
-  <img src="../assets/mock-2.png?raw=true" width="30%"/>
-  <img src="../assets/mock-3.png?raw=true" width="30%"/>
-  <img src="../assets/mock-4.png?raw=true" width="30%"/>
-  <img src="../assets/mock-5.png?raw=true" width="30%"/>
-  <img src="../assets/mock-6.png?raw=true" width="30%"/>
-  <img src="../assets/mock-7.png?raw=true" width="30%"/>
-  <img src="../assets/mock-8.png?raw=true" width="30%"/>
-  <img src="../assets/mock-9.png?raw=true" width="30%"/>
-  <img src="../assets/mock-10.png?raw=true" width="30%"/>
-  <img src="../assets/mock-11.png?raw=true" width="30%"/>
+  <img src="../assets/mock-1.png?raw=true" width="25%"/>
+  <img src="../assets/mock-2.png?raw=true" width="25%"/>
+  <img src="../assets/mock-3.png?raw=true" width="25%"/>
+  <img src="../assets/mock-4.png?raw=true" width="25%"/>
+  <img src="../assets/mock-5.png?raw=true" width="25%"/>
+  <img src="../assets/mock-6.png?raw=true" width="25%"/>
+  <img src="../assets/mock-7.png?raw=true" width="25%"/>
+  <img src="../assets/mock-8.png?raw=true" width="25%"/>
+  <img src="../assets/mock-9.png?raw=true" width="25%"/>
+  <img src="../assets/mock-10.png?raw=true" width="25%"/>
+  <img src="../assets/mock-11.png?raw=true" width="25%"/>
 </div>
 
 
