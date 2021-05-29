@@ -4,10 +4,10 @@
   <p align="center">
     Project developed for the final exam of the course named <em>Software Engineering II</em> held by Professor Elisabetta Di Nitto at <em>Politecnico di Milano</em>.
     <br />
-    <a href="https://github.com/ferrohd/FerraraFratus"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/ferrohd/CLup"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ferrohd/FerraraFratus/issues">Report Bug</a>
+    <a href="https://github.com/ferrohd/CLup/issues">Report Bug</a>
   </p>
 </p>
 
@@ -50,9 +50,9 @@ The system should also be very simple to use (to adapt to all demographics) and 
 ### Documentation
 
 To have more in-depth information about this project you can have a look at the documents that we have drawn up during the development of the project.
-* [Requirement Analysis and Specification Document (RASD)](https://github.com/ferrohd/FerraraFratus/blob/main/docs/RASD.pdf)
-* [Design Document (DD)](https://github.com/ferrohd/FerraraFratus/blob/main/docs/DD.pdf)
-* [Implementation and Test Deliverable](https://github.com/ferrohd/FerraraFratus/blob/main/docs/ITD.pdf)
+* [Requirement Analysis and Specification Document (RASD)](https://github.com/ferrohd/CLup/blob/main/docs/RASD.pdf)
+* [Design Document (DD)](https://github.com/ferrohd/CLup/blob/main/docs/DD.pdf)
+* [Implementation and Test Deliverable](https://github.com/ferrohd/CLup/blob/main/docs/ITD.pdf)
 
 ### Built With
 
@@ -70,7 +70,7 @@ A pretty extensive installation guide can be found inside the source code folder
 
 <div align="center">
 
-  [![Open Guide](https://img.shields.io/badge/Open-Guide-black.svg?style=for-the-badge&colorB=555)](https://github.com/ferrohd/FerraraFratus/blob/main/CLup/README.md)
+  [![Open Guide](https://img.shields.io/badge/Open-Guide-black.svg?style=for-the-badge&colorB=555)](https://github.com/ferrohd/CLup/blob/main/CLup/README.md)
 
 </div>
 
@@ -123,6 +123,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <br/>
 <div align="center">
 
-Project Link: [https://github.com/ferrohd/FerraraFratus](https://github.com/ferrohd/FerraraFratus)
+Project Link: [https://github.com/ferrohd/CLup](https://github.com/ferrohd/FerraraFratus)
 
 </div>
